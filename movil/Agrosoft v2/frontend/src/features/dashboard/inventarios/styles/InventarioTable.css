@@ -1,0 +1,163 @@
+.inventario-search-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.inventario-search-input {
+  padding: 0.5rem;
+  width: 300px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.inventario-error-msg {
+  color: red;
+}
+
+.inventario-empty-state {
+  padding: 1rem;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.inventario-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.inventario-modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.inventario-input-group {
+  margin-bottom: 1rem;
+}
+
+.inventario-modal-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.inventario-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.inventario-btn-cancel {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.inventario-group-container {
+  margin-bottom: 2.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.inventario-group-header {
+  background-color: #2E7D32;
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inventario-group-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.inventario-badge {
+  font-size: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+.inventario-table {
+  margin-top: 0;
+  width: 100%;
+}
+
+.inventario-thead {
+  background-color: #f1f8e9;
+}
+
+.col-id {
+  width: 80px;
+}
+
+.col-actions {
+  width: 150px;
+}
+
+.product-name {
+  font-weight: 500;
+}
+
+.location-placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.last-update {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.btn-edit {
+  margin-right: 0.5rem;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  background-color: #FFC107;
+  border: none;
+  border-radius: 4px;
+  color: #000;
+}
+
+.btn-delete {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  background-color: #F44336;
+  border: none;
+  border-radius: 4px;
+  color: white;
+}
+
+.quantity-low {
+  color: red;
+  font-weight: bold;
+}
+
+.quantity-medium {
+  color: orange;
+  font-weight: bold;
+}
+
+.quantity-ok {
+  color: green;
+  font-weight: bold;
+}
+

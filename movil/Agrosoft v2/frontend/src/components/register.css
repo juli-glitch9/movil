@@ -1,0 +1,141 @@
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: #f0f2f5;
+}
+
+.register-card {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  max-width: 900px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: #ffffffcc;
+}
+
+.register-visual {
+  width: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.register-visual img.active {
+  opacity: 1;
+}
+
+.register-form {
+  width: 50%;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.titulo-usuario {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #37bb0f;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #1d9105;
+  outline: none;
+}
+
+.input-error {
+  border-color: red;
+  background-color: #ffe0e0;
+}
+
+.btn-naranja {
+  background-color: #FF7F50;
+  color: #fff;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-naranja:hover {
+  background-color: #e06b3c;
+}
+
+.login-link {
+  margin-top: 15px;
+  text-align: center;
+  display: block;
+  color: #006400;
+  text-decoration: underline;
+}
+
+.toast {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.toast.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.toast.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .register-card {
+    flex-direction: column;
+  }
+
+  .register-visual {
+    width: 100%;
+    height: 200px;
+  }
+
+  .register-form {
+    width: 100%;
+    padding: 20px;
+  }
+}

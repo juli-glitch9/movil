@@ -1,0 +1,138 @@
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  /* Fondo oscuro elegante tipo Productor */
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  z-index: 100;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #45b810; /* Verde Agrosoft */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar nav ul li {
+  margin: 10px 0;
+}
+
+.sidebar nav ul li a {
+  text-decoration: none;
+  color: #e0e0e0;
+  font-size: 16px;
+  padding: 10px 15px;
+  display: block;
+  border-radius: 6px;
+  transition: all 0.3s;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.sidebar nav ul li a:hover, .sidebar nav ul li a.active {
+  background: rgba(255, 102, 0, 0.1); /* Naranja suave */
+  color: #ff6600; /* Naranja acento */
+  border-left: 4px solid #ff6600;
+}
+
+/* Botón hamburguesa */
+.hamburger-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #ff6600;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.hamburger-btn:hover {
+  background: #e65c00;
+}
+
+/* Contenido principal */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
+  background-color: #f4f4f7; /* Fondo claro consistente con cliente */
+}
+
+/* Cuando el sidebar está abierto */
+.main-content.shifted {
+  margin-left: 220px;
+}
+
+.logo {
+  border-radius: 50%;
+  width: 100px; 
+  height: 100px; 
+  overflow: hidden; /* Ensures the image stays inside the circle */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 3px #45b810; 
+  transition: transform 0.4s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: block;
+  margin: 20px auto;
+  background-color: #fff;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+  display: block;
+}
+
+.logo:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 0 3px #ff6600; 
+}
+
+/* Ocultar sidebar en pantallas pequeñas (móvil) porque ya existe menú hamburguesa */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none !important;
+    transform: translateX(-100%);
+  }
+
+  /* Asegurar que el contenido principal ocupe todo el ancho */
+  .main-content,
+  .main-content.shifted {
+    margin-left: 0 !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Si existe un botón hamburguesa fijo, mantener su posición encima */
+  .hamburger-btn {
+    z-index: 1100;
+  }
+}

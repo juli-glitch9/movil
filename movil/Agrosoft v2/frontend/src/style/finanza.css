@@ -1,0 +1,353 @@
+
+:root {
+    --color-primary:#45b810;
+    --color-accent: #06b6d4;
+    --surface-1: #ffffff;
+    --surface-2: #fbfdff;
+    --muted: #6b7280;
+    --color-success: #71f65c;
+    --color-danger: #ef4444;
+    --color-warning: #f59e0b;
+    --spacing-sm: 8px;
+    --spacing-md: 18px;
+    --spacing-lg: 32px;
+    --border-radius-card: 12px;
+    --box-shadow-card: 0 10px 30px rgba(2,6,23,0.06);
+    --glass: rgba(255,255,255,0.6);
+}
+
+.finanza-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-lg);
+    font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #0f172a;
+}
+
+/* 2. Títulos */
+.finanza-title {
+    color: var(--color-primary);
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-size: 1.6rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.finanza-subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.loading-message,
+.error-message,
+.no-data-message {
+    text-align: center;
+    padding: var(--spacing-md);
+    font-size: 1rem;
+    margin-top: 30px;
+    border-radius: var(--border-radius-card);
+    background: linear-gradient(180deg, var(--surface-2), var(--surface-1));
+    box-shadow: var(--box-shadow-card);
+}
+
+.error-message {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+    background-color: #f8d7da; 
+}
+
+
+.finanza-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    align-items: stretch;
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.finanza-cards .card {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+    text-align: left;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    min-height: 160px; /* Altura mínima para consistencia */
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--surface-2));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.finanza-cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.finanza-cards h2 {
+    font-size: 1.05rem;
+    margin: 0;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.card-header .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.financial-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.detail-row span {
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.detail-row.total {
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(15,23,42,0.06);
+}
+
+.detail-row.total span {
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.finanza-cards .cifra {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin: 0;
+    color: #0b1220;
+}
+
+.detail-row.total .cifra {
+    font-size: 1.45rem;
+}
+
+.cifra.pendiente {
+    opacity: 0.85;
+    font-style: normal;
+    color: var(--muted);
+}
+
+
+.ingresos {
+    background: linear-gradient(90deg, rgba(16,185,129,0.06), rgba(16,185,129,0.02));
+    border: 1px solid rgba(16,185,129,0.08);
+}
+.ingresos .cifra { color: var(--color-success); }
+
+.costos {
+    background: linear-gradient(90deg, rgba(239,68,68,0.04), rgba(239,68,68,0.01));
+    border: 1px solid rgba(239,68,68,0.06);
+}
+.costos .cifra { color: var(--color-danger); }
+
+.ganancia {
+    background: linear-gradient(90deg, rgba(245,158,11,0.04), rgba(245,158,11,0.01));
+    border: 1px solid rgba(245,158,11,0.06);
+}
+.ganancia .cifra { color: var(--color-warning); }
+
+
+#contenedorReportes {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    width: 100%;
+    padding-bottom: 10px;
+    min-width: 100%;
+}
+
+#contenedorReportes .card {
+    background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
+    border-radius: var(--border-radius-card);
+    padding: 16px;
+    box-shadow: var(--box-shadow-card);
+    height: 280px;
+    overflow: hidden; /* evitar que elementos se salgan del contenedor */
+    display: flex;
+    flex-direction: column;
+}
+
+#contenedorReportes .card h4 {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+
+#contenedorReportes .card > div {
+    flex-grow: 1;
+    min-height: 0;
+    position: relative;
+    padding-bottom: 8px; /* espacio para etiquetas del eje X */
+}
+
+/* Asegurar que el canvas no sobresalga y se ajuste al contenedor */
+/* Wrapper que deja espacio para el header y obliga al canvas a ocupar la zona restante */
+#contenedorReportes .card .chart-wrapper {
+    height: calc(100% - 40px); /* dejar espacio para el título */
+    display: block;
+    padding: 2px 2px 0 2px;
+}
+
+/* Forzar que el canvas ocupe todo el wrapper; ChartJS respetará maintainAspectRatio:false */
+#contenedorReportes .card .chart-wrapper canvas {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Títulos dentro de las tarjetas: permitir salto de línea y centrado */
+#contenedorReportes .card h4 {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    display: block;
+    padding: 0 6px; /* pequeño padding lateral para evitar tocar bordes */
+    line-height: 1.15;
+    word-break: break-word;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+#contenedorReportes .card.ingresos-chart,
+#contenedorReportes .card.costos-chart,
+#contenedorReportes .card.ganancia-chart {
+    background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 14px;
+}
+
+#contenedorReportes .card.ingresos-chart {
+    background: linear-gradient(90deg, rgba(16,185,129,0.06), rgba(16,185,129,0.02));
+    border: 1px solid rgba(16,185,129,0.08);
+}
+
+#contenedorReportes .card.costos-chart {
+    background: linear-gradient(90deg, rgba(239,68,68,0.04), rgba(239,68,68,0.01));
+    border: 1px solid rgba(239,68,68,0.06);
+}
+
+#contenedorReportes .card.ganancia-chart {
+    background: linear-gradient(90deg, rgba(245,158,11,0.04), rgba(245,158,11,0.01));
+    border: 1px solid rgba(245,158,11,0.06);
+}
+
+#contenedorReportes .card .financial-details {
+    gap: 6px;
+}
+
+#contenedorReportes .card .detail-row span {
+    font-size: 0.85rem;
+}
+
+#contenedorReportes .card .cifra-small {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0;
+    color: #35870f;
+}
+.reportes-header h2 {
+    font-size: 28px;
+    color: #35870f;
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+#contenedorReportes .card.ingresos-chart .cifra-small { color:#35870f; }
+#contenedorReportes .card.costos-chart .cifra-small { color: var(--color-danger); }
+#contenedorReportes .card.ganancia-chart .cifra-small { color: var(--color-warning); }
+
+.finanza-cards .card, #contenedorReportes .card {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 1024px) {
+    #contenedorReportes {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 12px;
+    }
+    #contenedorReportes .card {
+        height: 250px;
+        padding: 12px;
+    }
+    .finanza-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #contenedorReportes {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+    }
+    #contenedorReportes .card {
+        height: 220px;
+        padding: 10px;
+    }
+    #contenedorReportes .card h4 {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+    .finanza-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    #contenedorReportes {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+    }
+    #contenedorReportes .card {
+        height: 180px;
+        padding: 8px;
+    }
+    #contenedorReportes .card h4 {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+    .finanza-cards {
+        grid-template-columns: 1fr;
+    }
+    .finanza-container {
+        padding: 16px;
+    }
+    .card {
+        min-height: 0;
+    }
+}

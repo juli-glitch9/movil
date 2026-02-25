@@ -1,0 +1,56 @@
+ECHO est  activado.
+# Directorio de dependencias de Node.js 
+node_modules
+
+# pnpm-lock.yaml y yarn.lock 
+pnpm-lock.yaml
+yarn.lock
+
+
+
+# Directorio de producción creado por 'npm run build' o similar
+/build
+/dist
+/out
+
+
+# Archivos de entorno que contienen claves secretas, contraseñas de BD, etc.
+# NUNCA deben subirse a Git.
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.pem
+*.key
+*.p12
+*.mov
+
+
+*.db
+*.sqlite
+*.sqlite3
+
+
+
+# macOS
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+.qodo/
+
+# Logs y archivos de runtime
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Archivos de logs de Express/Node.js
+*.log
+
+# Windows
+Thumbs.db
+
+# env
+.env
+.env.development.local
+.env.test.local
+.env.production.local

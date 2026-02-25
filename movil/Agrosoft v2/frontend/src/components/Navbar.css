@@ -1,0 +1,461 @@
+.navbar-react {
+  height: 64px;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  padding: 0 1.2rem;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* LOGO */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: #028b20;
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+.nav-logo img {
+  width: 42px;
+}
+
+/* LINKS DESKTOP */
+.nav-links-desktop {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-links-desktop a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Auth links (desktop) */
+.auth-links a {
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: 6px 8px;
+}
+.auth-links a svg { color: #fff; }
+.auth-links a:hover { opacity: 0.9; }
+
+/* ACTIONS */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* CARRITO */
+.cart-btn {
+  position: relative;
+  color: #fff;
+}
+
+.cart-btn span {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #ff6600;
+  color: #fff;
+  font-size: .7rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+/* USER */
+.user-box button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.7rem;
+}
+
+.user-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #fff;
+  border-radius: 8px;
+  width: 160px;
+  overflow: hidden;
+  /* Elevado para que quede por encima de sidebars u otros elementos fijos */
+  z-index: 100002;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+} 
+
+.user-menu a,
+.user-menu button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: left;
+}
+
+/* HAMBURGUESA */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: #ff6600;
+  font-size: 1.8rem;
+}
+
+/* OVERLAY */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 900;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: #0a0a0a;
+  transform: translateY(-120%);
+  transition: .3s ease;
+  z-index: 999;
+}
+
+.mobile-menu.open {
+  transform: translateY(0);
+}
+
+.mobile-link {
+  display: block;
+  padding: 16px;
+  border-bottom: 1px solid #222;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+  .nav-links-desktop {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Ocultar las enlaces principales en pantallas pequeñas y dejar solo iconos (carrito, perfil y hamburguesa) */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none !important;
+  }
+}
+
+/* Hide auth/cart/user actions on small screens so only hamburger remains
+   Login/Registro will be available inside the mobile menu (already rendered there) */
+@media (max-width: 576px) {
+  /* Ocultar solo los enlaces de autenticación, pero mantener carrito y perfil visibles */
+  .nav-actions > .auth-links {
+    display: none;
+  }
+
+  /* Asegurar que carrito y perfil estén visibles en móvil */
+  .nav-actions > .cart-btn, .nav-actions > .user-dropdown {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nav-actions {
+    gap: 0.5rem;
+  }
+}
+
+/* ===================== Colores y estilo antiguo aplicado ===================== */
+.navbar-react {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+}
+
+.nav-logo {
+  color: #028b20;
+}
+
+.nav-logo .highlight {
+  color: #ff6600e0;
+  border-bottom: 3px solid #ff6600e0;
+  padding-bottom: 2px;
+}
+
+/* LINKS DESKTOP */
+.nav-links-desktop a {
+  color: #ffffffe0;
+  position: relative;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links-desktop a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #ff6600e0;
+  transition: width 0.3s ease;
+}
+
+.nav-links-desktop a:hover {
+  color: #ff6600e0;
+}
+
+.nav-links-desktop a:hover::after {
+  width: 100%;
+}
+
+/* Auth links (desktop) */
+.auth-links a {
+  color: #e67300 !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 6px 8px;
+}
+
+.auth-links a:hover {
+  color: #ff6600e0 !important;
+  text-decoration: none;
+}
+
+.auth-links a svg {
+  color: #ff6600e0;
+  transition: color 0.3s ease;
+}
+
+.auth-links a:hover svg {
+  color: #ff6600e0;
+}
+
+/* CARRITO */
+.cart-btn {
+  position: relative;
+  color: #ff6600e0;
+}
+
+.cart-btn span {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #ff6600e0;
+  color: #fff;
+  font-size: 0.7rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+/* USER */
+.user-box button {
+  background: none;
+  border: none;
+  color: #ff6600e0;
+  font-size: 1.7rem;
+}
+
+.user-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #f1f1f1;
+  border-radius: 8px;
+  width: 160px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(255,102,0,0.5);
+  z-index: 1000;
+}
+
+.user-menu a,
+.user-menu button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: left;
+  color: #000000e0;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.user-menu a:hover,
+.user-menu button:hover {
+  background-color: #ff6600e0;
+  color: #fff;
+}
+
+/* HAMBURGUESA */
+.hamburger {
+  color: #ff6600e0;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+}
+
+.mobile-link {
+  color: #ffffffe0;
+}
+
+.mobile-link:hover {
+  color: #ff6600e0;
+}
+
+/* Mobile user card (shows when authenticated inside mobile menu) */
+.mobile-user-card {
+  background: #f1f1f1;
+  padding: 12px;
+  margin: 12px;
+  border-radius: 8px;
+  color: #222;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+}
+
+.mobile-user-header {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-user-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.mobile-user-avatar:focus {
+  outline: 2px solid rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 3px rgba(255,102,0,0.12);
+}
+
+.mobile-user-avatar-icon {
+  color: #222;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mobile-user-avatar-icon:focus {
+  outline: 2px solid rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 3px rgba(255,102,0,0.12);
+}
+
+.mobile-user-info p {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.mobile-user-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mobile-user-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #222;
+}
+
+.mobile-user-action:hover {
+  background: rgba(255,102,0,0.06);
+  color: #ff6600;
+}
+
+.mobile-user-card .logout-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  text-align: left;
+  padding: 10px 8px;
+  border-radius: 6px;
+}
+
+.mobile-user-card .logout-btn:hover {
+  background: rgba(220,53,69,0.06);
+}
+
+
+/* When user menu is open on small screens, position it fixed and center like Navbarproductor */
+@media (max-width: 480px) {
+  .user-menu {
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    top: 70px;
+    max-width: calc(100% - 40px);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    border-radius: 10px;
+    z-index: 100002;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+
+  /* Neutralizar iconos y textos dentro del menú para que no se muestren con acentos naranjas */
+  .navbar-react.dropdown-open .user-menu svg,
+  .navbar-react.dropdown-open .user-menu a,
+  .navbar-react.dropdown-open .user-menu button {
+    color: #222 !important;
+    fill: currentColor !important;
+    filter: none !important;
+  }
+
+  /* Asegurar que el botón de usuario no tenga borde naranja cuando el menú esté abierto */
+  .navbar-react.dropdown-open .user-box button {
+    color: #222 !important;
+  }
+}
+
+/* Styles applied when user dropdown is open: attenuate logo and neutralize orange accents */
+.navbar-react.dropdown-open .nav-logo .highlight {
+  color: #ffffff !important;
+  border-bottom-color: transparent !important;
+  opacity: 0.85;
+}
+.navbar-react.dropdown-open .nav-logo img {
+  filter: grayscale(100%) brightness(70%);
+}
+.navbar-react.dropdown-open .user-menu svg,
+.navbar-react.dropdown-open .user-menu a,
+.navbar-react.dropdown-open .user-menu button {
+  color: #222 !important;
+  fill: currentColor !important;
+  filter: none !important;
+}
+.navbar-react.dropdown-open .hamburger {
+  opacity: 0.8;
+}
+
+/* RESPONSIVE ICONS */
+@media (max-width: 768px) {
+  .nav-links-desktop a::after,
+  .auth-links a::after {
+    bottom: -4px;
+    height: 2px;
+    background-color: #ff6600e0;
+  }
+}

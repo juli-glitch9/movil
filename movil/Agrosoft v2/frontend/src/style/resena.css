@@ -1,0 +1,223 @@
+:root {
+  --primary-color: #35870f;
+  --secondary-color: #8b5cf6;
+  --accent-color: #f59e0b;
+  --bg-light: #f8fafc;
+  --border-light: #e2e8f0;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+}
+
+.p-4 { padding: 1rem; }
+.sm\:p-8 { padding: 2rem; }
+.bg-gray-50 { background-color: var(--bg-light); }
+.min-h-screen { min-height: 100vh; }
+
+.max-w-7xl { max-width: 80rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* Títulos y Encabezados */
+.text-3xl { font-size: 1.875rem; }
+.font-extrabold { font-weight: 800; }
+.text-gray-900 { color: var(--text-primary); }
+.text-gray-600 { color: var(--text-secondary); }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.pb-4 { padding-bottom: 1rem; }
+.border-b { border-bottom: 1px solid var(--border-light); }
+
+/* Rejilla de Reseñas */
+.grid { display: grid; }
+.gap-6 { gap: 1.5rem; }
+
+@media (min-width: 768px) {
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* --- Tarjeta Moderna de Reseña --- */
+.review-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 18px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary-color);
+}
+
+/* Acento decorativo arriba */
+.review-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.bg-white { background-color: #ffffff; }
+.p-6 { padding: 1.5rem; }
+.rounded-xl { border-radius: 0.75rem; }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+.border { border-width: 1px; }
+.border-gray-100 { border-color: var(--border-light); }
+.transform { transform: var(--tw-transform); }
+.transition { transition: all 0.3s ease-in-out; }
+.duration-300 { transition-duration: 300ms; }
+.ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Tipografía y Colores */
+.text-lg { font-size: 1.125rem; }
+.font-bold { font-weight: 700; }
+.text-gray-800 { color: var(--text-primary); }
+.text-green-600 { color: var(--primary-color); }
+
+/* --- Sección de Información --- */
+.review-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.review-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+  color: var(--primary-color);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  white-space: nowrap;
+}
+
+.review-badge.cliente {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+  color: var(--secondary-color);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+/* --- Calificación --- */
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.rating-stars {
+  font-size: 1.2rem;
+  display: flex;
+  gap: 2px;
+  letter-spacing: 2px;
+}
+
+.rating-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- Comentario --- */
+.review-comment {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.02));
+  border-left: 3px solid var(--accent-color);
+  padding: 12px;
+  border-radius: 6px;
+  font-style: italic;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+
+/* --- Footer con Fecha --- */
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.review-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.review-date::before {
+  content: '📅';
+  font-size: 0.9rem;
+}
+
+/* --- Estilos Compatibles --- */
+.text-xl { font-size: 1.25rem; }
+.font-extrabold { font-weight: 800; }
+.text-yellow-500 { color: var(--accent-color); }
+
+.text-gray-700 { color: var(--text-primary); }
+.italic { font-style: italic; }
+.min-h-\[60px\] { min-height: 60px; }
+
+.text-sm { font-size: 0.875rem; }
+.text-gray-500 { color: var(--text-secondary); }
+.font-medium { font-weight: 500; }
+
+/* --- Estados de Carga --- */
+.flex { display: flex; }
+.justify-center { justify-content: center; }
+.items-center { align-items: center; }
+.h-40 { height: 10rem; }
+.animate-spin { animation: spin 1s linear infinite; }
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.text-center { text-align: center; }
+.bg-yellow-100 { background-color: #fffbeb; }
+.text-yellow-800 { color: #92400e; }
+.shadow-inner { box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); }
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .review-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .review-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

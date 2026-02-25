@@ -1,0 +1,978 @@
+.message-alert {
+color: #374151;
+}
+
+.login-simulation {
+    padding: 15px;
+    background-color: #e5f5f0;
+    border: 1px solid #047431;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    color: #1f2937; 
+}
+
+.sim-title {
+    margin-top: 0;
+    color: #047857; /* Título en verde */
+}
+
+.sim-note, .sim-label {
+    color: #1f2937 !important; /* Usamos !important para asegurar que el color oscuro prevalezca */
+    font-weight: 500;
+}
+
+.sim-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.price-base {
+    font-size: 0.9rem;
+    color: #1f2937; 
+    margin: 0;
+}
+
+.form-input, .form-select {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    color: #1f2937 !important;
+    background-color: white; 
+}
+
+.edit-form label {
+    color: #1f2937 !important; 
+}
+
+.modal-content .form-input, 
+.modal-content .form-select {
+    color: #1f2937 !important;
+}
+
+
+
+.deals-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.deals-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.deals-header h2 {
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 18px;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    background-color: white;
+    color: #6b7280;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.filter-btn:hover {
+    border-color: #9ca3af;
+    color: #374151;
+}
+
+.filter-btn.active-all {
+    background-color: #374151;
+    color: white;
+    border-color: #374151;
+}
+
+.filter-btn.active-aprobado {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-color: #059669;
+}
+
+.filter-btn.active-pendiente {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border-color: #d97706;
+}
+
+.filter-btn.active-rechazado {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border-color: #dc2626;
+}
+
+.filter-btn.active-eliminada {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+    border-color: #7c3aed;
+}
+
+/* Disabled/empty filters look nicer and non-interactive */
+.filter-btn.disabled,
+.filter-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    border-color: #e6e7eb;
+    color: #9aa0a6;
+    background: linear-gradient(135deg, #ffffff, #f7f7f9);
+    box-shadow: none;
+}
+
+.filter-btn.disabled:hover,
+.filter-btn:disabled:hover {
+    border-color: #e6e7eb;
+    color: #9aa0a6;
+}
+
+.deals-count {
+    background-color: #f3f4f6;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.main-title {
+    color: #0a9227;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #2b7e3d;
+    padding-bottom: 10px;
+}
+
+.section-title {
+    color: #374151;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.message-alert {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.message-alert.warning {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.login-simulation {
+    padding: 15px;
+    background-color: #e5f5f0;
+    border: 1px solid #0a9227;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.sim-title {
+    margin-top: 0;
+    color: #0a9227;
+}
+
+.sim-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.sim-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    color: rgb(31, 30, 30);
+    transition: background-color 0.3s;
+}
+
+.sim-button.blue { background-color: #3b82f6; }
+.sim-button.blue:hover { background-color: #2563eb; }
+
+.sim-button.indigo { background-color: #6366f1; }
+.sim-button.indigo:hover { background-color: #4f46e5; }
+
+.creation-form, .creation-form-container {
+    background-color: #f9fafb;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 22px; 
+    max-width: 800px; /* Ancho máximo limitado para que no se vea tan ancho */
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.creation-form h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #064e3b;
+    font-size: 1.25rem;
+    text-align: center;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 12px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas por defecto */
+    gap: 20px;
+    align-items: end;
+    margin-bottom: 24px;
+}
+
+.form-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4b5563;
+}
+
+.form-input, .form-select {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-submit-group {
+    grid-column: span 2; /* Ocupa las 2 columnas */
+    margin-top: 10px;
+}
+
+.form-submit-group .btn-create {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-submit-group .btn-create::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.form-submit-group .btn-create:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(34, 197, 94, 0.5);
+}
+
+.form-submit-group .btn-create:hover::before {
+    left: 100%;
+}
+
+.form-submit-group .btn-create:active {
+    transform: translateY(0);
+}
+
+.form-error, .form-success {
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.form-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.form-success {
+    background-color: #d1fae5;
+    color: #0a9227;
+}
+
+.form-info {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+.deals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+    padding: 0;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 1200px) {
+    .deals-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .deals-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .deals-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .deals-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.deal-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    border: 1px solid #f3f4f6;
+}
+
+.deal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: #e5e7eb;
+}
+
+.deal-card.discount { 
+    border-top: 4px solid #6366f1;
+    border-left: none; /* Removed side border */
+}
+
+.deal-card.offer { 
+    border-top: 4px solid #f97316;
+    border-left: none; /* Removed side border */
+}
+
+.deal-card.deleted {
+    opacity: 0.75;
+    background-color: #f9fafb;
+    border-top: 4px solid #9ca3af;
+    filter: grayscale(0.8);
+}
+
+.deal-card.deleted .image-status-tag {
+    background: #6b7280 !important;
+}
+
+.deal-image-container {
+    width: 100%;
+    height: 200px; 
+    overflow: hidden;
+    position: relative;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deal-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.deal-image-container:hover img {
+    transform: scale(1.08);
+}
+
+.image-status-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    left: auto; /* Moved to right */
+    padding: 6px 12px;
+    border-radius: 9999px; /* Pill shape */
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+}
+
+.image-status-tag.status-Aprobado {
+    background: rgba(16, 185, 129, 0.9);
+}
+
+.image-status-tag.status-Pendiente {
+    background: rgba(245, 158, 11, 0.9);
+}
+
+.image-status-tag.status-Rechazado {
+    background: rgba(239, 68, 68, 0.9);
+}
+
+.image-status-tag.status-Eliminada {
+    background: rgba(107, 114, 128, 0.9);
+}
+
+.deal-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.75rem;
+}
+
+.deal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+    gap: 0.5rem;
+}
+
+.tag {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-right: 0;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.discount-type { 
+    background-color: #e0e7ff;
+    color: #4338ca;
+}
+
+.offer-type { 
+    background-color: #ffedd5;
+    color: #c2410c;
+}
+
+.deal-title {
+    font-size: 1.1rem;
+    margin: 0;
+    color: #111827;
+    font-weight: 700;
+    line-height: 1.4;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.deal-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit description lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.6rem; 
+}
+
+.deal-percentage {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #dc2626;
+    line-height: 1;
+}
+
+.price-section {
+    margin-top: auto; /* Push to bottom before footer */
+    margin-bottom: 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.price-base {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.price-base.line-through-price {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+.price-final {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+.deal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 16px;
+}
+
+.deal-vigencia {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.deal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.edit-btn, .delete-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-transform: none; /* Removed uppercase */
+    letter-spacing: normal;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+}
+
+/* Removed complex pseudo-element effects for cleaner look */
+.edit-btn::before, .delete-btn::before { display: none; }
+
+.edit-btn { 
+    background-color: white;
+    color: #3b82f6;
+    border: 1px solid #dbeafe;
+    box-shadow: none;
+}
+
+.edit-btn:hover:not(:disabled) { 
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+    color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.delete-btn { 
+    background-color: white;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    box-shadow: none;
+}
+
+.delete-btn:hover:not(:disabled) { 
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.edit-btn:disabled, .delete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f3f4f6;
+    border-color: #e5e7eb;
+    color: #9ca3af;
+    transform: none;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.modal-title {
+    color: #0a9227;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+.edit-form .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.edit-form .form-input-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+}
+
+.btn-cancel, .btn-submit {
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+.btn-cancel::before,
+.btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.btn-cancel:hover::before,
+.btn-submit:hover::before {
+    left: 100%;
+}
+
+.btn-cancel { 
+    background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+    color: #1f2937;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-cancel:hover { 
+    background: linear-gradient(135deg, #d1d5db, #b3b9c5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-cancel:active {
+    transform: translateY(0);
+}
+
+.btn-submit { 
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-submit:hover:not(:disabled) { 
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(34, 197, 94, 0.5);
+}
+
+.btn-submit:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-error, .form-success { margin: 0 10px 0 0; }
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.12s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.btn-primary, .btn-create, .btn-submit {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(22, 163, 74, 0.18);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(22, 163, 74, 0.22); }
+.btn-primary:active:not(:disabled) { transform: translateY(-1px) scale(0.995); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary, .edit-btn {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    box-shadow: 0 6px 14px rgba(59, 130, 246, 0.16);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.btn-secondary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(37, 99, 235, 0.22); }
+
+.btn-danger, .delete-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    box-shadow: 0 6px 14px rgba(239, 68, 68, 0.16);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.btn-danger:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(220, 38, 38, 0.2); }
+
+.btn-ghost, .btn-cancel {
+    background: linear-gradient(135deg, #ffffff, #f3f4f6);
+    color: #111827;
+    box-shadow: 0 4px 10px rgba(15,23,42,0.06);
+    border: 1px solid rgba(17,24,39,0.06);
+}
+.btn-ghost:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(15,23,42,0.08); }
+
+.btn-sm { padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; }
+
+.btn:focus-visible {
+    outline: 3px solid rgba(99,102,241,0.16);
+    outline-offset: 3px;
+}
+
+.btn-create, .edit-btn, .delete-btn, .btn-submit, .btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.12s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.deals-container button,
+.creation-form button,
+.modal-content button,
+.deal-actions button,
+.sim-controls .sim-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.12s ease;
+}
+
+@media (max-width: 480px) {
+    .deal-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .deal-actions .btn { width: 100%; }
+}
+
+@media (max-width: 1024px) {
+    .deals-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+    
+    .deal-image-container {
+        height: 180px;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .deals-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .deal-image-container {
+        height: 140px;
+    }
+    
+    .deal-card {
+        border-left-width: 4px;
+    }
+    
+    .deal-content {
+        padding: 12px;
+        gap: 0.5rem;
+    }
+    
+    .deal-percentage {
+        font-size: 1.3rem;
+    }
+    
+    .deal-title {
+        font-size: 0.95rem;
+    }
+    
+    .deal-description {
+        font-size: 0.85rem;
+        min-height: 30px;
+    }
+    
+    .deal-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+        padding-top: 10px;
+    }
+    
+    .deal-vigencia {
+        width: 100%;
+        text-align: left;
+    }
+    
+    .deal-actions {
+        width: 100%;
+        margin-left: 0;
+        gap: 10px;
+    }
+    
+    .edit-btn, .delete-btn {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .image-status-tag {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+    }
+}

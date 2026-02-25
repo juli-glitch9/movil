@@ -1,0 +1,46 @@
+.page-container {
+  padding: 25px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: #ffffff;
+  min-height: calc(100vh - 40px);
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.page-header h1 {
+  font-family: 'Montserrat', sans-serif;
+  color: #45b810; /* Verde principal */
+  margin: 0;
+  font-size: 1.8em;
+  font-weight: 700;
+}   
+
+.btn-primary {
+  background: linear-gradient(90deg, #71f65c, #45b810);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(69, 184, 16, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(69, 184, 16, 0.4);
+  background: linear-gradient(90deg, #5de04b, #3da00e);
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "image": "/IMG/papapastusa.png",
+    "category": "Tubérculos",
+    "title": "Papa pastusa",
+    "producer": "Carlos Ordez",
+    "price": "$1,199 COP x lb",
+    "stock": "Disponible"
+  },
+  {
+    "id": 2,
+    "image": "/IMG/green-apples.jpg",
+    "category": "Frutas",
+    "title": "Manzana verde",
+    "producer": "Juan Pinilla",
+    "price": "$20,900 COP x lb",
+    "stock": "Disponible"
+  },
+  {
+    "id": 3,
+    "image": "/IMG/mora.jpg",
+    "category": "Frutas",
+    "title": "Mora",
+    "producer": "Juan Garzón",
+    "price": "$2,499 COP x lb",
+    "stock": "Agotado"
+  },
+  {
+    "id": 4,
+    "image": "/IMG/yuca.jpg",
+    "category": "Tubérculos",
+    "title": "Yuca",
+    "producer": "Jaime Pérez",
+    "price": "$2,399 COP x lb",
+    "stock": "Disponible"
+  },
+  {
+    "id": 5,
+    "image": "/IMG/Roasted_coffee_beans.jpg",
+    "category": "Granos",
+    "title": "Café",
+    "producer": "Francisco Pedroza",
+    "price": "$19,799 COP x lb",
+    "stock": "Disponible"
+  },
+  {
+    "id": 6,
+    "image": "/IMG/arracacha.jpg",
+    "category": "Tubérculos",
+    "title": "Arracacha",
+    "producer": "Lucía Hernández",
+    "price": "$4,900 COP x lb",
+    "stock": "Disponible"
+  },
+  {
+    "id": 7,
+    "image": "/IMG/Cafe.jpg",
+    "category": "Insumos agrícolas",
+    "title": "Abono para café",
+    "producer": "José Domínguez",
+    "price": "$22,900 COP",
+    "stock": "Disponible"
+  },
+  {
+    "id": 8,
+    "image": "/IMG/Banano.jpeg",
+    "category": "Frutas",
+    "title": "Banano",
+    "producer": "Carla Hurtado",
+    "price": "$2,900 COP x lb",
+    "stock": "Disponible"
+  }
+]

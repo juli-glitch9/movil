@@ -1,0 +1,336 @@
+
+.custom-navbar-productor {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  min-height: 60px;
+  position: relative;
+  z-index: 999;
+  width: 100%;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #028b20;
+  margin: 0;
+  white-space: nowrap;
+}
+
+
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #028b20;
+}
+
+.brand-text .highlight {
+  color: #ff6600e0;
+  border-bottom: 3px solid #ff6600e0;
+  padding-bottom: 2px;
+  transition: color .2s ease, border-color .2s ease, opacity .2s ease;
+}
+
+/* Cuando el dropdown está abierto, atenuar/ocultar el color naranja del logo */
+.custom-navbar-productor.dropdown-open .brand-text .highlight {
+  color: #ffffff !important;
+  border-bottom-color: transparent !important;
+  opacity: 0.85;
+}
+
+/* Desaturar la imagen del logo para que no destaque detrás del dropdown */
+.custom-navbar-productor.dropdown-open .navbar-brand img {
+  filter: grayscale(100%) brightness(70%);
+}
+
+
+.nav-links .nav-link {
+  position: relative;
+  margin-right: 1.5rem; 
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ffffffe0 !important;
+  transition: color 0.3s ease;
+}
+
+.nav-links .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;   
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #ff6600e0;
+  transition: width 0.3s ease;
+}
+
+.nav-links .nav-link:hover {
+  color: #ff6600e0 !important;
+}
+
+.nav-links .nav-link:hover::after {
+  width: 100%;
+}
+
+
+.nav-links .nav-link.active {
+  color: #ff6600e0 !important;
+}
+
+.nav-links .nav-link.active::after {
+  width: 100%;
+}
+
+
+.cart-link svg {
+  color: #ff6600e0;
+  transition: transform 0.2s ease;
+}
+
+.cart-link svg:hover {
+  transform: scale(1.2);
+}
+
+
+.user-dropdown {
+  position: relative;
+}
+
+.user-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.user-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid #ff6600e0;
+  object-fit: cover;
+}
+
+
+.dropdown-menu-custom {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: #f1f1f1;
+  border-radius: 8px;
+  padding: 10px;
+  width: 180px;
+  box-shadow: 0 4px 8px rgba(255, 102, 0, 0.5);
+  /* Elevar z-index para que el dropdown siempre quede por encima de elementos fijos */
+  z-index: 100002;
+}
+
+/* Forzar color neutro de iconos dentro del dropdown cuando está abierto */
+.custom-navbar-productor.dropdown-open .dropdown-menu-custom svg,
+.custom-navbar-productor.dropdown-open .dropdown-menu-custom .nav-icon {
+  color: #222 !important;
+  fill: currentColor !important;
+  stroke: none !important;
+  filter: none !important;
+}
+
+/* Quitar borde naranja del avatar si el dropdown está abierto */
+.custom-navbar-productor.dropdown-open .user-avatar,
+.custom-navbar-productor.dropdown-open .user-avatar-icon {
+  border-color: transparent !important;
+  color: #222 !important;
+}
+
+.dropdown-username {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 5px 10px;
+  color: #000000e0;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #ff6600e0;
+  color: #fff;
+}
+
+.nav-icon {
+  font-size: 1rem;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.nav-links .nav-link:hover .nav-icon {
+  color: #ff6600e0;
+}
+
+.nav-links .nav-link.active .nav-icon {
+  color: #ff6600e0;
+}
+
+/* Icono de usuario cuando no hay imagen */
+.user-avatar-icon {
+  color: #ff6600e0;
+  border: 2px solid #ff6600e0;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/* Mejoras para el dropdown */
+.dropdown-header {
+  position: relative;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-header .dropdown-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  color: #ff6600;
+  background: transparent;
+  border-radius: 50%;
+}
+
+.dropdown-header .dropdown-close:focus {
+  outline: 2px solid rgba(255,102,0,0.12);
+  box-shadow: 0 0 0 3px rgba(255,102,0,0.12);
+}
+
+.dropdown-email {
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #ddd;
+  margin: 8px 0;
+}
+
+/* Botón de logout específico */
+.logout-btn {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: #dc3545;
+}
+
+.logout-btn:hover {
+  background-color: #fff5f5;
+  color: #dc3545;
+}
+
+/* Enlace de registro con estilo especial */
+.register-link {
+  color: #ff6600e0 !important;
+  font-weight: 600;
+}
+
+.register-link:hover {
+  color: #ff4500 !important;
+}
+
+
+/* 🔵 ESTILOS AZULES PARA BOTONES DE AUTENTICACIÓN */
+.auth-buttons .login-link {
+  color: #e67300 !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.auth-buttons .login-link:hover {
+  color: #e67300 !important;
+  text-decoration: none;
+}
+
+.auth-buttons .register-link {
+  color: #e67300 !important;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.auth-buttons .register-link:hover {
+  color: #e67300 !important;
+  text-decoration: none;
+}
+
+.auth-buttons .nav-link {
+  position: relative;
+}
+
+.auth-buttons .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #e67300 ;
+  transition: width 0.3s ease;
+}
+
+.auth-buttons .nav-link:hover::after {
+  width: 100%;
+}
+
+/* Iconos azules */
+.auth-buttons .nav-link svg {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.auth-buttons .nav-link:hover svg {
+  color: white;
+}
+/* Responsive para iconos */
+@media (max-width: 768px) {
+  .nav-icon {
+    margin-right: 8px;
+  }
+  
+  .auth-buttons .nav-link {
+    padding: 8px 12px;
+  }
+}
+
+/* Centrar dropdown de usuario en pantallas pequeñas */
+@media (max-width: 480px) {
+  .user-dropdown {
+    position: relative; /* asegurar contexto */
+  }
+
+  .dropdown-menu-custom {
+    /* Posicionar respecto a la ventana para evitar heredar tamaños del contenedor */
+    position: fixed !important;
+    left: 20px !important;
+    right: 20px !important;
+    top: 70px !important;
+    transform: none !important;
+    width: auto !important;
+    max-width: calc(100% - 40px) !important;
+    max-height: calc(100vh - 120px) !important;
+    overflow-y: auto !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
+    border-radius: 10px !important;
+    z-index: 100002 !important;
+  }
+
+  /* Ajustes para que el botón del avatar no provoque overflow */
+  .user-btn {
+    z-index: 2100;
+  }
+}

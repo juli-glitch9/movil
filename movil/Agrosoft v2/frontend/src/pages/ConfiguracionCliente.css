@@ -1,0 +1,537 @@
+/* ========================================================================= */
+/* 1. VARIABLES Y ESTILOS BASE */
+/* ========================================================================= */
+
+:root {
+    --primary-color: #1a73e8; /* Azul primario para enlaces y acciones */
+    --primary-hover: #1764cc;
+    --background-color: #f7f7f7; /* Fondo general muy claro */
+    --card-background: #ffffff; /* Fondo de tarjetas y paneles */
+    --text-color: #333333; /* Texto principal oscuro */
+    --text-muted: #6c757d; /* Texto secundario o descriptivo */
+    --border-color: #e0e0e0; /* Bordes claros */
+    --sidebar-width: 280px;
+    --rightbar-width: 280px;
+    --error-color: #d9534f; /* Color de error (rojo) */
+    --success-color: #5cb85c; /* Color de éxito (verde) */
+    --alert-warning: #fff3cd; /* Fondo de alertas */
+    --alert-border: #ffeeba;
+}
+
+/* Base global */
+.container-global {
+    background-color: var(--background-color);
+    padding: 20px;
+    min-height: calc(100vh - 60px); /* Ajusta si tienes un header fijo */
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr var(--rightbar-width);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Enlaces base (para usar en todo el componente) */
+a.link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    font-size: 14px;
+}
+a.link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+.link.small {
+    font-size: 12px !important;
+}
+
+
+/* ========================================================================= */
+/* 2. SIDEBAR (Barra Lateral Izquierda) */
+/* ========================================================================= */
+.b
+.sidebar {
+    background: var(--card-background);
+    border-radius: 1px;
+    padding: 20px;
+    margin-top: 70px;
+    margin-left: 0px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+/* --- Perfil --- */
+
+.sidebar-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.avatar, .avatar-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--card-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+.avatar-img {
+    border: 3px solid var(--primary-color);
+}
+
+.profile-info .name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+.profile-info .email {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.edit-profile {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+.edit-profile:hover {
+    background-color: var(--background-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* Estadísticas del perfil (Cupones, Puntos, Cartera) */
+.profile-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 0 5px;
+}
+.stat {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+}
+.stat-icon {
+    color: var(--primary-color);
+    min-width: 18px;
+}
+.stat-body {
+    line-height: 1.2;
+}
+.stat-value {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* --- Elementos de Navegación Lateral (SideItem) --- */
+
+.side-item {
+    border-radius: 8px;
+    margin-bottom: 5px;
+    /* transition: background-color 0.2s; */
+}
+
+.side-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+.side-head:hover {
+    background-color: var(--background-color);
+}
+
+.side-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plus-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+}
+.plus-btn:hover {
+    transform: scale(1.1);
+}
+
+.chev {
+    color: var(--text-muted);
+}
+
+.side-body {
+    padding: 5px 0 10px 0;
+    /* Animación simple de entrada */
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+}
+
+.mini-list.menu-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px 8px 25px; /* Indentación para sub-enlaces */
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border-left: 3px solid transparent; /* Indicador de estado activo */
+}
+.menu-link svg {
+    min-width: 16px;
+}
+
+.menu-link:hover {
+    color: var(--text-color);
+    background-color: rgba(0, 0, 0, 0.03);
+    border-left-color: var(--border-color);
+}
+.menu-link.active {
+    color: var(--primary-color);
+    font-weight: 600;
+    background-color: rgba(26, 115, 232, 0.08); /* primary-color con transparencia */
+    border-left-color: var(--primary-color);
+}
+
+/* Estilo para el botón de cerrar sesión */
+.logout-item {
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+.logout-link {
+    color: var(--error-color) !important;
+    font-weight: 700;
+}
+.logout-link:hover {
+    background: rgba(217, 83, 79, 0.08) !important;
+    border-left-color: var(--error-color) !important;
+}
+
+/* ========================================================================= */
+/* 3. MAIN CONTENT (Centro) */
+/* ========================================================================= */
+
+.content {
+    background: var(--card-background);
+    border-radius: 12px;
+    padding: 30px;
+    width: 900px;
+    margin-left: 200px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Bienvenida --- */
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+.hello {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+.muted {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* --- Quick Links (Métricas del usuario) --- */
+.quick-links {
+    display: flex;
+    gap: 15px;
+    padding-top: 10px;
+}
+.quick-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.quick-item:hover {
+    color: var(--primary-color);
+}
+.quick-item svg {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+/* --- Alerta --- */
+.alert {
+    background-color: var(--alert-warning);
+    border: 1px solid var(--alert-border);
+    color: #856404; /* Color de texto para la advertencia */
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* --- Pedidos --- */
+.orders-block {
+    margin-top: 20px;
+}
+.orders-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.orders-head .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.order-status {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    gap: 5px;
+}
+.status-item:hover {
+    color: var(--primary-color);
+}
+.status-item svg {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.orders-list {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.order-row {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.order-row:last-child {
+    border-bottom: none;
+}
+.order-row.empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+
+/* ========================================================================= */
+/* 4. RIGHT BAR (Paneles de Información) */
+/* ========================================================================= */
+
+.rightbar {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin-left: 900px;
+    gap: 20px;
+}
+
+.panel {
+    background: var(--card-background);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.panel-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.panel-body {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+.panel-body strong {
+    color: var(--text-color);
+}
+
+.panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-decoration: none; /* Para usar con Link/a */
+    transition: all 0.2s;
+}
+.btn-icon:hover {
+    background-color: var(--background-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.btn-icon svg {
+    min-width: 16px;
+    color: var(--primary-color);
+}
+.btn-icon:hover svg {
+    color: var(--primary-hover);
+}
+
+/* ========================================================================= */
+/* 5. RESPONSIVE (Ajustes para móviles y tabletas) */
+/* ========================================================================= */
+
+@media (max-width: 1200px) {
+    .dashboard {
+        grid-template-columns: var(--sidebar-width) 1fr; /* Colapsar barra derecha */
+        gap: 15px;
+    }
+    .rightbar {
+        display: none; /* Ocultar barra derecha por completo o moverla al final */
+    }
+}
+
+@media (max-width: 768px) {
+    .container-global {
+        padding: 10px;
+    }
+    .dashboard {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+        order: 2; /* Mover el sidebar abajo del contenido principal */
+    }
+    .content {
+        order: 1; /* Mover el contenido principal arriba */
+        padding: 15px;
+    }
+    .sidebar-profile {
+        flex-direction: row; /* Perfil en línea horizontal */
+        text-align: left;
+        gap: 15px;
+    }
+    .profile-info {
+        flex-grow: 1;
+    }
+    .avatar, .avatar-img {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+    .profile-stats {
+        display: none; /* Ocultar stats en móvil para ahorrar espacio */
+    }
+    .welcome {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .hello {
+        font-size: 1.5rem;
+    }
+    .quick-links {
+        flex-wrap: wrap;
+    }
+    .quick-item {
+        flex-basis: calc(50% - 15px);
+    }
+}

@@ -1,0 +1,53 @@
+.catalog-nav {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 2rem;
+}
+
+.catalog-nav-list {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid #eee;
+}
+
+.catalog-nav-item {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2c3e50;
+  padding: 0.5rem 0;
+  position: relative;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.catalog-nav-item:hover {
+  color: #ff6600;
+}
+
+.catalog-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #ff6600;
+  transition: width 0.3s ease;
+}
+
+.catalog-nav-item:hover::after {
+  width: 100%;
+}
+
+/* Estado activo */
+.catalog-nav-item.active {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.catalog-nav-item.active::after {
+  width: 100%;
+}

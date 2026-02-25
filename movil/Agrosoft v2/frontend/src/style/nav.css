@@ -1,0 +1,80 @@
+/*
+ * ESTILOS REQUERIDOS PARA EL DROPDOWN DE USUARIO
+ */
+
+/* Contenedor principal del dropdown */
+.user-dropdown {
+  position: relative;
+  /* Asegura que el botón de perfil esté visible en móviles */
+  z-index: 1000; 
+}
+
+/* Estilo del menú desplegable personalizado */
+.dropdown-menu-custom {
+  position: absolute;
+  top: 100%; /* Justo debajo del botón */
+  right: 0; /* Alineado a la derecha */
+  z-index: 100;
+  min-width: 240px;
+  padding: 0;
+  margin-top: 8px; /* Pequeño espacio del botón */
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem; /* Bordes redondeados */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+/* Ítem del dropdown */
+.dropdown-menu-custom .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.dropdown-menu-custom .dropdown-item:hover {
+  color: #000;
+  background-color: #f8f9fa; /* Color hover suave */
+}
+
+/* Encabezado de usuario */
+.dropdown-header {
+  padding: 1rem;
+  white-space: normal;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.dropdown-username {
+  font-size: 1.1rem;
+}
+
+/* Botón de cerrar sesión */
+.logout-btn {
+  font-weight: bold;
+}
+
+/* Separador */
+.dropdown-divider {
+  height: 0;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Estilo del avatar */
+.user-avatar {
+  border: 2px solid #28a745; /* Borde verde para destacar el rol */
+}

@@ -1,0 +1,119 @@
+/* ===== VARIABLES CSS ===== */
+:root {
+  --primary-color: #27ae60;
+  /* Verde */
+  --secondary-color: #e67300;
+  /* Naranja */
+  --primary-dark: #2c3e50;
+  --text-dark: #333;
+  --background: #ffffff;
+  --decorative-orange: #e67300;
+  /* Naranja decorativo FIJO */
+  --decorative-green: #27ae60;
+  /* Verde decorativo FIJO */
+}
+
+/* ===== ESTILOS GENERALES HOME ===== */
+.home-page {
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-dark);
+  background-color: var(--background);
+  line-height: 1.6;
+  padding: 1rem 0;
+}
+
+/* 🔥 Título animado SOLO en Home - CORREGIDO */
+.home-page .section-title-custom {
+  color: var(--primary-dark);
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 2rem 0 1rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.6rem;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* LÍNEA SUPERIOR NARANJA - CORREGIDA CON !important */
+.home-page .section-title-custom::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 3px;
+  background: var(--decorative-orange) !important;
+  /* Naranja FIJO */
+  margin: 0 auto 6px;
+  border-radius: 2px;
+  animation: expandLineOrange 0.8s ease forwards;
+}
+
+/* LÍNEA INFERIOR VERDE - CORREGIDA CON !important */
+.home-page .section-title-custom::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 4px;
+  background: var(--decorative-green) !important;
+  /* Verde FIJO */
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+  animation: expandLineGreen 1s ease forwards;
+  animation-delay: 0.4s;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes expandLineOrange {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 60%;
+  }
+}
+
+@keyframes expandLineGreen {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .home-page .section-title-custom {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page .section-title-custom {
+    font-size: 1.3rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .home-page .section-title-custom::before {
+    height: 2px;
+  }
+
+  .home-page .section-title-custom::after {
+    height: 3px;
+  }
+}

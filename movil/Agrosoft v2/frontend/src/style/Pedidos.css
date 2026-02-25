@@ -1,0 +1,680 @@
+.mis-pedidos-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 80vh;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Estado de carga - previene flickering */
+.mis-pedidos-container.loading {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Header */
+.pedidos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ff9800;
+}
+
+.pedidos-title {
+  color: #000000;
+  font-size: 2rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pedidos-volver-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #e67300;
+  border: 1px solid #dee2e6;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.pedidos-volver-btn:hover {
+  background: #e9ecef;
+  transform: translateX(-2px);
+}
+
+/* Resumen de pedidos */
+.pedidos-resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.resumen-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.resumen-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.resumen-card h3 {
+  color: #6c757d;
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.resumen-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2d5016;
+}
+
+.resumen-number.entregado {
+  color: #28a745;
+}
+
+.resumen-number.procesando {
+  color: #ffc107;
+}
+
+/* Lista de pedidos */
+.pedidos-subtitle {
+  color: #2d5016;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.pedidos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Tarjeta de pedido - CON ANIMACIÓN CONTROLADA */
+.pedido-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+  animation: cardEntrance 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  border-left: 4px solid #ff9800;
+}
+
+@keyframes cardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pedido-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.pedido-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pedido-numero {
+  color: #2d5016;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.pedido-fecha {
+  color: #6c757d;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pedido-estado {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.pendiente {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status-badge.procesando {
+  background: #cce7ff;
+  color: #004085;
+  border: 1px solid #b3d7ff;
+}
+
+.status-badge.enviado {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.status-badge.entregado {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-badge.cancelado {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.status-icon {
+  font-size: 14px;
+}
+
+.status-icon.pendiente {
+  color: #ffc107;
+}
+
+.status-icon.procesando {
+  color: #5e6a6c;
+}
+
+.status-icon.enviado {
+  color: #007bff;
+}
+
+.status-icon.entregado {
+  color: #28a745;
+}
+
+.status-icon.cancelado {
+  color: #dc3545;
+}
+
+/* Detalles del pedido */
+.pedido-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.detalle-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.detalle-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.detalle-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.detalle-icon {
+  color: #2e7d32;
+  margin-top: 2px;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+.detalle-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.detalle-label {
+  color: #666;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.detalle-valor {
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.detalle-valor.total-pedido {
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.detalle-valor.numero-seguimiento {
+  font-family: 'Courier New', monospace;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+/* Footer del pedido */
+.pedido-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.pedido-total {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.total-label {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.total-precio {
+  color: #28a745;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.pedido-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-accion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+
+.btn-accion.cancelar-pedido {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-accion.cancelar-pedido:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.btn-accion.cancelar-pedido:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========== ESTADOS DE CARGA MEJORADOS ========== */
+
+/* Loading principal - EVITA FLICKERING */
+.pedidos-loading {
+  text-align: center;
+  padding: 80px 20px;
+  background: transparent;
+  border: none;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.loading-icon {
+  font-size: 4rem;
+  color: #28a745;
+  margin-bottom: 25px;
+  animation: spin 1.5s linear infinite;
+}
+
+.pedidos-loading p {
+  font-size: 1.2rem;
+  color: #2d5016;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.loading-subtext {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+/* Error state */
+.pedidos-error {
+  text-align: center;
+  padding: 60px 20px;
+  border-radius: 12px;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #dc3545;
+}
+
+.pedidos-error h3 {
+  color: #721c24;
+  margin-bottom: 15px;
+}
+
+.pedidos-error p {
+  color: #721c24;
+  margin-bottom: 25px;
+}
+
+/* Mensaje sin pedidos */
+.pedidos-mensaje {
+  text-align: center;
+  padding: 80px 20px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.pedidos-mensaje .mensaje-icon {
+  font-size: 4rem;
+  color: #6c757d;
+  margin-bottom: 25px;
+  opacity: 0.7;
+}
+
+.pedidos-mensaje h3 {
+  color: #2d5016;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.pedidos-mensaje p {
+  color: #6c757d;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+/* Botones */
+.pedidos-btn-primary {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pedidos-btn-primary:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.pedidos-btn-secondary {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pedidos-btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.error-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Nuevos estilos para mejoras visuales */
+.fecha-entrega {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.numero-seguimiento-container {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+/* Animación de spin mejorada */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Clase para prevenir renderizado prematuro */
+.content-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.content-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mis-pedidos-container {
+    padding: 15px;
+  }
+
+  .pedidos-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .pedidos-resumen {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .resumen-card {
+    padding: 20px;
+  }
+
+  .resumen-number {
+    font-size: 2rem;
+  }
+
+  .pedido-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .pedido-estado {
+    align-self: flex-start;
+  }
+
+  .detalle-fila {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .detalle-item.full-width {
+    grid-column: 1;
+  }
+
+  .detalle-valor {
+    text-align: left;
+  }
+
+  .pedido-footer {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .pedido-acciones {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn-accion {
+    flex: 1;
+    justify-content: center;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  .error-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pedidos-btn-primary,
+  .pedidos-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .pedidos-title {
+    font-size: 1.5rem;
+  }
+
+  .pedido-card {
+    padding: 20px 15px;
+  }
+
+  .resumen-card {
+    padding: 15px 10px;
+  }
+
+  .pedido-acciones {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-accion {
+    width: 100%;
+  }
+
+  .pedidos-loading,
+  .pedidos-error,
+  .pedidos-mensaje {
+    padding: 40px 15px;
+  }
+}
+
+.pedido-card {
+  will-change: transform, opacity;
+}
+
+.pedidos-loading,
+.pedidos-error,
+.pedidos-mensaje {
+  will-change: opacity, transform;
+}
+
+.mis-pedidos-container * {
+  box-sizing: border-box;
+}
