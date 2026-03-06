@@ -3,13 +3,18 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 require("./models/associations_model");
+const path = require('path');
+
 const db = require("./config/db");
 
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/products_routes");
 const adminProductRoutes = require("./routes/productRoutes");
 const reviewRoutes = require("./routes/review_routes");
+const clienteResenaRoutes = require("./routes/cliente_Resena");
 const pqrsRoutes = require("./routes/pqrs_routes");
+
+const perfilRoutes = require("./routes/perfil_routes");
 
 const ofertasRoutes = require("./routes/ofertas_routes"); // ← TU RUTA CORRECTA (codigos, validar, productos)
 const ofertasProductor = require("./routes/ofertasRoutes");
@@ -94,8 +99,12 @@ app.use("/api/ofertas", ofertasRoutes);
 app.use("/api/descuentos", descuentosRoutes);
 app.use('/api/descuentos-alt', descuentoRoutes);
 app.use('/api/product-discounts', productoDescuentoRoutes);
-
+app.use('/api/clienteresenas', clienteResenaRoutes);
 app.use("/api/users", userRoutes);
+// Serve uploaded profile images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use('/api/perfil', perfilRoutes);
 app.use("/api/products", adminProductRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/reviews", reviewRoutes);

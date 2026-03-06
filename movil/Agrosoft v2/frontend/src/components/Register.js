@@ -13,7 +13,6 @@ const images = [
 function Register({ onLogin }) {
   const navigate = useNavigate();
   const [activeImage, setActiveImage] = useState(0);
-  const [showRoles, setShowRoles] = useState(false);
 
   const [formData, setFormData] = useState({
     nombre_usuario: "",
@@ -26,6 +25,7 @@ function Register({ onLogin }) {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
+  const [roles, setRoles] = useState([]);
 
   // Cambio automático de imagen cada 4s
   useEffect(() => {
@@ -33,6 +33,19 @@ function Register({ onLogin }) {
       setActiveImage((prev) => (prev + 1) % images.length);
     }, 4000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Fetch roles on mount
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const res = await api.get('/api/roles/admin');
+        setRoles(res.data);
+      } catch (error) {
+        console.error('Error fetching roles:', error);
+      }
+    };
+    fetchRoles();
   }, []);
 
   const handleChange = (e) => {
@@ -111,23 +124,22 @@ function Register({ onLogin }) {
               </div>
             ))}
 
-            {/* DROPDOWN DE ROL */}
+            {/* SELECT DE ROL */}
             <div className="form-group">
               <label>Elige tu rol</label>
-              <div className="custom-dropdown">
-                <button type="button" onClick={() => setShowRoles(!showRoles)}>
-                  {formData.id_rol ? ["Cliente", "Administrador", "Agricultor"][formData.id_rol - 1] : "Selecciona un rol"}
-                </button>
-                {showRoles && (
-                  <div className="dropdown-menu">
-                    {["Cliente", "Administrador", "Agricultor"].map((r, i) => (
-                      <div key={r} onClick={() => { setFormData({ ...formData, id_rol: i + 1 }); setShowRoles(false); }}>
-                        {r}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <select
+                name="id_rol"
+                value={formData.id_rol}
+                onChange={handleChange}
+                className={errors.id_rol ? "input-error" : ""}
+              >
+                <option value="">Selecciona un rol</option>
+                {roles.filter(role => role.id_rol !== 2).map((role) => (
+                  <option key={role.id_rol} value={role.id_rol}>
+                    {role.nombre_rol}
+                  </option>
+                ))}
+              </select>
               {errors.id_rol && <small>{errors.id_rol}</small>}
             </div>
 

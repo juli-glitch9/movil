@@ -12,7 +12,9 @@
   --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   --nav-bag: rgba(12, 70, 146, 0.575);
 }
-
+.nav{
+  background-color: #0a0a0a;
+}
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -330,7 +332,9 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .navbar {
+  /* avoid globally hiding any <nav> elements used by the rest of the app */
+  /* originally intended to target only blog sidebar navbars */
+  .sidebar .navbar {
     display: none;
   }
 

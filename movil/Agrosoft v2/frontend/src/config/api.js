@@ -1,31 +1,16 @@
-// src/config/api.js
 import axios from "axios";
 
-// Detectar si estamos en Capacitor (Android / iOS)
-const isCapacitor = !!window.Capacitor;
+// Tu IP de AWS - La fábrica de datos
+const AWS_IP = "35.173.161.55"; 
 
-// IP de tu PC para conexión desde móvil
-const PC_IP = "192.168.20.26"; // cambia si tu IP cambia
-
-// URL base según plataforma
-export const API_BASE_URL = (() => {
-  if (isCapacitor) {
-    // Emulador Android → usar 10.0.2.2
-    if (navigator.userAgent.includes("Android")) return "http://10.0.2.2:4000";
-    // Celular real → usar IP de tu PC
-    return `http://${PC_IP}:4000`;
-  } else {
-    // Web → localhost
-    return "http://localhost:4000";
-  }
-})();
+export const API_BASE_URL = `http://${AWS_IP}:4000`;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
 });
 
-// Attach Authorization header automatically if token is present
+// Interceptor para el token (mantén el resto igual)
 api.interceptors.request.use((config) => {
   try {
     let token = localStorage.getItem("token");
@@ -38,12 +23,10 @@ api.interceptors.request.use((config) => {
     }
     if (token) {
       config.headers = config.headers || {};
-      if (!config.headers.Authorization) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+      config.headers.Authorization = `Bearer ${token}`;
     }
   } catch (e) {
-    // ignore parsing errors
+    // ignore
   }
   return config;
 }, (error) => Promise.reject(error));

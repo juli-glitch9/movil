@@ -1,337 +1,313 @@
-import React, { useContext, useState, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom"; // Importar useLocation para determinar el enlace activo
+// src/pages/ConfiguracionCliente.jsx
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "./ConfiguracionCliente.css"; // Asume que este archivo contiene el CSS del dashboard
+import { useNotification } from "../context/NotificationContext";
+import "./ConfiguracionCliente.css";
 
-// 🔥 Feather Icons (react-icons/fi)
+// Iconos
 import {
-    FiUser, FiMapPin, FiCreditCard, FiGift, FiStar,
-    FiShoppingBag, FiClock, FiTruck, FiMessageSquare,
-    FiRotateCcw, FiHeart, FiEye, FiBell, FiFileText,
-    FiHelpCircle, FiLogOut, FiPlusCircle, FiChevronDown, FiChevronRight,
-    FiSettings, FiShield
+  FiUser,
+  FiMapPin,
+  FiCreditCard,
+  FiGift,
+  FiStar,
+  FiShoppingBag,
+  FiClock,
+  FiTruck,
+  FiMessageSquare,
+  FiRotateCcw,
+  FiHeart,
+  FiEye,
+  FiBell,
+  FiFileText,
+  FiHelpCircle,
+  FiLogOut,
+  FiSettings,
+  FiShield,
+  FiChevronRight,
+  FiHome,
+  FiPackage,
+  FiAward
 } from "react-icons/fi";
 
-// 1. Configuración de Menú: Datos de navegación centralizados y escalables
-const sidebarConfig = [
+const ConfiguracionCliente = () => {
+  const { user, logout } = useContext(AuthContext);
+  const { addNotification } = useNotification();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const [stats, setStats] = useState({
+    cupones: 0,
+    puntos: 0,
+    cartera: 0,
+    pedidosRecientes: []
+  });
+  const [loading, setLoading] = useState(false);
+
+  // Cargar estadísticas del usuario
+  useEffect(() => {
+    if (user?.id_usuario) {
+      cargarEstadisticas();
+    }
+  }, [user]);
+
+  const cargarEstadisticas = async () => {
+    try {
+      setLoading(true);
+      // Simulación - reemplazar con tu API real
+      // const response = await api.get(`/api/usuarios/${user.id_usuario}/estadisticas`);
+      
+      // Datos de ejemplo mientras tanto
+      setStats({
+        cupones: user?.cupones || 3,
+        puntos: user?.puntos || 250,
+        cartera: user?.cartera || 50000,
+        pedidosRecientes: []
+      });
+    } catch (error) {
+      console.error("Error cargando estadísticas:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      addNotification("Sesión cerrada correctamente", "success");
+      navigate("/login");
+    } catch (error) {
+      addNotification("Error al cerrar sesión", "error");
+    }
+  };
+
+  const menuItems = [
     {
-        label: "Mi Cuenta",
-        icon: FiSettings,
-        onAdd: () => alert("Añadir dirección!"),
-        items: [
-            { to: "/mi-cuenta/perfil", label: "Mi Perfil", icon: FiUser },
-            { to: "/mi-cuenta/direcciones", label: "Direcciones", icon: FiMapPin },
-            { to: "/mi-cuenta/pago", label: "Métodos de Pago", icon: FiCreditCard },
-            { to: "/mi-cuenta/cupones", label: "Mis Cupones", icon: FiGift },
-            { to: "/mi-cuenta/puntos", label: "Mis Puntos", icon: FiStar },
-            { to: "/mi-cuenta/cartera", label: "Mi Cartera", icon: FiGift },
-            { to: "/mi-cuenta/tarjetas-regalo", label: "Mis Tarjetas de Regalo", icon: FiGift },
-        ]
+      titulo: "Mi Cuenta",
+      icono: FiUser,
+      items: [
+        { to: "/perfil", label: "Mi Perfil", icon: FiUser },
+        { to: "/direcciones", label: "Direcciones", icon: FiMapPin },
+        { to: "/metodos-pago", label: "Métodos de Pago", icon: FiCreditCard }
+      ]
     },
     {
-        label: "Mis Pedidos",
-        icon: FiShoppingBag,
-        items: [
-            { to: "/pedidos/todos", label: "Todos los Pedidos", icon: FiShoppingBag },
-            { to: "/pedidos/impagados", label: "Impagados", icon: FiClock },
-            { to: "/pedidos/proceso", label: "En Proceso", icon: FiClock },
-            { to: "/pedidos/enviados", label: "Enviados", icon: FiTruck },
-            { to: "/pedidos/comentados", label: "Comentados", icon: FiMessageSquare },
-            { to: "/pedidos/devueltos", label: "Devueltos", icon: FiRotateCcw },
-        ]
+      titulo: "Mis Beneficios",
+      icono: FiAward,
+      items: [
+        { to: "/cupones", label: "Mis Cupones", icon: FiGift, valor: stats.cupones },
+        { to: "/puntos", label: "Mis Puntos", icon: FiStar, valor: stats.puntos },
+        { to: "/cartera", label: "Mi Cartera", icon: FiGift, valor: `$${stats.cartera.toLocaleString()}` }
+      ]
     },
     {
-        label: "Mis Intereses",
-        icon: FiHeart,
-        items: [
-            { to: "/intereses/deseos", label: "Lista De Deseos", icon: FiHeart },
-            { to: "/intereses/visto", label: "Visto Recientemente", icon: FiEye },
-            { to: "/intereses/seguir", label: "Seguir", icon: FiUser },
-        ]
+      titulo: "Mis Pedidos",
+      icono: FiPackage,
+      items: [
+        { to: "/pedidos/todos", label: "Todos los Pedidos", icon: FiShoppingBag },
+        { to: "/pedidos/proceso", label: "En Proceso", icon: FiClock },
+        { to: "/pedidos/enviados", label: "Enviados", icon: FiTruck },
+        { to: "/pedidos/completados", label: "Completados", icon: FiRotateCcw }
+      ]
     },
     {
-        label: "Servicio Al Cliente",
-        icon: FiHelpCircle,
-        items: [
-            { to: "/servicio/registros", label: "Registros De Servicio", icon: FiFileText },
-            { to: "/servicio/contacto", label: "Contáctanos", icon: FiHelpCircle },
-        ]
-    },
-    {
-        label: "Política",
-        icon: FiShield,
-        onAdd: () => alert("Abrir Privacidad y Seguridad"),
-        items: [
-            { to: "/politica/envio", label: "Información De Envío", icon: FiFileText },
-            { to: "/politica/devoluciones", label: "Devoluciones", icon: FiRotateCcw },
-            { to: "/politica/privacidad", label: "Política De Privacidad", icon: FiFileText },
-            { to: "/politica/reembolso", label: "Reembolso", icon: FiGift },
-            { to: "/politica/pago", label: "Método de Pago", icon: FiCreditCard },
-            { to: "/politica/wallet", label: "SHEIN Wallet", icon: FiGift },
-            { to: "/politica/puntos", label: "Puntos", icon: FiStar },
-            { to: "/politica/cupones", label: "Cupones", icon: FiGift },
-            { to: "/politica/vip", label: "SHEIN VIP", icon: FiStar },
-            { to: "/politica/reseñas", label: "Reseñas", icon: FiMessageSquare },
-            { to: "/politica/regalo", label: "Tarjeta de Regalo", icon: FiGift },
-            { to: "/politica/rastrear", label: "Rastrear Pedido", icon: FiTruck },
-            { to: "/politica/hacerpedido", label: "Cómo Hacer Un Pedido", icon: FiShoppingBag },
-        ]
-    },
-];
+      titulo: "Soporte",
+      icono: FiHelpCircle,
+      items: [
+        { to: "/pqrs", label: "Mis PQRS", icon: FiFileText },
+        { to: "/notificaciones", label: "Notificaciones", icon: FiBell },
+        { to: "/ayuda", label: "Centro de Ayuda", icon: FiHelpCircle }
+      ]
+    }
+  ];
 
-const Plus = ({ onClick, title = "Añadir" }) => (
-    <button className="plus-btn" onClick={onClick} title={title} aria-label={title}>
-        <FiPlusCircle size={18} />
-    </button>
-);
+  const userImage = user?.foto_perfil || user?.foto || user?.avatarUrl;
+  const iniciales = (user?.nombre || user?.nombre_usuario || "U")
+    .split(" ")
+    .map(n => n[0])
+    .join("")
+    .toUpperCase()
+    .substring(0, 2);
 
-/** Ítem lateral, mejorado para manejar la apertura basada en la ruta activa */
-const SideItem = ({ label, onAdd, children, isDefaultOpen = false, currentPath }) => {
-    const hasContent = React.Children.count(children) > 0;
-    
-    // Determina si alguno de los hijos es la ruta activa
-    const isChildActive = useMemo(() => {
-        if (!hasContent) return false;
-        return React.Children.toArray(children).some(child => 
-            child.props.to && currentPath.startsWith(child.props.to.replace(/\/$/, ""))
-        );
-    }, [children, currentPath, hasContent]);
+  return (
+    <div className="config-container">
+      {/* Header */}
+      <div className="config-header">
+        <button className="config-back-btn" onClick={() => navigate(-1)}>
+          ← Volver
+        </button>
+        <h1>Configuración de Cuenta</h1>
+      </div>
 
-    // Abre por defecto si se indica O si contiene la ruta actual
-    const [open, setOpen] = useState(isDefaultOpen || isChildActive);
-
-    // Si un hijo se activa, asegura que el padre esté abierto (efecto secundario)
-    React.useEffect(() => {
-        if (isChildActive) {
-            setOpen(true);
-        }
-    }, [isChildActive]);
-
-    return (
-        <div className="side-item">
-            <div className="side-head" onClick={() => hasContent && setOpen(!open)}>
-                <span>{label}</span>
-                <span className="side-actions">
-                    {onAdd && (
-                        <Plus
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onAdd();
-                            }}
-                        />
-                    )}
-                    {hasContent &&
-                        (open ? (
-                            <FiChevronDown size={16} className="chev" />
-                        ) : (
-                            <FiChevronRight size={16} className="chev" />
-                        ))}
-                </span>
+      <div className="config-grid">
+        {/* Sidebar - Perfil */}
+        <aside className="config-sidebar">
+          <div className="profile-card">
+            <div className="profile-avatar">
+              {userImage ? (
+                <img src={userImage} alt={user?.nombre} />
+              ) : (
+                <div className="avatar-iniciales">{iniciales}</div>
+              )}
             </div>
-            {hasContent && open && <div className="side-body">{children}</div>}
-        </div>
-    );
+            <h3>{user?.nombre || user?.nombre_usuario}</h3>
+            <p className="profile-email">{user?.email || user?.correo_electronico}</p>
+            
+            <div className="profile-stats">
+              <div className="stat-item">
+                <FiGift />
+                <div>
+                  <span className="stat-value">{stats.cupones}</span>
+                  <span className="stat-label">Cupones</span>
+                </div>
+              </div>
+              <div className="stat-item">
+                <FiStar />
+                <div>
+                  <span className="stat-value">{stats.puntos}</span>
+                  <span className="stat-label">Puntos</span>
+                </div>
+              </div>
+              <div className="stat-item">
+                <FiGift />
+                <div>
+                  <span className="stat-value">${stats.cartera.toLocaleString()}</span>
+                  <span className="stat-label">Cartera</span>
+                </div>
+              </div>
+            </div>
+
+            <button 
+              className="btn-editar-perfil"
+              onClick={() => navigate("/perfil/editar")}
+            >
+              <FiSettings /> Editar Perfil
+            </button>
+          </div>
+
+          {/* Menú de navegación */}
+          <nav className="config-nav">
+            {menuItems.map((seccion, idx) => (
+              <div key={idx} className="nav-seccion">
+                <h4 className="seccion-titulo">
+                  <seccion.icono /> {seccion.titulo}
+                </h4>
+                <ul className="seccion-links">
+                  {seccion.items.map((item, i) => (
+                    <li key={i}>
+                      <Link
+                        to={item.to}
+                        className={`nav-link ${currentPath === item.to ? "active" : ""}`}
+                      >
+                        <item.icon />
+                        <span>{item.label}</span>
+                        {item.valor && <span className="link-badge">{item.valor}</span>}
+                        <FiChevronRight className="link-arrow" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <button className="btn-logout" onClick={handleLogout}>
+              <FiLogOut /> Cerrar Sesión
+            </button>
+          </nav>
+        </aside>
+
+        {/* Contenido principal */}
+        <main className="config-main">
+          <div className="welcome-card">
+            <h2>¡Hola, {user?.nombre || user?.nombre_usuario}!</h2>
+            <p>Bienvenido a tu centro de configuración. Aquí puedes administrar todos los aspectos de tu cuenta.</p>
+          </div>
+
+          <div className="quick-actions">
+            <h3>Acciones Rápidas</h3>
+            <div className="actions-grid">
+              <button className="action-card" onClick={() => navigate("/pedidos/nuevo")}>
+                <FiShoppingBag />
+                <span>Nuevo Pedido</span>
+              </button>
+              <button className="action-card" onClick={() => navigate("/pqrs/nuevo")}>
+                <FiFileText />
+                <span>Crear PQRS</span>
+              </button>
+              <button className="action-card" onClick={() => navigate("/recargar")}>
+                <FiCreditCard />
+                <span>Recargar Cartera</span>
+              </button>
+              <button className="action-card" onClick={() => navigate("/cupones/canjear")}>
+                <FiGift />
+                <span>Canjear Cupón</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Pedidos recientes */}
+          <div className="recent-orders">
+            <div className="section-header">
+              <h3>Pedidos Recientes</h3>
+              <Link to="/pedidos/todos" className="ver-todos">Ver todos →</Link>
+            </div>
+
+            {stats.pedidosRecientes.length > 0 ? (
+              <div className="orders-list">
+                {stats.pedidosRecientes.map((pedido, idx) => (
+                  <div key={idx} className="order-item">
+                    {/* Renderizar pedidos */}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <FiPackage size={48} />
+                <p>No tienes pedidos recientes</p>
+                <button className="btn-primary" onClick={() => navigate("/catalogo")}>
+                  Explorar Productos
+                </button>
+              </div>
+            )}
+          </div>
+        </main>
+
+        {/* Panel lateral derecho */}
+        <aside className="config-rightbar">
+          <div className="info-card">
+            <h4>Soporte Rápido</h4>
+            <p>¿Necesitas ayuda? Estamos aquí para ti</p>
+            <button className="btn-soporte" onClick={() => navigate("/ayuda")}>
+              <FiHelpCircle /> Centro de Ayuda
+            </button>
+            <button className="btn-soporte" onClick={() => navigate("/pqrs/nuevo")}>
+              <FiFileText /> Crear PQRS
+            </button>
+          </div>
+
+          <div className="info-card">
+            <h4>Próximos Vencimientos</h4>
+            <div className="vencimiento-item">
+              <span>Cupón BIENVENIDA10</span>
+              <span className="vencimiento-badge">Expira en 5 días</span>
+            </div>
+            <div className="vencimiento-item">
+              <span>Puntos por vencer</span>
+              <span className="vencimiento-badge">150 puntos</span>
+            </div>
+          </div>
+
+          <div className="info-card">
+            <h4>Recomendado para ti</h4>
+            <p>Productos que podrían interesarte basados en tus compras</p>
+            <Link to="/catalogo" className="btn-outline">Ver Catálogo</Link>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
 };
 
-export default function ConfiguracionCliente() {
-    // Hooks
-    const { user, logout } = useContext(AuthContext); // Asumo que AuthContext provee una función logout
-    const location = useLocation();
-    const currentPath = location.pathname;
-
-    // Handlers
-    const openHelp = () =>
-        window.open(
-            "mailto:Agrosoft@gmail.com?subject=Soporte%20AgroSoft&body=Describe%20tu%20solicitud",
-            "_blank"
-        );
-    
-    // User data display
-    const initials = (user?.nombre || user?.nombre_usuario || user?.email || 'U').charAt(0).toUpperCase();
-    const displayName = user?.nombre || user?.nombre_usuario || user?.email || 'Usuario';
-    const displayEmail = user?.email || user?.correo_electronico || '-';
-
-    return (
-        <div className="container-global">
-            <div className="dashboard">
-                {/* ----------------- SIDEBAR ----------------- */}
-                <aside className="sidebar">
-                    <div className="sidebar-title">Centro Personal</div>
-                    <div className="sidebar-profile">
-                        {user?.foto || user?.avatarUrl ? (
-                            <img className="avatar-img" src={user?.foto || user?.avatarUrl} alt="Avatar" />
-                        ) : (
-                            <div className="avatar">{initials}</div>
-                        )}
-
-                        <div className="profile-info">
-                            <div className="name">{displayName}</div>
-                            <div className="email">{displayEmail}</div>
-                            <div className="profile-stats">
-                                <div className="stat">
-                                    <FiGift className="stat-icon" />
-                                    <div className="stat-body">
-                                        <div className="stat-value">{user?.cupones ?? 0}</div>
-                                        <div className="stat-label">Cupones</div>
-                                    </div>
-                                </div>
-                                <div className="stat">
-                                    <FiStar className="stat-icon" />
-                                    <div className="stat-body">
-                                        <div className="stat-value">{user?.puntos ?? 0}</div>
-                                        <div className="stat-label">Puntos</div>
-                                    </div>
-                                </div>
-                                <div className="stat">
-                                    <FiGift className="stat-icon" />
-                                    <div className="stat-body">
-                                        <div className="stat-value">{user?.cartera ?? 0}</div>
-                                        <div className="stat-label">Cartera</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button 
-                                className="edit-profile" 
-                                onClick={() => window.location.href = '/mi-cuenta/perfil'}
-                                aria-label="Editar perfil y detalles de la cuenta"
-                            >
-                                Editar perfil
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Menús generados a partir de la configuración */}
-                    <div className="side-list">
-                        {sidebarConfig.map((section, index) => (
-                            <SideItem
-                                key={index}
-                                label={section.label}
-                                onAdd={section.onAdd}
-                                currentPath={currentPath}
-                                isDefaultOpen={index === 0} // Abrir la primera sección por defecto
-                            >
-                                <div className="mini-list menu-links">
-                                    {section.items.map(item => (
-                                        <Link 
-                                            key={item.to} 
-                                            to={item.to} 
-                                            className={`menu-link ${currentPath.startsWith(item.to.replace(/\/$/, "")) ? 'active' : ''}`}
-                                        >
-                                            {React.createElement(item.icon)} {item.label}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </SideItem>
-                        ))}
-                    </div>
-                </aside>
-
-                {/* ----------------- MAIN CONTENT ----------------- */}
-                <main className="content">
-                    <div className="content-inner">
-                        <div className="welcome">
-                            <div>
-                                <div className="hello">Hola, {displayName}</div>
-                                <div className="muted">Administra cupones, puntos, cartera y más</div>
-                            </div>
-                            {/* Ajuste: Quitar el quick-links del welcome y ponerlo como un módulo de tarjeta aparte */}
-                        </div>
-
-                        {/* Quick links como un Panel destacado (opcional, si el contenido central lo permite) 
-                            * NOTA: Mantenemos la estructura original de quick-links para consistencia con tu CSS, pero se sugiere moverlo a un componente separado o a la derecha si es posible.
-                        */}
-                        <div className="quick-links">
-                            <div className="quick-item"><FiGift /> Cupones</div>
-                            <div className="quick-item"><FiStar /> Puntos</div>
-                            <div className="quick-item"><FiGift /> Cartera</div>
-                            <div className="quick-item"><FiGift /> Tarjeta de Regalo</div>
-                        </div>
-
-                        <div className="alert" role="alert">¡Tienes cupones a punto de expirar!</div>
-
-                        <section className="orders-block">
-                            <div className="orders-head">
-                                <div className="title">Mis Pedidos</div>
-                                <Link to="/ordenes" className="link">Ver todo</Link>
-                            </div>
-
-                            <div className="order-status">
-                                <div className="status-item"><FiClock size={20} /> Procesando</div>
-                                <div className="status-item"><FiTruck size={20} /> Enviado</div>
-                                <div className="status-item"><FiMessageSquare size={20} /> Comentarios</div>
-                                <div className="status-item"><FiRotateCcw size={20} /> Devolución</div>
-                            </div>
-
-                            <div className="orders-list">
-                                <div className="order-row empty">No hay pedidos para mostrar</div>
-                                {/* Ejemplo de un pedido activo (mantengo la estructura) */}
-                                <div className="order-row">
-                                    <Link to="/pedido/detalles">Detalles De Pedido</Link>
-                                </div>
-                            </div>
-                        </section>
-                    </div> {/* .content-inner */}
-                </main>
-
-                {/* ----------------- RIGHT PANEL ----------------- */}
-                <aside className="rightbar">
-
-                    <div className="panel">
-                        <div className="panel-title">Perfil Rápido</div>
-                        <div className="panel-body">
-                            <div><strong>Nombre:</strong> {user?.nombre || "-"}</div>
-                            <div><strong>Email:</strong> {user?.email || "-"}</div>
-                            <div><strong>ID:</strong> {user?.id_usuario ?? "-"}</div>
-                        </div>
-                    </div>
-
-
-                    <div className="panel">
-                        <div className="panel-title">Servicio Al Cliente</div>
-                        <div className="panel-actions">
-                            <button className="btn-icon"><FiBell /> Mis Notificaciones</button>
-                            <button className="btn-icon"><FiFileText /> Registros de Servicio</button>
-                        </div>
-                    </div>
-
-                    <div className="panel">
-                        <div className="panel-head">
-                            <div className="panel-title">GUARDAR</div>
-                            <Link to="/guardados" className="link small">Más</Link>
-                        </div>
-                        <div className="panel-body muted" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <img src="https://via.placeholder.com/60x80/EEEEEE/808080?text=IMG" alt="Producto guardado" style={{ width: "60px", height: "80px", objectFit: "cover", borderRadius: '6px' }} />
-                            <span>Favoritos próximamente</span>
-                        </div>
-                    </div>
-
-                    <div className="panel">
-                        <div className="panel-title">Siguiente</div>
-                        <div className="panel-body muted">0 Artículo</div>
-                    </div>
-
-                    <div className="panel">
-                        <div className="panel-head">
-                            <div className="panel-title">Visto Recientemente</div>
-                            <Link to="/historial" className="link small">Más</Link>
-                        </div>
-                        <div className="panel-body muted">
-                            Sin historial
-                        </div>
-                    </div>
-
-                    <div className="panel">
-                        <div className="panel-title">Soporte</div>
-                        <div className="panel-actions">
-                            <button className="btn-icon" onClick={openHelp}>
-                                <FiHelpCircle /> Contacto: Agrosoft@gmail.com
-                            </button>
-                            <Link className="btn-icon" to="/pqrs"><FiFileText /> PQRS</Link>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    );
-}
-
+export default ConfiguracionCliente;

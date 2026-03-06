@@ -1,336 +1,569 @@
-
-.custom-navbar-productor {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  min-height: 60px;
-  position: relative;
-  z-index: 999;
-  width: 100%;
+/* Variables de color profesionales */
+:root {
+  --agro-green: #028b20;
+  --agro-orange: #ff6600;
+  --agro-dark: #0f0f0f;
+  --agro-bg: #1a1a1a;
+  --agro-text: #ffffff;
+  --agro-text-muted: #b0b0b0;
+  --agro-border: rgba(255, 255, 255, 0.08);
 }
 
-.navbar-brand {
+.agro-navbar {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--agro-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0.8rem 0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.agro-container {
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+/* Logo mejorado */
+.agro-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
-  color: #028b20;
-  margin: 0;
-  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  min-width: 160px; /* Ancho fijo para el logo */
 }
 
+.agro-brand:hover {
+  transform: scale(1.02);
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.logo-wrapper img {
+  width: 45px;
+  height: 45px;
+  filter: drop-shadow(0 2px 8px rgba(2, 139, 32, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.agro-brand:hover .logo-wrapper img {
+  filter: drop-shadow(0 4px 12px rgba(2, 139, 32, 0.5));
+}
 
 .brand-text {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #028b20;
+  font-weight: 800;
+  color: var(--agro-green);
+  letter-spacing: -0.8px;
+  transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .brand-text .highlight {
-  color: #ff6600e0;
-  border-bottom: 3px solid #ff6600e0;
-  padding-bottom: 2px;
-  transition: color .2s ease, border-color .2s ease, opacity .2s ease;
+  color: var(--agro-orange);
+  font-weight: 900;
 }
 
-/* Cuando el dropdown está abierto, atenuar/ocultar el color naranja del logo */
-.custom-navbar-productor.dropdown-open .brand-text .highlight {
-  color: #ffffff !important;
-  border-bottom-color: transparent !important;
-  opacity: 0.85;
-}
-
-/* Desaturar la imagen del logo para que no destaque detrás del dropdown */
-.custom-navbar-productor.dropdown-open .navbar-brand img {
-  filter: grayscale(100%) brightness(70%);
-}
-
-
-.nav-links .nav-link {
-  position: relative;
-  margin-right: 1.5rem; 
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #ffffffe0 !important;
-  transition: color 0.3s ease;
-}
-
-.nav-links .nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;   
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background-color: #ff6600e0;
-  transition: width 0.3s ease;
-}
-
-.nav-links .nav-link:hover {
-  color: #ff6600e0 !important;
-}
-
-.nav-links .nav-link:hover::after {
-  width: 100%;
-}
-
-
-.nav-links .nav-link.active {
-  color: #ff6600e0 !important;
-}
-
-.nav-links .nav-link.active::after {
-  width: 100%;
-}
-
-
-.cart-link svg {
-  color: #ff6600e0;
-  transition: transform 0.2s ease;
-}
-
-.cart-link svg:hover {
-  transform: scale(1.2);
-}
-
-
-.user-dropdown {
-  position: relative;
-}
-
-.user-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
+/* Nav Links mejorados - CENTRADOS */
+.agro-nav {
+  display: flex;
+  list-style: none;
+  gap: 0.1rem;
+  margin: 0;
   padding: 0;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
 
-.user-avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 2px solid #ff6600e0;
+.agro-item {
+  list-style: none;
+}
+
+.agro-link {
+  color: var(--agro-text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.link-icon {
+  font-size: 0.95rem;
+  opacity: 0.7;
+  transition: opacity 0.25s ease;
+}
+
+.agro-link:hover {
+  background: rgba(255, 102, 0, 0.12);
+  color: var(--agro-orange);
+}
+
+.agro-link:hover .link-icon {
+  opacity: 1;
+}
+
+.agro-link.active {
+  background: rgba(255, 102, 0, 0.15);
+  color: var(--agro-orange);
+  font-weight: 700;
+}
+
+.agro-link.active .link-icon {
+  opacity: 1;
+  color: var(--agro-orange);
+}
+
+.agro-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background: var(--agro-orange);
+  border-radius: 1px;
+}
+
+/* Auth Section - COMPACTA */
+.agro-auth-section {
+  min-width: 160px; /* Mismo ancho que el logo */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.auth-btns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.btn-login {
+  color: var(--agro-text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn-login:hover {
+  color: var(--agro-orange);
+  background: rgba(255, 102, 0, 0.1);
+}
+
+.btn-register {
+  background: linear-gradient(135deg, var(--agro-orange) 0%, #ff8533 100%);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(255, 102, 0, 0.25);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 102, 0, 0.35);
+  color: white;
+  text-decoration: none;
+}
+
+/* Profile Dropdown mejorado */
+.user-profile-dropdown {
+  position: relative;
+}
+
+.profile-trigger {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 102, 0, 0.3);
+  padding: 0.5rem 0.8rem 0.5rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--agro-text);
+  transition: all 0.25s ease;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.profile-trigger:hover {
+  background: rgba(255, 102, 0, 0.12);
+  border-color: rgba(255, 102, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.user-name-desktop {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.avatar-img, .avatar-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
   object-fit: cover;
+  color: var(--agro-orange);
+  border: 1px solid rgba(255, 102, 0, 0.3);
+  transition: border-color 0.25s ease;
 }
 
+.profile-trigger:hover .avatar-img,
+.profile-trigger:hover .avatar-icon {
+  border-color: var(--agro-orange);
+}
 
-.dropdown-menu-custom {
+/* Dropdown menu - MEJORADO PARA WEB */
+.agro-dropdown-menu {
   position: absolute;
   right: 0;
-  top: 45px;
-  background: #f1f1f1;
-  border-radius: 8px;
-  padding: 10px;
-  width: 180px;
-  box-shadow: 0 4px 8px rgba(255, 102, 0, 0.5);
-  /* Elevar z-index para que el dropdown siempre quede por encima de elementos fijos */
-  z-index: 100002;
+  top: calc(100% + 10px);
+  background: #ffffff;
+  width: 260px;
+  border-radius: 12px;
+  padding: 0.8rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.2s ease;
+  z-index: 1001;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Forzar color neutro de iconos dentro del dropdown cuando está abierto */
-.custom-navbar-productor.dropdown-open .dropdown-menu-custom svg,
-.custom-navbar-productor.dropdown-open .dropdown-menu-custom .nav-icon {
-  color: #222 !important;
-  fill: currentColor !important;
-  stroke: none !important;
-  filter: none !important;
+.dropdown-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #eeeeee;
 }
 
-/* Quitar borde naranja del avatar si el dropdown está abierto */
-.custom-navbar-productor.dropdown-open .user-avatar,
-.custom-navbar-productor.dropdown-open .user-avatar-icon {
-  border-color: transparent !important;
-  color: #222 !important;
+.dropdown-info strong { 
+  color: #1a1a1a; 
+  font-weight: 700;
+  font-size: 0.95rem;
 }
 
-.dropdown-username {
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #000;
+.dropdown-info span { 
+  font-size: 0.8rem; 
+  color: #888888;
+  margin-top: 2px;
 }
 
-.dropdown-item {
-  display: block;
-  padding: 5px 10px;
-  color: #000000e0;
+.dropdown-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.7rem 0.8rem;
+  color: #444444;
   text-decoration: none;
-  border-radius: 5px;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.dropdown-item:hover {
-  background-color: #ff6600e0;
-  color: #fff;
-}
-
-.nav-icon {
-  font-size: 1rem;
-  color: inherit;
-  transition: color 0.3s ease;
-}
-
-.nav-links .nav-link:hover .nav-icon {
-  color: #ff6600e0;
-}
-
-.nav-links .nav-link.active .nav-icon {
-  color: #ff6600e0;
-}
-
-/* Icono de usuario cuando no hay imagen */
-.user-avatar-icon {
-  color: #ff6600e0;
-  border: 2px solid #ff6600e0;
-  border-radius: 50%;
-  padding: 2px;
-}
-
-/* Mejoras para el dropdown */
-.dropdown-header {
-  position: relative;
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.dropdown-header .dropdown-close {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+  width: 100%;
+  border: none;
+  background: none;
   cursor: pointer;
-  color: #ff6600;
-  background: transparent;
-  border-radius: 50%;
+  text-align: left;
 }
 
-.dropdown-header .dropdown-close:focus {
-  outline: 2px solid rgba(255,102,0,0.12);
-  box-shadow: 0 0 0 3px rgba(255,102,0,0.12);
+.dropdown-opt:hover { 
+  background: #f5f5f5; 
+  color: var(--agro-green);
+  transform: translateX(2px);
 }
 
-.dropdown-email {
-  color: #666;
-  font-size: 0.8rem;
+.dropdown-opt svg {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
 }
 
-.dropdown-divider {
-  height: 1px;
-  background: #ddd;
-  margin: 8px 0;
+.dropdown-opt:hover svg {
+  opacity: 1;
 }
 
-/* Botón de logout específico */
-.logout-btn {
+.dropdown-opt.logout { 
+  color: #dc3545; 
+  margin-top: 4px;
+  border-top: 1px solid #eeeeee;
+  padding-top: 0.8rem;
+}
+
+.dropdown-opt.logout:hover {
+  background: #fff5f5;
+  color: #c82333;
+}
+
+/* Mobile Toggler */
+.agro-toggler {
+  display: none;
   background: none;
   border: none;
-  width: 100%;
-  text-align: left;
-  color: #dc3545;
+  color: var(--agro-text);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.25s ease;
+  flex-shrink: 0;
 }
 
-.logout-btn:hover {
-  background-color: #fff5f5;
-  color: #dc3545;
+.agro-toggler:hover {
+  color: var(--agro-orange);
 }
 
-/* Enlace de registro con estilo especial */
-.register-link {
-  color: #ff6600e0 !important;
-  font-weight: 600;
-}
+/* =========================================== */
+/* RESPONSIVE - MEDIA QUERIES */
+/* =========================================== */
 
-.register-link:hover {
-  color: #ff4500 !important;
-}
-
-
-/* 🔵 ESTILOS AZULES PARA BOTONES DE AUTENTICACIÓN */
-.auth-buttons .login-link {
-  color: #e67300 !important;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.auth-buttons .login-link:hover {
-  color: #e67300 !important;
-  text-decoration: none;
-}
-
-.auth-buttons .register-link {
-  color: #e67300 !important;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-.auth-buttons .register-link:hover {
-  color: #e67300 !important;
-  text-decoration: none;
-}
-
-.auth-buttons .nav-link {
-  position: relative;
-}
-
-.auth-buttons .nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background-color: #e67300 ;
-  transition: width 0.3s ease;
-}
-
-.auth-buttons .nav-link:hover::after {
-  width: 100%;
-}
-
-/* Iconos azules */
-.auth-buttons .nav-link svg {
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.auth-buttons .nav-link:hover svg {
-  color: white;
-}
-/* Responsive para iconos */
-@media (max-width: 768px) {
-  .nav-icon {
-    margin-right: 8px;
+/* Desktop grande */
+@media (min-width: 1400px) {
+  .agro-container {
+    padding: 0 3rem;
   }
   
-  .auth-buttons .nav-link {
-    padding: 8px 12px;
+  .agro-link {
+    padding: 0.6rem 0.8rem;
+    font-size: 1rem;
   }
 }
 
-/* Centrar dropdown de usuario en pantallas pequeñas */
+/* Tablets landscape */
+@media (max-width: 1200px) {
+  .agro-link {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .brand-text {
+    font-size: 1.3rem;
+  }
+  
+  .agro-brand {
+    min-width: 140px;
+  }
+  
+  .agro-auth-section {
+    min-width: 140px;
+  }
+}
+
+/* Tablets y móviles */
+@media (max-width: 991px) {
+  .agro-container {
+    padding: 0 1.5rem;
+  }
+
+  .agro-toggler { 
+    display: block; 
+  }
+
+  .agro-brand {
+    min-width: auto;
+  }
+
+  .agro-nav {
+    flex-direction: column;
+    gap: 0.2rem;
+    width: 100%;
+  }
+
+  .agro-collapse {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    overflow: hidden;
+    transition: height 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    z-index: 999;
+  }
+
+  .agro-collapse.show {
+    height: auto;
+    max-height: calc(100vh - 70px);
+    padding: 1.5rem 0;
+    overflow-y: auto;
+    border-bottom: 1px solid var(--agro-border);
+  }
+
+  .agro-nav {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .agro-link {
+    font-size: 1rem;
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 0.3rem;
+    width: 100%;
+  }
+
+  .agro-link::after {
+    display: none;
+  }
+
+  .agro-link.active {
+    background: rgba(255, 102, 0, 0.2);
+    border-left: 3px solid var(--agro-orange);
+    padding-left: calc(1.2rem - 3px);
+  }
+
+  .agro-auth-section {
+    width: 100%;
+    min-width: auto;
+    padding: 1rem 1.5rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--agro-border);
+  }
+
+  .auth-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .btn-login,
+  .btn-register {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem;
+  }
+
+  .user-profile-dropdown {
+    width: 100%;
+  }
+
+  .profile-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-name-desktop {
+    max-width: none;
+  }
+
+  .agro-dropdown-menu {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    top: auto;
+    bottom: auto;
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .agro-container {
+    padding: 0 1rem;
+  }
+
+  .logo-wrapper img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text {
+    font-size: 1.2rem;
+  }
+
+  .agro-toggler {
+    font-size: 1.3rem;
+  }
+}
+
+/* Móviles pequeños */
 @media (max-width: 480px) {
-  .user-dropdown {
-    position: relative; /* asegurar contexto */
+  .agro-container {
+    padding: 0 0.8rem;
   }
 
-  .dropdown-menu-custom {
-    /* Posicionar respecto a la ventana para evitar heredar tamaños del contenedor */
-    position: fixed !important;
-    left: 20px !important;
-    right: 20px !important;
-    top: 70px !important;
-    transform: none !important;
-    width: auto !important;
-    max-width: calc(100% - 40px) !important;
-    max-height: calc(100vh - 120px) !important;
-    overflow-y: auto !important;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
-    border-radius: 10px !important;
-    z-index: 100002 !important;
+  .brand-text {
+    font-size: 1rem;
   }
 
-  /* Ajustes para que el botón del avatar no provoque overflow */
-  .user-btn {
-    z-index: 2100;
+  .logo-wrapper img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .agro-toggler {
+    font-size: 1.2rem;
+    padding: 0.3rem;
+  }
+
+  .agro-link {
+    font-size: 0.95rem;
+    padding: 0.8rem 0.8rem;
+  }
+
+  .profile-trigger {
+    padding: 0.4rem 0.6rem 0.4rem 0.8rem;
+  }
+
+  .avatar-img, .avatar-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .agro-dropdown-menu {
+    padding: 0.6rem;
+  }
+
+  .dropdown-opt {
+    padding: 0.6rem;
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
   }
 }

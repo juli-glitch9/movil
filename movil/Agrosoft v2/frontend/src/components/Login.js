@@ -1,11 +1,13 @@
 // src/components/Login.jsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import './login.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from "../context/AuthContext";
 import { api } from "../config/api"; // <- Axios con URL dinámica
 
 function Login({ switchToRegister, onLogin }) {
+  const { login: authLogin } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     correo_electronico: "",
     password: ""
@@ -38,7 +40,7 @@ function Login({ switchToRegister, onLogin }) {
     try {
       console.log('🔐 [LOGIN] Starting login process...');
 
-      // 🔹 Usando Axios con API dinámica
+      // 🔹 Usando Axios con API dinámica (igual que el primer código)
       const { data } = await api.post("/api/users/login", formData);
 
       console.log('🔐 [LOGIN] Response:', data);
@@ -50,21 +52,18 @@ function Login({ switchToRegister, onLogin }) {
         setMessage(data.message);
         setErrors({});
 
-        // Guardar token y datos del usuario
+        console.log('💾 [LOGIN] Saving token and user data...');
+
         localStorage.setItem('token', data.token);
-        const userData = {
-          id_usuario: data.user.id_usuario,
-          id_rol: data.user.id_rol,
-          nombre: data.user.nombre_usuario,
-          email: data.user.correo_electronico,
-          token: data.token 
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
+        console.log(' [LOGIN] Token saved to localStorage');
 
-        // Llamar callback del componente padre
-        if (typeof onLogin === 'function') onLogin(userData);
+        // 🔥 Actualizar AuthContext PRIMERO para que obtenga los datos frescos
+        console.log('🔐 [LOGIN] Actualizando AuthContext...');
+        authLogin(data.token);
 
-        // Redirección según rol: 3 -> productor, 2 -> administrador, otros -> home
+        console.log(` [LOGIN] User role: ${data.user.id_rol}, redirecting...`);
+        
+        // Redirección según rol (igual que el primer código)
         if (data.user.id_rol === 3) {
           navigate('/AdminView', { replace: true });
         } else if (data.user.id_rol === 2) {
@@ -75,9 +74,13 @@ function Login({ switchToRegister, onLogin }) {
       }
 
     } catch (error) {
-      console.error(' [LOGIN] Error:', error);
-      setMessage("Error de conexión. Intenta nuevamente.");
-      setErrors({});
+      if (error.response?.status === 401) {
+        setMessage("Correo o contraseña incorrectos");
+      } else if (error.response) {
+        setMessage(error.response.data?.message || "Error del servidor");
+      } else {
+        setMessage("Error de conexión");
+      }
     } finally {
       setLoading(false);
     }

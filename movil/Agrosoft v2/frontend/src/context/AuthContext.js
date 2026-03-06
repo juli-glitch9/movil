@@ -14,7 +14,15 @@ export const useAuth = () => {
   return context;
 };
 
-// DEBUG_MODE para desarrollo con datos simulados
+// Mapeo de roles
+const ROLE_MAP = {
+  1: "cliente",
+  2: "administrador",
+  3: "productor"
+};
+
+// DEBUG_MODE se ubica fuera del componente para estabilidad y evitar advertencias de dependencias
+// Poner false para que el frontend consuma la API real y muestre datos desde la base de datos
 const DEBUG_MODE = false;
 
 export const AuthProvider = ({ children }) => {
@@ -30,6 +38,7 @@ export const AuthProvider = ({ children }) => {
         id_rol: 1,
         nombre: "Usuario Demo",
         email: "demo@demo.com",
+        role: "cliente"
       };
       setUser(fakeUser);
       setIsAuthenticated(true);
@@ -44,13 +53,13 @@ export const AuthProvider = ({ children }) => {
           .then((res) => {
             const data = res.data;
             if (data?.success && data.user) {
-              setUser(data.user);
+              setUser({ ...data.user, role: ROLE_MAP[data.user.id_rol] || "cliente" });
               setIsAuthenticated(true);
             } else {
               // Fallback: decodificar token si la ruta falla
               try {
                 const decoded = jwtDecode(token);
-                setUser(decoded);
+                setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
                 setIsAuthenticated(true);
               } catch (error) {
                 console.error("Token inválido:", error);
@@ -63,7 +72,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Error al obtener perfil:", err);
             try {
               const decoded = jwtDecode(token);
-              setUser(decoded);
+              setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
               setIsAuthenticated(true);
             } catch (error) {
               setUser(null);
@@ -85,12 +94,12 @@ export const AuthProvider = ({ children }) => {
       });
       const data = res.data;
       if (data?.success && data.user) {
-        setUser(data.user);
+        setUser({ ...data.user, role: ROLE_MAP[data.user.id_rol] || "cliente" });
         setIsAuthenticated(true);
       } else {
         try {
           const decoded = jwtDecode(token);
-          setUser(decoded);
+          setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
           setIsAuthenticated(true);
         } catch {
           setUser(null);
@@ -101,7 +110,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Error al obtener perfil tras login:", err);
       try {
         const decoded = jwtDecode(token);
-        setUser(decoded);
+        setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
         setIsAuthenticated(true);
       } catch {
         setUser(null);

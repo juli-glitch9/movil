@@ -9,12 +9,14 @@ import {
   FaBlog,
   FaTag,
   FaBox,
+  FaCog,
+  FaQuestionCircle,
   FaUser,
   FaUserCircle,
   FaSignOutAlt,
   FaSignInAlt,
   FaUserPlus
-} from "react-icons/fa";
+} from "react-icons/fa";  // added FaCog for configuración icon and FaQuestionCircle for PQRS
 import "./Navbar.css";
 import "./Navbarproductor.css";
 import { api } from "../config/api";
@@ -33,12 +35,32 @@ const Navbar = ({ isAuthenticated, user, onLogout }) => {
     setUserOpen(false);
   };
 
-  // 🔹 cerrar con ESC
+  // 🔹 cerrar con ESC y click fuera
   useEffect(() => {
-    const esc = (e) => e.key === "Escape" && closeAll();
-    window.addEventListener("keydown", esc);
-    return () => window.removeEventListener("keydown", esc);
-  }, []);
+    const handleEsc = (e) => e.key === "Escape" && closeAll();
+    const handleClickOutside = (e) => {
+      const userDropdown = document.querySelector(".user-dropdown");
+      const mobileMenu = document.querySelector(".mobile-menu");
+      
+      // Cerrar dropdown si se hace clic fuera
+      if (userDropdown && !userDropdown.contains(e.target) && userOpen) {
+        setUserOpen(false);
+      }
+      
+      // Cerrar menú móvil si se hace clic fuera (excepto en el dropdown)
+      if (mobileMenu && !mobileMenu.contains(e.target) && menuOpen && !userDropdown?.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    document.addEventListener("mousedown", handleClickOutside);
+    
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [userOpen, menuOpen]);
 
   // 🔹 carrito
   useEffect(() => {
@@ -109,12 +131,23 @@ const Navbar = ({ isAuthenticated, user, onLogout }) => {
             </Link>
           </li>
           {isAuthenticated && isCliente && (
-            <li className="nav-item">
-              <Link className={`nav-link d-flex align-items-center ${location.pathname === "/pedidos" ? "active" : ""}`} to="/pedidos">
-                <FaBox className="nav-icon me-2" />
-                Mis pedidos
-              </Link>
-            </li>
+            <>
+              <li className="nav-item">
+                <Link className={`nav-link d-flex align-items-center ${location.pathname === "/pedidos" ? "active" : ""}`} to="/pedidos">
+                  <FaBox className="nav-icon me-2" />
+                  Mis pedidos
+                </Link>
+              </li>
+              
+              <li className="nav-item">
+                <Link className={`nav-link d-flex align-items-center ${location.pathname === "/mis-pqrs" ? "active" : ""}`} to="/mis-pqrs">
+                  <FaQuestionCircle className="nav-icon me-2" />
+                  Mis PQRS
+                </Link>
+              </li>
+            </>
+            
+          
           )}
         </ul>
 
@@ -162,7 +195,7 @@ const Navbar = ({ isAuthenticated, user, onLogout }) => {
 
                   <Link
                     to="/perfil"
-                    className="dropdown-item d-flex align-items-center"
+                    className={`dropdown-item d-flex align-items-center ${location.pathname === "/perfil" ? "active-item" : ""}`}
                     onClick={closeAll}
                   >
                     <FaUser className="me-2" />
@@ -171,12 +204,22 @@ const Navbar = ({ isAuthenticated, user, onLogout }) => {
 
                   <Link
                     to="/pedidos"
-                    className="dropdown-item d-flex align-items-center"
+                    className={`dropdown-item d-flex align-items-center ${location.pathname === "/pedidos" ? "active-item" : ""}`}
                     onClick={closeAll}
                   >
                     <FaBox className="me-2" />
                     Pedidos
                   </Link>
+
+                  <Link
+                    to="/configuracion"
+                    className={`dropdown-item d-flex align-items-center ${location.pathname === "/configuracion" ? "active-item" : ""}`}
+                    onClick={closeAll}
+                  >
+                    <FaCog className="me-2" />
+                    Configuración
+                  </Link>  {/* switched icon and added active highlight */}
+                  
 
                   <div className="dropdown-divider"></div>
 
@@ -214,7 +257,10 @@ const Navbar = ({ isAuthenticated, user, onLogout }) => {
         <NavMobile to="/blog" text="Blog" close={closeAll} />
         <NavMobile to="/ofertas" text="Ofertas" close={closeAll} />
         {isAuthenticated && isCliente && (
-          <NavMobile to="/pedidos" text="Mis pedidos" close={closeAll} />
+          <>
+            <NavMobile to="/pedidos" text="Mis pedidos" close={closeAll} />
+            <NavMobile to="/mis-pqrs" text="Mis PQRS" close={closeAll} />
+          </>
         )}
         {!isAuthenticated && (
           <>

@@ -1,5 +1,4 @@
 // src/pages/Catalogo.js
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaShoppingCart } from "react-icons/fa";
@@ -9,7 +8,7 @@ import CatalogNav from "../components/CatalogNav";
 import SearchBar from "../components/SearchBar";
 import { useCarrito } from "../context/CarritoContext";
 import { useNotification } from "../context/NotificationContext";
-import { api } from "../config/api"; // <-- Usamos la instancia api
+import { api } from "../config/api"; // ✅ Usar api configurada
 import "../style/Catalogo.css";
 
 const Catalogo = () => {
@@ -27,16 +26,23 @@ const Catalogo = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get("/api/products"); // <-- URL relativa
+        // ✅ Usando api.get en lugar de axios.get con URL hardcodeada
+        const res = await api.get("/api/products");
+        
+        console.log("✅ Respuesta completa:", res);
+        console.log("📦 res.data:", res.data);
+
         // Detectar la estructura de datos
         const dataArray =
           Array.isArray(res.data) ? res.data :
           Array.isArray(res.data.products) ? res.data.products :
           Array.isArray(res.data.data) ? res.data.data :
           Array.isArray(res.data.result) ? res.data.result : [];
+        
         setProducts(dataArray);
+        console.log(`✅ ${dataArray.length} productos cargados`);
       } catch (err) {
-        console.error("Error cargando productos:", err);
+        console.error("❌ Error cargando productos:", err);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -47,6 +53,8 @@ const Catalogo = () => {
   }, []);
 
   const handleAddToCart = async (productId) => {
+    console.log('🛒 Iniciando handleAddToCart para producto:', productId);
+
     if (!isAuthenticated || !user) {
       addNotification('Por favor inicia sesión para agregar productos al carrito', 'warning');
       navigate("/login");
@@ -58,15 +66,33 @@ const Catalogo = () => {
       return;
     }
 
+    console.log('👤 Usuario válido:', user.nombre_usuario);
     setAddingToCart(prev => ({ ...prev, [productId]: true }));
 
     try {
+      console.log('🔄 Llamando a agregarAlCarrito...');
       await agregarAlCarrito(productId, 1);
+
       const product = products.find(p => p.id_producto === productId);
       addNotification(`¡${product?.nombre_producto} agregado al carrito correctamente!`, 'success');
+      console.log('✅ Producto agregado exitosamente');
+
     } catch (error) {
-      console.error("Error agregando al carrito:", error);
-      const errorMessage = error.response?.data?.error || error.message || "Error inesperado al agregar al carrito";
+      console.error("❌ Error en handleAddToCart:", error);
+
+      let errorMessage = "Error inesperado al agregar al carrito";
+
+      if (error.response) {
+        errorMessage = error.response.data?.error || errorMessage;
+        console.error('📊 Detalles del error del servidor:', error.response.data);
+      } else if (error.request) {
+        errorMessage = "Error de conexión. Por favor, verifica tu internet.";
+        console.error('🌐 Error de conexión:', error.request);
+      } else if (error.message) {
+        errorMessage = error.message;
+        console.error('💬 Mensaje de error:', error.message);
+      }
+
       addNotification(errorMessage, 'error');
     } finally {
       setAddingToCart(prev => ({ ...prev, [productId]: false }));
@@ -77,6 +103,7 @@ const Catalogo = () => {
     navigate(`/producto/${productId}`);
   };
 
+  // Filtrar productos basado en la búsqueda
   const filteredProducts = products.filter(product =>
     product.nombre_producto?.toLowerCase().includes(search.toLowerCase()) ||
     product.descripcion_producto?.toLowerCase().includes(search.toLowerCase()) ||
@@ -105,6 +132,7 @@ const Catalogo = () => {
   return (
     <>
       <Slideshow2 />
+
       <div className="catalogo-section-title">
         <h2 className="catalogo-title-animated">Catálogo de productos</h2>
         {isAuthenticated && user?.id_rol === 1 && (
@@ -113,15 +141,23 @@ const Catalogo = () => {
           </p>
         )}
       </div>
+
       <CatalogNav />
       <SearchBar onSearch={setSearch} />
+
       <main className="catalogo-container">
+        {/* Información de resultados */}
         <div className="catalogo-info-bar">
           <span className="catalogo-product-count">
             {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
           </span>
-          {search && <span className="catalogo-search-term">Búsqueda: "{search}"</span>}
+          {search && (
+            <span className="catalogo-search-term">
+              Búsqueda: "{search}"
+            </span>
+          )}
         </div>
+
         <div className="catalogo-products-grid">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
@@ -147,10 +183,16 @@ const Catalogo = () => {
               <FaShoppingCart size={48} className="no-products-icon" />
               <h3>No se encontraron productos</h3>
               <p>
-                {search ? `No hay productos que coincidan con "${search}"` : "No hay productos disponibles en este momento"}
+                {search
+                  ? `No hay productos que coincidan con "${search}"`
+                  : "No hay productos disponibles en este momento"
+                }
               </p>
               {search && (
-                <button className="catalogo-clear-search" onClick={() => setSearch("")}>
+                <button
+                  className="catalogo-clear-search"
+                  onClick={() => setSearch("")}
+                >
                   Limpiar búsqueda
                 </button>
               )}
@@ -158,15 +200,20 @@ const Catalogo = () => {
           )}
         </div>
 
+        {/* Botón para ir al carrito si hay productos */}
         {isAuthenticated && user?.id_rol === 1 && filteredProducts.length > 0 && (
           <div className="catalogo-cart-cta">
-            <button className="catalogo-go-to-cart-btn" onClick={() => navigate("/carrito")}>
+            <button
+              className="catalogo-go-to-cart-btn"
+              onClick={() => navigate("/carrito")}
+            >
               <FaShoppingCart />
               Ver mi carrito
             </button>
           </div>
         )}
 
+        {/* Botón volver */}
         <section className="catalogo-volver-container">
           <button className="catalogo-volver-btn" onClick={() => navigate(-1)}>
             <FaArrowLeft style={{ marginRight: "8px" }} />

@@ -25,6 +25,8 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Credenciales inválidas (Contraseña incorrecta)", status: "error" });
     }
 
+    console.log("🔐 [LOGIN] Usuario autenticado - ID:", user.id_usuario, "Nombre:", user.nombre_usuario); // DEBUG
+
     const token = jwt.sign(
       {
         id_usuario: user.id_usuario,
@@ -34,6 +36,8 @@ exports.login = async (req, res) => {
       JWT_SECRET,
       { expiresIn: "1h" }
     );
+
+    console.log("🔐 [LOGIN] Token generado con ID:", user.id_usuario); // DEBUG
 
     res.json({
       message: "Login exitoso",
@@ -48,7 +52,7 @@ exports.login = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Error en el login:", error);
+    console.error("❌ [LOGIN] Error:", error);
     res.status(500).json({ message: "Error interno del servidor", status: "error" });
   }
 };

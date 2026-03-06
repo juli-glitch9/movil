@@ -1,7 +1,9 @@
+// src/App.js (VERSIÓN DEFINITIVA)
 import React, { useState, useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { CarritoProvider } from './context/CarritoContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { AnimatePresence } from "framer-motion";
 
 import Navbar from "./components/Navbar.js";
@@ -17,40 +19,40 @@ import Ofertas from "./pages/Ofertas.jsx";
 import Carrito from "./pages/Carrito.js";
 import Pedidos from "./pages/Pedidos.js";
 import ConfiguracionCliente from "./pages/ConfiguracionCliente.jsx";
-
+import Perfil from "./pages/Perfil";
+import MisPqrs from "./pages/MisPqrs.jsx";
+import MisResenas from "./pages/MisResenas.jsx";
 import ProductorApp from "./productorApp.jsx";
-
 import AdminApp from "./AdminApp.jsx";
 
 import "./App.css";
 
-const AppRoutes = ({ isAuthenticated, user, handleLogin, handleLogout, Layout, ProtectedRoute, ProducerGuard }) => {
+const AppRoutes = ({ Layout, ProtectedRoute, ProducerGuard }) => {
+  const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Layout><Home /></Layout>} />
-
-        <Route path="/catalogo" element={
-          <ProducerGuard element={<Layout><Catalogo /></Layout>} />
-        } />
-
-        <Route path="/producto/:id" element={
-          <ProducerGuard element={<Layout><ProductPage /></Layout>} />
-        } />
-
-        <Route path="/blog" element={
-          <ProducerGuard element={<Layout><Blog /></Layout>} />
-        } />
-
-        <Route path="/ofertas" element={
-          <ProducerGuard element={<Layout><Ofertas /></Layout>} />
-        } />
+        <Route path="/catalogo" element={<ProducerGuard element={<Layout><Catalogo /></Layout>} />} />
+        <Route path="/producto/:id" element={<ProducerGuard element={<Layout><ProductPage /></Layout>} />} />
+        <Route path="/blog" element={<ProducerGuard element={<Layout><Blog /></Layout>} />} />
+        <Route path="/ofertas" element={<ProducerGuard element={<Layout><Ofertas /></Layout>} />} />
 
         <Route path="/configuracion" element={
           <ProducerGuard element={
             <ProtectedRoute element={<Layout><ConfiguracionCliente /></Layout>} />
+          } />
+        } />
+
+        <Route path="/perfil" element={
+          <ProducerGuard element={
+            <ProtectedRoute element={<Layout><Perfil /></Layout>} />
           } />
         } />
 
@@ -66,16 +68,28 @@ const AppRoutes = ({ isAuthenticated, user, handleLogin, handleLogout, Layout, P
           } />
         } />
 
+        <Route path="/mis-pqrs" element={
+          <ProducerGuard element={
+            <ProtectedRoute element={<Layout><MisPqrs /></Layout>} />
+          } />
+        } />
+
+        <Route path="/mis-resenas" element={
+          <ProducerGuard element={
+            <ProtectedRoute element={<Layout><MisResenas /></Layout>} />
+          } />
+        } />
+
         <Route path="/login" element={
           isAuthenticated && user?.role === "productor"
             ? <Navigate to="/AdminView" replace />
             : (isAuthenticated && user?.role === "administrador"
               ? <Navigate to="/admin" replace />
-              : (isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />))
+              : (isAuthenticated ? <Navigate to="/" /> : <Login onLogin={() => {}} />))
         } />
 
         <Route path="/register" element={
-          isAuthenticated ? <Navigate to="/" /> : <Register onLogin={handleLogin} />
+          isAuthenticated ? <Navigate to="/" /> : <Register onLogin={() => {}} />
         } />
 
         <Route path="/AdminView/*" element={
@@ -105,48 +119,11 @@ const AppRoutes = ({ isAuthenticated, user, handleLogin, handleLogout, Layout, P
 };
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { user, isAuthenticated, isLoading, logout } = useAuth();
 
-  useEffect(() => {
-    const userJson = localStorage.getItem("user");
-    if (userJson) {
-      try {
-        const userData = JSON.parse(userJson);
-        const roleMap = { 1: "cliente", 2: "administrador", 3: "productor" };
-        const finalUserData = {
-          ...userData,
-          role: roleMap[userData.id_rol] || "cliente"
-        };
-
-        setUser(finalUserData);
-        setIsAuthenticated(true);
-      } catch (e) {
-        localStorage.removeItem("user");
-      }
-    }
-    setLoading(false);
-  }, []);
-
-  const handleLogin = useCallback((userData) => {
-    const roleMap = { 1: "cliente", 2: "administrador", 3: "productor" };
-    const finalUserData = {
-      ...userData,
-      role: roleMap[userData.id_rol] || "cliente"
-    };
-
-    localStorage.setItem("user", JSON.stringify(finalUserData));
-    setUser(finalUserData);
-    setIsAuthenticated(true);
-  }, []);
-
-  const handleLogout = useCallback(() => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("carrito");
-    setUser(null);
-    setIsAuthenticated(false);
-  }, []);
+  const handleLogout = () => {
+    logout();
+  };
 
   const Layout = ({ children }) => (
     <>
@@ -171,7 +148,7 @@ function App() {
     return element;
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="app-loading">
         <div className="spinner"></div>
@@ -185,10 +162,6 @@ function App() {
       <CarritoProvider>
         <Router>
           <AppRoutes 
-            isAuthenticated={isAuthenticated} 
-            user={user} 
-            handleLogin={handleLogin} 
-            handleLogout={handleLogout}
             Layout={Layout}
             ProtectedRoute={ProtectedRoute}
             ProducerGuard={ProducerGuard}
