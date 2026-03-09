@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import './login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../context/AuthContext";
-import { api } from "../config/api"; // <- Axios con URL dinámica
+import { api } from "../config/api"; // Axios con URL dinámica
 
 function Login({ switchToRegister, onLogin }) {
   const { login: authLogin } = useContext(AuthContext);
@@ -38,12 +38,12 @@ function Login({ switchToRegister, onLogin }) {
     }
 
     try {
-      console.log('🔐 [LOGIN] Starting login process...');
+      console.log('🔐 [LOGIN] Iniciando proceso de autenticación...');
 
-      // 🔹 Usando Axios con API dinámica (igual que el primer código)
+      // Petición al backend
       const { data } = await api.post("/api/users/login", formData);
 
-      console.log('🔐 [LOGIN] Response:', data);
+      console.log('🔐 [LOGIN] Respuesta del servidor:', data);
 
       if (data.status === "error") {
         setErrors({ ...errors, password: data.message });
@@ -52,40 +52,51 @@ function Login({ switchToRegister, onLogin }) {
         setMessage(data.message);
         setErrors({});
 
-        console.log('💾 [LOGIN] Saving token and user data...');
+        console.log('💾 [LOGIN] Guardando token y datos de usuario...');
 
+        // --- CORRECCIÓN CRÍTICA AQUÍ ---
+        // 1. Guardamos el token para las peticiones API
         localStorage.setItem('token', data.token);
-        console.log(' [LOGIN] Token saved to localStorage');
+        
+        // 2. Guardamos el objeto usuario completo (contiene id_usuario, nombre, rol, etc.)
+        // Esto es lo que AdminView.jsx busca para filtrar Pedidos y Finanzas
+        localStorage.setItem('user', JSON.stringify(data.user)); 
+        
+        console.log('✅ [LOGIN] Datos guardados en localStorage correctamente');
 
-        // 🔥 Actualizar AuthContext PRIMERO para que obtenga los datos frescos
-        console.log('🔐 [LOGIN] Actualizando AuthContext...');
+        // 3. Actualizamos el contexto global de la App
         authLogin(data.token);
 
-        console.log(` [LOGIN] User role: ${data.user.id_rol}, redirecting...`);
+        console.log(`🚀 [LOGIN] Rol detectado: ${data.user.id_rol}, redirigiendo...`);
         
-        // Redirección según rol (igual que el primer código)
+        // Redirección basada en el rol del usuario
         if (data.user.id_rol === 3) {
+          // Vista del Productor/Admin Agrosoft
           navigate('/AdminView', { replace: true });
         } else if (data.user.id_rol === 2) {
+          // Vista de Administrador de Sistema
           navigate('/admin', { replace: true });
         } else {
+          // Vista de Cliente/Público
           navigate('/', { replace: true });
         }
       }
 
     } catch (error) {
+      console.error("❌ [LOGIN] Error:", error);
       if (error.response?.status === 401) {
         setMessage("Correo o contraseña incorrectos");
       } else if (error.response) {
         setMessage(error.response.data?.message || "Error del servidor");
       } else {
-        setMessage("Error de conexión");
+        setMessage("Error de conexión con el servidor");
       }
     } finally {
       setLoading(false);
     }
   };
 
+  // Animaciones de Framer Motion
   const pageVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.5 } },
@@ -108,7 +119,7 @@ function Login({ switchToRegister, onLogin }) {
     >
       <img
         src="/img/1.png"
-        alt="Logo"
+        alt="Logo Agrosoft"
         style={{
           position: "absolute",
           top: "30px",
@@ -145,28 +156,41 @@ function Login({ switchToRegister, onLogin }) {
           </motion.h3>
 
           <form className="login-form" onSubmit={handleSubmit}>
-            {["correo_electronico", "password"].map((field, index) => (
-              <motion.div
-                key={field}
-                className="login-field"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 * index }}
-              >
-                <label>
-                  {field === "correo_electronico" ? "Correo electrónico" : "Contraseña"}
-                </label>
-                <input
-                  type={field === "password" ? "password" : "text"}
-                  name={field}
-                  value={formData[field]}
-                  onChange={handleChange}
-                  className={errors[field] ? "input-error" : ""}
-                  placeholder={errors[field] ? errors[field] : field === "correo_electronico" ? "ejemplo@correo.com" : "********"}
-                  disabled={loading}
-                />
-              </motion.div>
-            ))}
+            <motion.div
+              className="login-field"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <label>Correo electrónico</label>
+              <input
+                type="text"
+                name="correo_electronico"
+                value={formData.correo_electronico}
+                onChange={handleChange}
+                className={errors.correo_electronico ? "input-error" : ""}
+                placeholder={errors.correo_electronico || "ejemplo@correo.com"}
+                disabled={loading}
+              />
+            </motion.div>
+
+            <motion.div
+              className="login-field"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <label>Contraseña</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={errors.password ? "input-error" : ""}
+                placeholder={errors.password || "********"}
+                disabled={loading}
+              />
+            </motion.div>
 
             <motion.button
               type="submit"
@@ -180,7 +204,7 @@ function Login({ switchToRegister, onLogin }) {
           </form>
 
           {message && (
-            <div className={`login-message ${message.includes('Error') ? 'error' : 'success'}`}>
+            <div className={`login-message ${message.toLowerCase().includes('error') || message.toLowerCase().includes('incorrecto') ? 'error' : 'success'}`}>
               {message}
             </div>
           )}
