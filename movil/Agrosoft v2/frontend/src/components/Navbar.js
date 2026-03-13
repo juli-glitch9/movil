@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaBars, FaTimes, FaShoppingCart, FaHome, FaShoppingBag,
   FaBlog, FaTag, FaBox, FaCog, FaQuestionCircle, FaUser,
-  FaUserCircle, FaSignOutAlt, FaSignInAlt, FaUserPlus
+  FaUserCircle, FaSignOutAlt, FaSignInAlt, FaUserPlus,FaComment
 } from "react-icons/fa";
 import "./Navbar.css";
 import { api } from "../config/api";
@@ -75,6 +75,11 @@ const Navbar = ({ isAuthenticated, user, onLogout }) => {
           <NavItem to="/catalogo" icon={<FaShoppingBag />} text="Catálogo" active={location.pathname === "/catalogo"} />
           <NavItem to="/blog" icon={<FaBlog />} text="Blog" active={location.pathname === "/blog"} />
           <NavItem to="/ofertas" icon={<FaTag />} text="Ofertas" active={location.pathname === "/ofertas"} />
+          <NavItem to="/mis-pqrs" icon={<FaQuestionCircle />} text="Mis PQRS" active={location.pathname === "/mis-pqrs"} />
+          <NavItem to="/mis-resenas" icon={<FaComment />} text="Mis Reseñas" active={location.pathname === "/mis-resenas"} />
+
+
+       
         </ul>
 
         {/* CONTENEDOR DERECHO */}

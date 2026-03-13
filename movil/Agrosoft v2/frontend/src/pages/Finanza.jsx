@@ -70,7 +70,23 @@ export default function Finanza() {
     const [selectedReport, setSelectedReport] = useState(null);
     const [showReports, setShowReports] = useState(false);
 
+    // Estados para responsive charts
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [selectedChart, setSelectedChart] = useState(null);
+
+    // Estado para contenedores móviles
+    const [selectedCard, setSelectedCard] = useState(null);
+
     const ID_USUARIO_ACTUAL = getLoggedUserId();
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -290,91 +306,243 @@ export default function Finanza() {
                 Reportes Visuales (Productor ID: {ID_USUARIO_ACTUAL})
             </h1>
 
-            <div id="contenedorReportes">
-                <div className="card">
-                    <h4 className="text-center">Ventas por Mes</h4>
-                    <div className="chart-wrapper">
-                        <Line
-                            data={ventasChartConfig}
-                            options={{ responsive: true, maintainAspectRatio: false }}
-                        />
+            {isMobile ? (
+                <div className="mobile-charts-container">
+                    <div className="chart-buttons">
+                        <button 
+                            className="chart-button"
+                            onClick={() => setSelectedChart(selectedChart === 'ventas' ? null : 'ventas')}
+                        >
+                            📈 Ver Gráfica de Ventas por Mes
+                        </button>
+                        <button 
+                            className="chart-button"
+                            onClick={() => setSelectedChart(selectedChart === 'productos' ? null : 'productos')}
+                        >
+                            🛒 Ver Gráfica de Productos Más Vendidos
+                        </button>
+                        <button 
+                            className="chart-button"
+                            onClick={() => setSelectedChart(selectedChart === 'ordenes' ? null : 'ordenes')}
+                        >
+                            📦 Ver Gráfica de Órdenes Activas vs Completadas
+                        </button>
                     </div>
-                </div>
 
-                <div className="card">
-                    <h4 className="text-center">Productos Más Vendidos</h4>
-                    <div className="chart-wrapper">
-                        <Bar
-                            data={productosChartConfig}
-                            options={{ responsive: true, maintainAspectRatio: false }}
-                        />
-                    </div>
-                </div>
+                    {selectedChart && (
+                        <div className="mobile-chart-display">
+                            <div className="card">
+                                {selectedChart === 'ventas' && (
+                                    <>
+                                        <h4 className="text-center">Ventas por Mes</h4>
+                                        <div className="chart-wrapper">
+                                            <Line
+                                                data={ventasChartConfig}
+                                                options={{ responsive: true, maintainAspectRatio: false }}
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                                {selectedChart === 'productos' && (
+                                    <>
+                                        <h4 className="text-center">Productos Más Vendidos</h4>
+                                        <div className="chart-wrapper">
+                                            <Bar
+                                                data={productosChartConfig}
+                                                options={{ responsive: true, maintainAspectRatio: false }}
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                                {selectedChart === 'ordenes' && (
+                                    <>
+                                        <h4 className="text-center">Órdenes Activas vs Completadas</h4>
+                                        <div className="chart-wrapper">
+                                            <Doughnut
+                                                data={ordenesChartConfig}
+                                                options={{ responsive: true, maintainAspectRatio: false }}
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
-                <div className="card">
-                    <h4 className="text-center">Órdenes Activas vs Completadas</h4>
-                    <div className="chart-wrapper">
-                        <Doughnut
-                            data={ordenesChartConfig}
-                            options={{ responsive: true, maintainAspectRatio: false }}
-                        />
+                    <div className="finanza-cards-mobile">
+                        {!selectedCard ? (
+                            // Mostrar títulos en fila de 3 columnas
+                            <>
+                                <div className="card-title ingresos-title" onClick={() => setSelectedCard('ingresos')}>
+                                    <h4 className="text-center">Ingresos</h4>
+                                </div>
+                                <div className="card-title costos-title" onClick={() => setSelectedCard('costos')}>
+                                    <h4 className="text-center">Costos</h4>
+                                </div>
+                                <div className="card-title ganancia-title" onClick={() => setSelectedCard('ganancia')}>
+                                    <h4 className="text-center">Ganancia</h4>
+                                </div>
+                            </>
+                        ) : (
+                            // Mostrar el contenedor seleccionado expandido
+                            <>
+                                {selectedCard === 'ingresos' && (
+                                    <div className="card ingresos-chart expanded">
+                                        <div className="card-header">
+                                            <h4 className="text-center">Ingresos</h4>
+                                            <button className="close-btn" onClick={() => setSelectedCard(null)}>✕</button>
+                                        </div>
+                                        <div className="financial-details">
+                                            <div className="detail-row">
+                                                <span>Completados:</span>
+                                                <p className="cifra-small">{formatoCOP(finanzas.ingresos.completados)}</p>
+                                            </div>
+                                            <div className="detail-row">
+                                                <span>Pendientes:</span>
+                                                <p className="cifra-small pendiente">{formatoCOP(finanzas.ingresos.pendientes)}</p>
+                                            </div>
+                                            <div className="detail-row total">
+                                                <span>Total:</span>
+                                                <p className="cifra-small">{formatoCOP(finanzas.ingresos.total)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                {selectedCard === 'costos' && (
+                                    <div className="card costos-chart expanded">
+                                        <div className="card-header">
+                                            <h4 className="text-center">Costos</h4>
+                                            <button className="close-btn" onClick={() => setSelectedCard(null)}>✕</button>
+                                        </div>
+                                        <div className="financial-details">
+                                            <div className="detail-row">
+                                                <span>Ejecutados:</span>
+                                                <p className="cifra-small">{formatoCOP(finanzas.costos.completados)}</p>
+                                            </div>
+                                            <div className="detail-row">
+                                                <span>Pendientes:</span>
+                                                <p className="cifra-small pendiente">{formatoCOP(finanzas.costos.pendientes)}</p>
+                                            </div>
+                                            <div className="detail-row total">
+                                                <span>Total:</span>
+                                                <p className="cifra-small">{formatoCOP(finanzas.costos.total)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                {selectedCard === 'ganancia' && (
+                                    <div className="card ganancia-chart expanded">
+                                        <div className="card-header">
+                                            <h4 className="text-center">Ganancia</h4>
+                                            <button className="close-btn" onClick={() => setSelectedCard(null)}>✕</button>
+                                        </div>
+                                        <div className="financial-details">
+                                            <div className="detail-row">
+                                                <span>Actual:</span>
+                                                <p className="cifra-small">{formatoCOP(finanzas.ganancia.actual)}</p>
+                                            </div>
+                                            <div className="detail-row">
+                                                <span>Potencial:</span>
+                                                <p className="cifra-small pendiente">{formatoCOP(finanzas.ganancia.potencial)}</p>
+                                            </div>
+                                            <div className="detail-row total">
+                                                <span>Total:</span>
+                                                <p className="cifra-small">{formatoCOP(finanzas.ganancia.total)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </div>
                 </div>
+            ) : (
+                <div id="contenedorReportes">
+                    <div className="card">
+                        <h4 className="text-center">Ventas por Mes</h4>
+                        <div className="chart-wrapper">
+                            <Line
+                                data={ventasChartConfig}
+                                options={{ responsive: true, maintainAspectRatio: false }}
+                            />
+                        </div>
+                    </div>
 
-                <div className="card ingresos-chart">
-                    <h4 className="text-center">Ingresos</h4>
-                    <div className="financial-details">
-                        <div className="detail-row">
-                            <span>Completados:</span>
-                            <p className="cifra-small">{formatoCOP(finanzas.ingresos.completados)}</p>
-                        </div>
-                        <div className="detail-row">
-                            <span>Pendientes:</span>
-                            <p className="cifra-small pendiente">{formatoCOP(finanzas.ingresos.pendientes)}</p>
-                        </div>
-                        <div className="detail-row total">
-                            <span>Total:</span>
-                            <p className="cifra-small">{formatoCOP(finanzas.ingresos.total)}</p>
+                    <div className="card">
+                        <h4 className="text-center">Productos Más Vendidos</h4>
+                        <div className="chart-wrapper">
+                            <Bar
+                                data={productosChartConfig}
+                                options={{ responsive: true, maintainAspectRatio: false }}
+                            />
                         </div>
                     </div>
-                </div>
 
-                <div className="card costos-chart">
-                    <h4 className="text-center">Costos</h4>
-                    <div className="financial-details">
-                        <div className="detail-row">
-                            <span>Ejecutados:</span>
-                            <p className="cifra-small">{formatoCOP(finanzas.costos.completados)}</p>
-                        </div>
-                        <div className="detail-row">
-                            <span>Pendientes:</span>
-                            <p className="cifra-small pendiente">{formatoCOP(finanzas.costos.pendientes)}</p>
-                        </div>
-                        <div className="detail-row total">
-                            <span>Total:</span>
-                            <p className="cifra-small">{formatoCOP(finanzas.costos.total)}</p>
+                    <div className="card">
+                        <h4 className="text-center">Órdenes Activas vs Completadas</h4>
+                        <div className="chart-wrapper">
+                            <Doughnut
+                                data={ordenesChartConfig}
+                                options={{ responsive: true, maintainAspectRatio: false }}
+                            />
                         </div>
                     </div>
-                </div>
 
-                <div className="card ganancia-chart">
-                    <h4 className="text-center">Ganancia</h4>
-                    <div className="financial-details">
-                        <div className="detail-row">
-                            <span>Actual:</span>
-                            <p className="cifra-small">{formatoCOP(finanzas.ganancia.actual)}</p>
+                    <div className="card ingresos-chart">
+                        <h4 className="text-center">Ingresos</h4>
+                        <div className="financial-details">
+                            <div className="detail-row">
+                                <span>Completados:</span>
+                                <p className="cifra-small">{formatoCOP(finanzas.ingresos.completados)}</p>
+                            </div>
+                            <div className="detail-row">
+                                <span>Pendientes:</span>
+                                <p className="cifra-small pendiente">{formatoCOP(finanzas.ingresos.pendientes)}</p>
+                            </div>
+                            <div className="detail-row total">
+                                <span>Total:</span>
+                                <p className="cifra-small">{formatoCOP(finanzas.ingresos.total)}</p>
+                            </div>
                         </div>
-                        <div className="detail-row">
-                            <span>Potencial:</span>
-                            <p className="cifra-small pendiente">{formatoCOP(finanzas.ganancia.potencial)}</p>
+                    </div>
+
+                    <div className="card costos-chart">
+                        <h4 className="text-center">Costos</h4>
+                        <div className="financial-details">
+                            <div className="detail-row">
+                                <span>Ejecutados:</span>
+                                <p className="cifra-small">{formatoCOP(finanzas.costos.completados)}</p>
+                            </div>
+                            <div className="detail-row">
+                                <span>Pendientes:</span>
+                                <p className="cifra-small pendiente">{formatoCOP(finanzas.costos.pendientes)}</p>
+                            </div>
+                            <div className="detail-row total">
+                                <span>Total:</span>
+                                <p className="cifra-small">{formatoCOP(finanzas.costos.total)}</p>
+                            </div>
                         </div>
-                        <div className="detail-row total">
-                            <span>Total:</span>
-                            <p className="cifra-small">{formatoCOP(finanzas.ganancia.total)}</p>
+                    </div>
+
+                    <div className="card ganancia-chart">
+                        <h4 className="text-center">Ganancia</h4>
+                        <div className="financial-details">
+                            <div className="detail-row">
+                                <span>Actual:</span>
+                                <p className="cifra-small">{formatoCOP(finanzas.ganancia.actual)}</p>
+                            </div>
+                            <div className="detail-row">
+                                <span>Potencial:</span>
+                                <p className="cifra-small pendiente">{formatoCOP(finanzas.ganancia.potencial)}</p>
+                            </div>
+                            <div className="detail-row total">
+                                <span>Total:</span>
+                                <p className="cifra-small">{formatoCOP(finanzas.ganancia.total)}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             {/* Sección de Reportes Detallados */}
             {showReports && (

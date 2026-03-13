@@ -202,6 +202,7 @@
     margin-bottom: 10px;
     font-size: 1.1rem;
     font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 
@@ -249,21 +250,29 @@
     flex-direction: column;
     justify-content: flex-start;
     padding: 14px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#contenedorReportes .card.ingresos-chart:hover,
+#contenedorReportes .card.costos-chart:hover,
+#contenedorReportes .card.ganancia-chart:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 #contenedorReportes .card.ingresos-chart {
-    background: linear-gradient(90deg, rgba(16,185,129,0.06), rgba(16,185,129,0.02));
-    border: 1px solid rgba(16,185,129,0.08);
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
+    border: 2px solid rgba(16,185,129,0.2);
 }
 
 #contenedorReportes .card.costos-chart {
-    background: linear-gradient(90deg, rgba(239,68,68,0.04), rgba(239,68,68,0.01));
-    border: 1px solid rgba(239,68,68,0.06);
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+    border: 2px solid rgba(239,68,68,0.2);
 }
 
 #contenedorReportes .card.ganancia-chart {
-    background: linear-gradient(90deg, rgba(245,158,11,0.04), rgba(245,158,11,0.01));
-    border: 1px solid rgba(245,158,11,0.06);
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05));
+    border: 2px solid rgba(245,158,11,0.2);
 }
 
 #contenedorReportes .card .financial-details {
@@ -350,4 +359,152 @@
     .card {
         min-height: 0;
     }
+}
+
+/* Estilos para botones de gráficas en móvil */
+.mobile-charts-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.chart-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chart-button {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: var(--border-radius-card);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(69, 184, 16, 0.3);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(69, 184, 16, 0.4);
+    background: linear-gradient(135deg, #3a9e0f, #059bb8);
+}
+
+.chart-button:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.mobile-chart-display {
+    margin-top: var(--spacing-md);
+}
+
+.finanza-cards-mobile {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.finanza-cards-mobile .card-title {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--surface-2));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+}
+
+.finanza-cards-mobile .card-title:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.finanza-cards-mobile .card-title.ingresos-title {
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
+    border: 2px solid rgba(16,185,129,0.2);
+}
+
+.finanza-cards-mobile .card-title.costos-title {
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+    border: 2px solid rgba(239,68,68,0.2);
+}
+
+.finanza-cards-mobile .card-title.ganancia-title {
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05));
+    border: 2px solid rgba(245,158,11,0.2);
+}
+
+.finanza-cards-mobile .card.expanded {
+    grid-column: 1 / -1; /* Ocupa toda la fila */
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--surface-2));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.finanza-cards-mobile .card.expanded:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.finanza-cards-mobile .card.expanded.ingresos-chart {
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
+    border: 2px solid rgba(16,185,129,0.2);
+}
+
+.finanza-cards-mobile .card.expanded.costos-chart {
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+    border: 2px solid rgba(239,68,68,0.2);
+}
+
+.finanza-cards-mobile .card.expanded.ganancia-chart {
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05));
+    border: 2px solid rgba(245,158,11,0.2);
+}
+
+.finanza-cards-mobile .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.finanza-cards-mobile .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 4px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.finanza-cards-mobile .close-btn:hover {
+    background: rgba(0,0,0,0.1);
+    color: #0f172a;
+}
+
+.finanza-cards-mobile .card-title h4 {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
 }

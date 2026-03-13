@@ -51,3 +51,7 @@
 .catalog-nav-item.active::after {
   width: 100%;
 }
+
+.catalog-nav-item.active::after {
+  width: 100%;
+}

@@ -14,6 +14,7 @@ import "../style/Catalogo.css";
 const Catalogo = () => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [loading, setLoading] = useState(true);
   const [addingToCart, setAddingToCart] = useState({});
   const navigate = useNavigate();
@@ -103,12 +104,23 @@ const Catalogo = () => {
     navigate(`/producto/${productId}`);
   };
 
-  // Filtrar productos basado en la búsqueda
-  const filteredProducts = products.filter(product =>
-    product.nombre_producto?.toLowerCase().includes(search.toLowerCase()) ||
-    product.descripcion_producto?.toLowerCase().includes(search.toLowerCase()) ||
-    product.nombre_categoria?.toLowerCase().includes(search.toLowerCase())
-  );
+  // Filtrar productos basado en la búsqueda y categoría
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.nombre_producto?.toLowerCase().includes(search.toLowerCase()) ||
+      product.descripcion_producto?.toLowerCase().includes(search.toLowerCase()) ||
+      product.nombre_categoria?.toLowerCase().includes(search.toLowerCase());
+    
+    let matchesCategory = selectedCategory === "Todos";
+    if (!matchesCategory) {
+      if (selectedCategory === "Pollo") {
+        matchesCategory = product.subcategoria === "Carne de pollo";
+      } else {
+        matchesCategory = product.nombre_categoria === selectedCategory;
+      }
+    }
+    
+    return matchesSearch && matchesCategory;
+  });
 
   if (loading) {
     return (
@@ -142,7 +154,7 @@ const Catalogo = () => {
         )}
       </div>
 
-      <CatalogNav />
+      <CatalogNav selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
       <SearchBar onSearch={setSearch} />
 
       <main className="catalogo-container">
@@ -151,6 +163,11 @@ const Catalogo = () => {
           <span className="catalogo-product-count">
             {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
           </span>
+          {selectedCategory !== "Todos" && (
+            <span className="catalogo-category-filter">
+              Categoría: {selectedCategory}
+            </span>
+          )}
           {search && (
             <span className="catalogo-search-term">
               Búsqueda: "{search}"

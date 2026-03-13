@@ -165,6 +165,11 @@
   font-style: italic;
 }
 
+.catalogo-category-filter {
+  color: #ff6600;
+  font-weight: 500;
+}
+
 .catalogo-no-products {
   text-align: center;
   padding: 60px 20px;

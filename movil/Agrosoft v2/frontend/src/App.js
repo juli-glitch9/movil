@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar.js";
 import Footer from "./components/Footer.js";
 import Login from "./components/Login.js";
 import Register from "./components/Register.js";
+import ForgotPassword from "./components/ForgotPassword";
 
 import Catalogo from "./pages/Catalogo.js";
 import Home from "./pages/Home.js";
@@ -78,6 +79,10 @@ const AppRoutes = ({ Layout, ProtectedRoute, ProducerGuard }) => {
           <ProducerGuard element={
             <ProtectedRoute element={<Layout><MisResenas /></Layout>} />
           } />
+        } />
+
+        <Route path="/forgot-password" element={
+          isAuthenticated ? <Navigate to="/" /> : <ForgotPassword />
         } />
 
         <Route path="/login" element={

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController"); 
+const passwordResetController = require("../controllers/passwordResetController");
 const { authenticateToken, isAdmin } = require("../middleware/authMiddleware");
 const User = require("../models/user_model");
 
@@ -74,6 +75,85 @@ router.post("/register", userController.register);
  *         description: Credenciales inválidas
  */
 router.post("/login", userController.login);
+
+/**
+ * @swagger
+ * /api/users/password-reset/request:
+ *   post:
+ *     summary: Solicitar código de verificación para recuperar contraseña
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - correo_electronico
+ *               - metodo
+ *             properties:
+ *               correo_electronico:
+ *                 type: string
+ *               metodo:
+ *                 type: string
+ *                 enum: [email, whatsapp]
+ *     responses:
+ *       200:
+ *         description: Código enviado (si el correo existe)
+ */
+router.post("/password-reset/request", passwordResetController.requestReset);
+
+/**
+ * @swagger
+ * /api/users/password-reset/confirm:
+ *   post:
+ *     summary: Confirmar código y establecer nueva contraseña
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - correo_electronico
+ *               - code
+ *               - nueva_contrasena
+ *             properties:
+ *               correo_electronico:
+ *                 type: string
+ *               code:
+ *                 type: string
+ *               nueva_contrasena:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Contraseña actualizada correctamente
+ */
+router.post("/password-reset/confirm", passwordResetController.confirmReset);
+
+/**
+ * @swagger
+ * /api/users/check-email:
+ *   post:
+ *     summary: Verificar si un email existe (para recuperación de contraseña)
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - correo_electronico
+ *             properties:
+ *               correo_electronico:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Retorna si el email existe o no
+ */
+router.post("/check-email", passwordResetController.checkEmail);
 
 /**
  * @swagger

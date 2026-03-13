@@ -210,6 +210,9 @@ function Login({ switchToRegister, onLogin }) {
           )}
 
           <div className="login-footer">
+            <Link to="/forgot-password" className="btn-link-login">
+              ¿Olvidaste tu contraseña?
+            </Link>
             <Link to="/register" className="btn-link-login">
               ¿No tienes cuenta? Regístrate aquí
             </Link>

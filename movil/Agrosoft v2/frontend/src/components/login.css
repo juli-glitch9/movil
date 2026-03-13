@@ -80,6 +80,17 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
+.btn-secondary {
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #ddd;
+  margin-top: 10px;
+}
+
+.btn-secondary:hover {
+  background-color: #f8f8f8;
+}
+
 .login-footer {
   text-align: center;
   margin-top: 15px;
