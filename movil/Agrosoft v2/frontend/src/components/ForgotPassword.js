@@ -21,13 +21,6 @@ function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Configuración de EmailJS (TUS CREDENCIALES REALES)
-  const EMAILJS_CONFIG = {
-    SERVICE_ID: "service_nx3666n",     // ✅ Tu Service ID
-    TEMPLATE_ID: "template_byse3dh",    // ✅ Tu Template ID (NO el de prueba)
-    PUBLIC_KEY: "K1xk84VHUNS_jSpVv"     // ✅ Tu Public Key
-  };
-
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
@@ -54,40 +47,32 @@ function ForgotPassword() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Función para generar código de 6 dígitos
-  const generateCode = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  };
-
   // Función para enviar email con EmailJS
- // Función para enviar email con EmailJS
+  const sendEmailWithCode = async (email, code) => {
+    try {
+      const templateParams = {
+        email: email,
+        to_name: email.split('@')[0],
+        verification_code: code,
+        reply_to: "julitiquea17@gmail.com"
+      };
 
-// Función para enviar email con EmailJS - VERSIÓN CORREGIDA
-const sendEmailWithCode = async (email, code) => {
-  try {
-    const templateParams = {
-      email: email,                    // ← Variable correcta según tu template
-      to_name: email.split('@')[0],     // Nombre del destinatario
-      verification_code: code,          // Código de verificación
-      reply_to: "julitiquea17@gmail.com" // Email para respuestas
-    };
+      console.log("📧 Enviando email a:", email);
+      console.log("📧 Con código:", code);
+      
+      const response = await emailjs.send(
+        "service_nx3666n",
+        "template_byse3dh", 
+        templateParams
+      );
 
-    console.log("📧 Enviando email a:", email);
-    console.log("📧 Con código:", code);
-    
-    const response = await emailjs.send(
-      "service_nx3666n",
-      "template_byse3dh", 
-      templateParams
-    );
-
-    console.log("✅ Email enviado exitosamente:", response);
-    return true;
-  } catch (error) {
-    console.error("❌ Error al enviar email:", error);
-    throw error;
-  }
-};
+      console.log("✅ Email enviado exitosamente:", response);
+      return true;
+    } catch (error) {
+      console.error("❌ Error al enviar email:", error);
+      throw error;
+    }
+  };
 
   // PASO 1: Solicitar código de recuperación
   const handleRequestReset = async (e) => {
@@ -97,49 +82,47 @@ const sendEmailWithCode = async (email, code) => {
     setMessage("");
 
     try {
-      // Verificar si el usuario existe (opcional - por seguridad)
-      const userCheck = await api.post("/api/users/check-email", {
+      // Verificar si el usuario existe
+      console.log("📤 Verificando email...");
+      await api.post("/api/users/check-email", {
         correo_electronico: form.correo_electronico
-      }).catch(() => ({ data: { exists: true } })); // Si falla, asumimos que existe por seguridad
+      });
 
-      // Siempre procedemos como si existiera (por seguridad)
-      if (true) { // userCheck.data.exists
-        // Generar código de verificación
-        const verificationCode = generateCode();
-        
-        // Guardar código en localStorage con expiración (10 minutos)
-        const resetData = {
-          code: verificationCode,
-          email: form.correo_electronico,
-          expiresAt: Date.now() + 10 * 60 * 1000 // 10 minutos
-        };
-        
-        localStorage.setItem(
-          `reset_${form.correo_electronico}`, 
-          JSON.stringify(resetData)
-        );
-        
-        console.log("🔐 Código generado y guardado:", verificationCode);
+      // Solicitar código al backend
+      console.log("📤 Solicitando código al backend...");
+      const response = await api.post("/api/users/password-reset/request", {
+        correo_electronico: form.correo_electronico,
+        metodo: form.metodo
+      });
+      
+      console.log("✅ Respuesta del backend:", response.data);
+      const verificationCode = response.data.code; // ← Código generado por el backend
+      
+      // Guardar código en localStorage (opcional, como respaldo)
+      const resetData = {
+        code: verificationCode,
+        email: form.correo_electronico,
+        expiresAt: Date.now() + 10 * 60 * 1000
+      };
+      
+      localStorage.setItem(
+        `reset_${form.correo_electronico}`, 
+        JSON.stringify(resetData)
+      );
+      
+      console.log("🔐 Código guardado en localStorage:", verificationCode);
 
-        // Enviar email según el método seleccionado
-        if (form.metodo === "email") {
-          await sendEmailWithCode(form.correo_electronico, verificationCode);
-          setMessage("✅ Código enviado a tu correo electrónico");
-        } else {
-          // Para WhatsApp, necesitarías implementar con otra API
-          setMessage("📱 Modo WhatsApp: Código guardado localmente");
-          // Aquí podrías integrar TextBelt u otro servicio
-        }
-        
-        setStep(2);
-      } else {
-        // Por seguridad, no revelamos si el email existe
-        setMessage("📧 Si el correo existe, recibirás un código");
-        setStep(2);
+      // Enviar email con EmailJS
+      if (form.metodo === "email") {
+        await sendEmailWithCode(form.correo_electronico, verificationCode);
+        setMessage("✅ Código enviado a tu correo electrónico");
       }
+      
+      setStep(2);
+
     } catch (error) {
       console.error("❌ Error en solicitud:", error);
-      setMessage("Error al enviar código. Intenta de nuevo.");
+      setMessage(error.response?.data?.message || "Error al enviar código. Intenta de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -179,20 +162,17 @@ const sendEmailWithCode = async (email, code) => {
         return;
       }
 
-      // Código válido - proceder con el cambio de contraseña
       console.log("✅ Código verificado correctamente");
 
       // Llamar al backend para actualizar la contraseña
-     const response = await api.post("/api/users/password-reset/confirm", {
-     correo_electronico: form.correo_electronico,
-     code: form.code,                    // ← AGREGAR ESTA LÍNEA
-    nueva_contrasena: form.nueva_contrasena
-  });
+      const response = await api.post("/api/users/password-reset/confirm", {
+        correo_electronico: form.correo_electronico,
+        code: form.code,
+        nueva_contrasena: form.nueva_contrasena
+      });
 
       if (response.data.status === "success") {
-        // Limpiar localStorage
         localStorage.removeItem(`reset_${form.correo_electronico}`);
-        
         setMessage("✅ Contraseña actualizada correctamente");
         setStep(3);
       } else {
@@ -210,7 +190,14 @@ const sendEmailWithCode = async (email, code) => {
   const handleResendCode = async () => {
     setLoading(true);
     try {
-      const verificationCode = generateCode();
+      // Solicitar nuevo código al backend
+      const response = await api.post("/api/users/password-reset/request", {
+        correo_electronico: form.correo_electronico,
+        metodo: form.metodo
+      });
+      
+      const verificationCode = response.data.code;
+      
       const resetData = {
         code: verificationCode,
         email: form.correo_electronico,

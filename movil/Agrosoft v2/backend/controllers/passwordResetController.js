@@ -80,75 +80,54 @@ exports.requestReset = async (req, res) => {
       return res.status(400).json({ status: "error", message: "Correo electrónico es requerido" });
     }
 
-    // PASO 1: Buscar usuario
-    console.log("🔍 PASO 1: Buscando usuario...");
+    // Buscar usuario
     const [users] = await pool.query(
       "SELECT * FROM usuarios WHERE correo_electronico = ?", 
       [correo_electronico]
     );
     
-    console.log(`✅ Usuarios encontrados: ${users.length}`);
-    
     if (users.length === 0) {
-      console.log("⚠️ Usuario no encontrado, pero respondemos OK por seguridad");
       return res.json({ status: "success", message: "Si el correo existe, se ha enviado un código" });
     }
 
     const user = users[0];
     console.log(`👤 Usuario ID: ${user.id_usuario}`);
 
-    // PASO 2: Marcar códigos anteriores
-    console.log("🔍 PASO 2: Marcando códigos anteriores como usados...");
-    const [updateResult] = await pool.query(
+    // Marcar códigos anteriores como usados
+    await pool.query(
       "UPDATE password_resets SET used = true WHERE email = ? AND used = false",
       [correo_electronico]
     );
-    console.log(`✅ Códigos anteriores marcados: ${updateResult.affectedRows}`);
 
-    // PASO 3: Generar código
     const code = generateCode();
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + 10);
     
-    console.log(`🔐 PASO 3: Código generado: ${code}`);
-    console.log(`📅 Expira: ${expiresAt}`);
+    console.log(`🔐 Código generado: ${code}`);
 
-    // PASO 4: Guardar en BD
-    console.log("🔍 PASO 4: Intentando guardar en BD...");
-    
-    const [insertResult] = await pool.query(
+    // Guardar en base de datos
+    await pool.query(
       "INSERT INTO password_resets (email, code, expires_at, used) VALUES (?, ?, ?, ?)",
       [correo_electronico, code, expiresAt, false]
     );
 
-    console.log(`✅ Resultado inserción - insertId: ${insertResult.insertId}`);
-    console.log(`✅ Resultado inserción - affectedRows: ${insertResult.affectedRows}`);
+    console.log("✅ Código guardado en BD");
 
-    // PASO 5: Verificar que se guardó
-    console.log("🔍 PASO 5: Verificando guardado...");
-    const [verification] = await pool.query(
-      "SELECT * FROM password_resets WHERE email = ? AND code = ?",
-      [correo_electronico, code]
-    );
-
-    if (verification.length > 0) {
-      console.log(`✅ VERIFICACIÓN EXITOSA - ID: ${verification[0].id}`);
-    } else {
-      console.error("❌ VERIFICACIÓN FALLÓ - El código NO se guardó");
-      throw new Error("No se pudo verificar el guardado del código");
-    }
-
-    // PASO 6: Enviar email
-    console.log("🔍 PASO 6: Enviando email...");
-    const message = buildMessage(code);
-    
+    // Enviar email (si es necesario)
     if (metodo === "email") {
+      const message = buildMessage(code);
       await sendEmail(correo_electronico, EMAIL_SUBJECT, message);
       console.log("✅ Email enviado");
     }
 
     console.log("========== SOLICITUD COMPLETADA ==========\n");
-    return res.json({ status: "success", message: "Código enviado" });
+    
+    // 🔴 IMPORTANTE: Devolver el código al frontend
+    return res.json({ 
+      status: "success", 
+      message: "Código enviado",
+      code: code  // ← EL FRONTEND NECESITA ESTO
+    });
 
   } catch (err) {
     console.error("\n❌❌❌ ERROR EN REQUEST RESET ❌❌❌");
@@ -173,15 +152,13 @@ exports.confirmReset = async (req, res) => {
     console.log(`🔑 Código: ${code}`);
 
     if (!correo_electronico || !code || !nueva_contrasena) {
-      console.log("❌ Error: Faltan campos requeridos");
       return res.status(400).json({ 
         status: "error", 
         message: "Correo, código y nueva contraseña son requeridos" 
       });
     }
 
-    // PASO 1: Buscar código válido
-    console.log("🔍 PASO 1: Buscando código en BD...");
+    // Buscar código válido
     const [resetRequests] = await pool.query(
       "SELECT * FROM password_resets WHERE email = ? AND code = ? AND used = false AND expires_at > NOW()",
       [correo_electronico, code]
@@ -190,62 +167,37 @@ exports.confirmReset = async (req, res) => {
     console.log(`✅ Códigos encontrados: ${resetRequests.length}`);
 
     if (resetRequests.length === 0) {
-      // Verificar si existe pero expiró
-      const [expirados] = await pool.query(
-        "SELECT * FROM password_resets WHERE email = ? AND code = ?",
-        [correo_electronico, code]
-      );
-      
-      if (expirados.length > 0) {
-        if (expirados[0].used) {
-          console.log("❌ Código ya usado");
-          return res.status(400).json({ status: "error", message: "Código ya fue utilizado" });
-        }
-        if (new Date() > new Date(expirados[0].expires_at)) {
-          console.log("❌ Código expirado");
-          return res.status(400).json({ status: "error", message: "Código expirado" });
-        }
-      }
-      
-      console.log("❌ Código no encontrado");
-      return res.status(400).json({ status: "error", message: "Código inválido" });
+      return res.status(400).json({ status: "error", message: "Código inválido o expirado" });
     }
 
     const resetRequest = resetRequests[0];
-    console.log(`✅ Código válido encontrado - ID: ${resetRequest.id}`);
 
-    // PASO 2: Buscar usuario
-    console.log("🔍 PASO 2: Buscando usuario...");
+    // Buscar usuario
     const [users] = await pool.query(
       "SELECT * FROM usuarios WHERE correo_electronico = ?",
       [correo_electronico]
     );
 
-    console.log(`✅ Usuarios encontrados: ${users.length}`);
-
     if (users.length === 0) {
-      console.log("❌ Usuario no encontrado");
       return res.status(400).json({ status: "error", message: "Usuario no encontrado" });
     }
 
-    // PASO 3: Actualizar contraseña
-    console.log("🔍 PASO 3: Actualizando contraseña...");
+    // Actualizar contraseña
     const hashed = await bcrypt.hash(nueva_contrasena, 10);
-    const [updateResult] = await pool.query(
+    await pool.query(
       "UPDATE usuarios SET password_hash = ? WHERE correo_electronico = ?",
       [hashed, correo_electronico]
     );
-    console.log(`✅ Contraseña actualizada: ${updateResult.affectedRows} filas`);
 
-    // PASO 4: Marcar código como usado
-    console.log("🔍 PASO 4: Marcando código como usado...");
-    const [usedResult] = await pool.query(
+    // Marcar código como usado
+    await pool.query(
       "UPDATE password_resets SET used = true WHERE id = ?",
       [resetRequest.id]
     );
-    console.log(`✅ Código marcado: ${usedResult.affectedRows} filas`);
 
+    console.log("✅ Contraseña actualizada correctamente");
     console.log("========== CONFIRMACIÓN COMPLETADA ==========\n");
+
     return res.json({ 
       status: "success", 
       message: "Contraseña actualizada correctamente" 
