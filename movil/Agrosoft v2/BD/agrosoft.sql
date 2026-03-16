@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 11-12-2025 a las 21:11:47
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Mar 13, 2026 at 07:21 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `agrosoft`
+-- Database: `agrosoft`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `carrito`
+-- Table structure for table `carrito`
 --
 
 CREATE TABLE `carrito` (
@@ -36,7 +36,7 @@ CREATE TABLE `carrito` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `carrito`
+-- Dumping data for table `carrito`
 --
 
 INSERT INTO `carrito` (`id_carrito`, `id_usuario`, `fecha_creacion`, `fecha_ultima_actualizacion`, `estado_carrito`) VALUES
@@ -47,12 +47,15 @@ INSERT INTO `carrito` (`id_carrito`, `id_usuario`, `fecha_creacion`, `fecha_ulti
 (5, 5, '2025-05-18 11:00:00', '2025-05-25 10:00:00', 'Completado'),
 (6, 6, '2025-06-01 09:15:00', '2025-06-02 08:30:00', 'Abandonado'),
 (7, 56, '2025-11-24 22:08:52', '2025-12-11 19:48:48', 'Activo'),
-(8, 66, '2025-11-25 20:14:19', '2025-11-27 20:43:58', 'Activo');
+(8, 66, '2025-11-25 20:14:19', '2025-11-27 20:43:58', 'Activo'),
+(9, 76, '2026-03-05 20:27:06', '2026-03-05 23:16:11', 'Activo'),
+(10, 77, '2026-03-06 00:48:55', '2026-03-06 00:48:55', 'Activo'),
+(11, 78, '2026-03-13 18:02:20', '2026-03-13 18:02:20', 'Activo');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
+-- Table structure for table `categorias`
 --
 
 CREATE TABLE `categorias` (
@@ -62,7 +65,7 @@ CREATE TABLE `categorias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `categorias`
+-- Dumping data for table `categorias`
 --
 
 INSERT INTO `categorias` (`id_categoria`, `nombre_categoria`, `estado`) VALUES
@@ -77,7 +80,7 @@ INSERT INTO `categorias` (`id_categoria`, `nombre_categoria`, `estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categoria_descuento`
+-- Table structure for table `categoria_descuento`
 --
 
 CREATE TABLE `categoria_descuento` (
@@ -86,7 +89,7 @@ CREATE TABLE `categoria_descuento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `categoria_descuento`
+-- Dumping data for table `categoria_descuento`
 --
 
 INSERT INTO `categoria_descuento` (`id_categoria`, `id_descuento`) VALUES
@@ -100,7 +103,7 @@ INSERT INTO `categoria_descuento` (`id_categoria`, `id_descuento`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categoria_oferta`
+-- Table structure for table `categoria_oferta`
 --
 
 CREATE TABLE `categoria_oferta` (
@@ -109,7 +112,7 @@ CREATE TABLE `categoria_oferta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `categoria_oferta`
+-- Dumping data for table `categoria_oferta`
 --
 
 INSERT INTO `categoria_oferta` (`id_categoria`, `id_oferta`) VALUES
@@ -123,7 +126,7 @@ INSERT INTO `categoria_oferta` (`id_categoria`, `id_oferta`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comentario_resena`
+-- Table structure for table `comentario_resena`
 --
 
 CREATE TABLE `comentario_resena` (
@@ -138,7 +141,7 @@ CREATE TABLE `comentario_resena` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `comentario_resena`
+-- Dumping data for table `comentario_resena`
 --
 
 INSERT INTO `comentario_resena` (`id_comentario_resena`, `id_usuario`, `id_producto`, `calificacion`, `texto_comentario`, `fecha_creacion`, `estado_comentario`, `id_administrador_moderador`) VALUES
@@ -162,7 +165,7 @@ INSERT INTO `comentario_resena` (`id_comentario_resena`, `id_usuario`, `id_produ
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `descuentos`
+-- Table structure for table `descuentos`
 --
 
 CREATE TABLE `descuentos` (
@@ -179,33 +182,33 @@ CREATE TABLE `descuentos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `descuentos`
+-- Dumping data for table `descuentos`
 --
 
 INSERT INTO `descuentos` (`id_descuento`, `id_productor`, `nombre_descuento`, `tipo_descuento`, `valor_descuento`, `fecha_inicio`, `fecha_fin`, `codigo_descuento`, `activo`, `estado`) VALUES
-(1, 55, 'Descuento Primavera', 'Porcentaje', 2.000, '2025-03-01 00:00:00', '2025-05-31 23:59:59', 'PRIMAVERA15', 1, 'Aprobado'),
-(2, 55, 'Descuento Verano', 'Porcentaje', 1.000, '2025-06-01 00:00:00', '2025-08-31 23:59:59', 'VERANO20', 1, 'Aprobado'),
-(3, NULL, 'Descuento Invierno', 'Monto Fijo', 3.000, '2025-12-01 00:00:00', '2025-12-31 23:59:59', 'INVIERNO10', 1, 'Aprobado'),
-(4, NULL, 'Descuento Otoño', 'Porcentaje', 4.000, '2025-09-01 00:00:00', '2025-11-30 23:59:59', 'OTOÑO10', 1, 'Aprobado'),
-(5, NULL, 'Descuento Cliente Nuevo', 'Monto Fijo', 1.000, '2025-01-01 00:00:00', '2025-12-31 23:59:59', 'NUEVO5', 1, 'Aprobado'),
-(6, NULL, 'Descuento Festivo', 'Porcentaje', 5.000, '2025-12-24 00:00:00', '2025-12-26 23:59:59', 'FESTIVO25', 1, 'Aprobado'),
-(7, NULL, 'Descuento Semana Santa', 'Porcentaje', 1.300, '2025-04-10 00:00:00', '2025-04-20 23:59:59', 'SEMANA18', 1, 'Aprobado'),
-(8, NULL, 'Descuento Aniversario', 'Monto Fijo', 2.300, '2025-07-15 00:00:00', '2025-07-20 23:59:59', 'ANIVERSARIO15', 1, 'Aprobado'),
-(9, NULL, 'Descuento Black Friday', 'Porcentaje', 1.100, '2025-11-27 00:00:00', '2025-11-29 23:59:59', 'BLACK30', 1, 'Aprobado'),
-(10, NULL, 'Descuento Cyber Monday', 'Porcentaje', 1.200, '2025-11-30 00:00:00', '2025-12-01 23:59:59', 'CYBER28', 1, 'Aprobado'),
-(11, NULL, 'Descuento Productos Frescos', 'Monto Fijo', 1.000, '2025-01-01 00:00:00', '2025-12-31 23:59:59', 'FRESCOS3', 1, 'Aprobado'),
-(12, NULL, 'Descuento Navidad', 'Porcentaje', 4.200, '2025-12-15 00:00:00', '2025-12-25 23:59:59', 'NAVIDAD22', 1, 'Aprobado'),
-(13, NULL, 'Descuento Fin de Semana', 'Monto Fijo', 5.100, '2025-01-01 00:00:00', '2025-12-31 23:59:59', 'FINSEM7', 1, 'Aprobado'),
-(14, NULL, 'Descuento Clientes Frecuentes', 'Porcentaje', 2.000, '2025-01-01 00:00:00', '2025-12-31 23:59:59', 'FRECUENTE12', 1, 'Aprobado'),
-(19, NULL, 'Tomate', '', 1.000, '2025-10-23 00:00:00', '2025-10-23 00:00:00', 'FOUND1', 1, 'Rechazado'),
-(26, 55, 'Descuento 10', 'Porcentaje', 1.100, '2025-10-28 00:00:00', '2025-10-28 00:00:00', 'FIRST23', 1, 'Aprobado'),
-(27, 55, 'Descuento 10', 'Porcentaje', 3.000, '2025-10-28 00:00:00', '2025-10-28 00:00:00', 'PAWN31', 1, 'Aprobado'),
-(28, 55, 'Descuento 10', 'Porcentaje', 3.000, '2025-10-28 00:00:00', '2025-10-28 00:00:00', 'AEA32', 1, 'Aprobado');
+(1, 55, 'Descuento Primavera', 'Porcentaje', 2.000, '2025-03-01 00:00:00', '2026-05-31 23:59:59', 'PRIMAVERA15', 1, 'Aprobado'),
+(2, 55, 'Descuento Verano', 'Porcentaje', 1.000, '2025-06-01 00:00:00', '2026-08-31 23:59:59', 'VERANO20', 1, 'Aprobado'),
+(3, NULL, 'Descuento Invierno', 'Monto Fijo', 3.000, '2025-12-01 00:00:00', '2026-12-31 23:59:59', 'INVIERNO10', 1, 'Aprobado'),
+(4, NULL, 'Descuento Otoño', 'Porcentaje', 4.000, '2025-09-01 00:00:00', '2026-11-30 23:59:59', 'OTOÑO10', 1, 'Aprobado'),
+(5, NULL, 'Descuento Cliente Nuevo', 'Monto Fijo', 1.000, '2025-01-01 00:00:00', '2026-12-31 23:59:59', 'NUEVO5', 1, 'Aprobado'),
+(6, NULL, 'Descuento Festivo', 'Porcentaje', 5.000, '2025-12-24 00:00:00', '2026-12-26 23:59:59', 'FESTIVO25', 1, 'Aprobado'),
+(7, NULL, 'Descuento Semana Santa', 'Porcentaje', 1.300, '2025-04-10 00:00:00', '2026-04-20 23:59:59', 'SEMANA18', 1, 'Aprobado'),
+(8, NULL, 'Descuento Aniversario', 'Monto Fijo', 2.300, '2025-07-15 00:00:00', '2026-07-20 23:59:59', 'ANIVERSARIO15', 1, 'Aprobado'),
+(9, NULL, 'Descuento Black Friday', 'Porcentaje', 1.100, '2025-11-27 00:00:00', '2026-11-29 23:59:59', 'BLACK30', 1, 'Aprobado'),
+(10, NULL, 'Descuento Cyber Monday', 'Porcentaje', 1.200, '2025-11-30 00:00:00', '2026-12-01 23:59:59', 'CYBER28', 1, 'Aprobado'),
+(11, NULL, 'Descuento Productos Frescos', 'Monto Fijo', 1.000, '2025-01-01 00:00:00', '2026-12-31 23:59:59', 'FRESCOS3', 1, 'Aprobado'),
+(12, NULL, 'Descuento Navidad', 'Porcentaje', 4.200, '2025-12-15 00:00:00', '2026-12-25 23:59:59', 'NAVIDAD22', 1, 'Aprobado'),
+(13, NULL, 'Descuento Fin de Semana', 'Monto Fijo', 5.100, '2025-01-01 00:00:00', '2026-12-31 23:59:59', 'FINSEM7', 1, 'Aprobado'),
+(14, NULL, 'Descuento Clientes Frecuentes', 'Porcentaje', 2.000, '2025-01-01 00:00:00', '2026-12-31 23:59:59', 'FRECUENTE12', 1, 'Aprobado'),
+(19, NULL, 'Tomate', '', 1.000, '2025-10-23 00:00:00', '2026-10-23 00:00:00', 'FOUND1', 1, 'Rechazado'),
+(26, 55, 'Descuento 10', 'Porcentaje', 1.100, '2025-10-28 00:00:00', '2026-10-28 00:00:00', 'FIRST23', 1, 'Aprobado'),
+(27, 55, 'Descuento 10', 'Porcentaje', 3.000, '2025-10-28 00:00:00', '2026-10-28 00:00:00', 'PAWN31', 1, 'Aprobado'),
+(28, 0, 'Descuento 10', 'Porcentaje', 3.000, '2025-10-28 00:00:00', '2025-10-28 00:00:00', 'AEA32', 1, 'Aprobado');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle_carrito`
+-- Table structure for table `detalle_carrito`
 --
 
 CREATE TABLE `detalle_carrito` (
@@ -218,7 +221,7 @@ CREATE TABLE `detalle_carrito` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `detalle_carrito`
+-- Dumping data for table `detalle_carrito`
 --
 
 INSERT INTO `detalle_carrito` (`id_detalle_carrito`, `id_carrito`, `id_producto`, `cantidad`, `precio_unitario_al_momento`, `subtotal`) VALUES
@@ -228,12 +231,14 @@ INSERT INTO `detalle_carrito` (`id_detalle_carrito`, `id_carrito`, `id_producto`
 (4, 4, 4, 7, 12.000, 84.000),
 (5, 5, 5, 2, 50.000, 100.000),
 (6, 6, 6, 4, 25.000, 100.000),
-(33, 7, 6, 1, 2.100, 2.100);
+(33, 7, 6, 1, 2.100, 2.100),
+(34, 9, 47, 1, 500.000, 500.000),
+(35, 9, 7, 1, 4.100, 4.100);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle_pedido`
+-- Table structure for table `detalle_pedido`
 --
 
 CREATE TABLE `detalle_pedido` (
@@ -247,7 +252,7 @@ CREATE TABLE `detalle_pedido` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `detalle_pedido`
+-- Dumping data for table `detalle_pedido`
 --
 
 INSERT INTO `detalle_pedido` (`id_detalle_pedido`, `id_pedido`, `id_producto`, `cantidad`, `precio_unitario_al_momento`, `subtotal`, `descuento_aplicado_monto`) VALUES
@@ -274,7 +279,7 @@ INSERT INTO `detalle_pedido` (`id_detalle_pedido`, `id_pedido`, `id_producto`, `
 (28, 1009, 3, 1, 12.200, 12.200, 0.000);
 
 --
--- Disparadores `detalle_pedido`
+-- Triggers `detalle_pedido`
 --
 DELIMITER $$
 CREATE TRIGGER `actualizar_stock_producto` AFTER INSERT ON `detalle_pedido` FOR EACH ROW BEGIN
@@ -289,7 +294,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estado_pedido`
+-- Table structure for table `estado_pedido`
 --
 
 CREATE TABLE `estado_pedido` (
@@ -298,7 +303,7 @@ CREATE TABLE `estado_pedido` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `estado_pedido`
+-- Dumping data for table `estado_pedido`
 --
 
 INSERT INTO `estado_pedido` (`id_estado_pedido`, `nombre_estado`) VALUES
@@ -311,7 +316,7 @@ INSERT INTO `estado_pedido` (`id_estado_pedido`, `nombre_estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estado_pqrs`
+-- Table structure for table `estado_pqrs`
 --
 
 CREATE TABLE `estado_pqrs` (
@@ -320,7 +325,7 @@ CREATE TABLE `estado_pqrs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `estado_pqrs`
+-- Dumping data for table `estado_pqrs`
 --
 
 INSERT INTO `estado_pqrs` (`id_estado_pqrs`, `nombre_estado`) VALUES
@@ -332,7 +337,7 @@ INSERT INTO `estado_pqrs` (`id_estado_pqrs`, `nombre_estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `inventario`
+-- Table structure for table `inventario`
 --
 
 CREATE TABLE `inventario` (
@@ -347,7 +352,7 @@ CREATE TABLE `inventario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `inventario`
+-- Dumping data for table `inventario`
 --
 
 INSERT INTO `inventario` (`id_inventario`, `id_producto`, `id_agricultor`, `vendido`, `fecha_Compra`, `cantidad_disponible`, `fecha_ultima_actualizacion`, `ubicacion_almacenamiento`) VALUES
@@ -365,12 +370,13 @@ INSERT INTO `inventario` (`id_inventario`, `id_producto`, `id_agricultor`, `vend
 (12, 43, 55, 0, NULL, 2, '2025-10-27 21:48:19', NULL),
 (13, 44, 55, 4, NULL, 23, '2025-11-04 20:43:17', NULL),
 (14, 45, 55, 0, NULL, 56, '2025-11-04 20:44:03', NULL),
-(15, 46, 55, 0, NULL, 23, '2025-12-10 22:47:43', NULL);
+(15, 46, 55, 0, NULL, 23, '2025-12-10 22:47:43', NULL),
+(16, 47, 55, 0, NULL, 20, '2026-02-19 01:03:09', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `metodo_pago`
+-- Table structure for table `metodo_pago`
 --
 
 CREATE TABLE `metodo_pago` (
@@ -379,7 +385,7 @@ CREATE TABLE `metodo_pago` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `metodo_pago`
+-- Dumping data for table `metodo_pago`
 --
 
 INSERT INTO `metodo_pago` (`id_metodo_pago`, `nombre_metodo`) VALUES
@@ -392,7 +398,7 @@ INSERT INTO `metodo_pago` (`id_metodo_pago`, `nombre_metodo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ofertas`
+-- Table structure for table `ofertas`
 --
 
 CREATE TABLE `ofertas` (
@@ -406,7 +412,7 @@ CREATE TABLE `ofertas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `ofertas`
+-- Dumping data for table `ofertas`
 --
 
 INSERT INTO `ofertas` (`id_oferta`, `nombre_oferta`, `descripcion_oferta`, `fecha_inicio`, `fecha_fin`, `tipo_oferta`, `activo`) VALUES
@@ -429,7 +435,22 @@ INSERT INTO `ofertas` (`id_oferta`, `nombre_oferta`, `descripcion_oferta`, `fech
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pedidos`
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `code` varchar(6) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `used` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pedidos`
 --
 
 CREATE TABLE `pedidos` (
@@ -451,7 +472,7 @@ CREATE TABLE `pedidos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `pedidos`
+-- Dumping data for table `pedidos`
 --
 
 INSERT INTO `pedidos` (`id_pedido`, `id_usuario`, `fecha_pedido`, `total_pedido`, `id_metodo_pago`, `direccion_envio`, `ciudad_envio`, `codigo_postal_envio`, `id_estado_pedido`, `fecha_entrega_estimada`, `fecha_entrega_real`, `numero_seguimiento`, `notas_pedido`, `motivo_cancelacion`, `fecha_actualizacion`) VALUES
@@ -519,7 +540,7 @@ INSERT INTO `pedidos` (`id_pedido`, `id_usuario`, `fecha_pedido`, `total_pedido`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `perfiles`
+-- Table structure for table `perfiles`
 --
 
 CREATE TABLE `perfiles` (
@@ -530,17 +551,10 @@ CREATE TABLE `perfiles` (
   `url_foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `perfiles`
---
-
-INSERT INTO `perfiles` (`id_perfil`, `id_usuario`, `nombre_completo`, `biografia`, `url_foto`) VALUES
-(1, 55, 'Juliana Tique Ortiz', 'productor se cerial', 'https://www.maga.gob.gt/wp-content/uploads/2024/09/Dia-Mundial-de-la-Agricultura1-1200x800.jpeg');
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pqrs`
+-- Table structure for table `pqrs`
 --
 
 CREATE TABLE `pqrs` (
@@ -557,7 +571,7 @@ CREATE TABLE `pqrs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `pqrs`
+-- Dumping data for table `pqrs`
 --
 
 INSERT INTO `pqrs` (`id_pqrs`, `id_usuario`, `id_tipo_pqrs`, `asunto`, `descripcion`, `fecha_creacion`, `id_estado_pqrs`, `fecha_ultima_actualizacion`, `respuesta_administrador`, `id_administrador_respuesta`) VALUES
@@ -610,12 +624,13 @@ INSERT INTO `pqrs` (`id_pqrs`, `id_usuario`, `id_tipo_pqrs`, `asunto`, `descripc
 (47, 47, 2, 'Queja por error en el cobro', 'Me cobraron más de lo que indicaba el carrito.', '2025-09-14 21:00:11', 2, '2025-09-14 21:00:11', NULL, NULL),
 (48, 48, 1, 'Petición de cambio de producto', 'Quisiera cambiar un producto que no me gusta.', '2025-09-14 21:00:11', 3, '2025-09-14 21:00:11', 'El proceso de cambio está en marcha.', 30),
 (49, 49, 3, 'Reclamo por mala calidad del producto', 'El producto no es como esperaba, tiene defectos.', '2025-09-14 21:00:11', 1, '2025-09-14 21:00:11', NULL, NULL),
-(50, 50, 4, 'Sugerencia para la app móvil', 'Sería útil poder realizar seguimiento de los pedidos.', '2025-09-14 21:00:11', 4, '2025-09-14 21:00:11', 'Gracias por la sugerencia, lo tomaremos en cuenta.', 31);
+(50, 50, 4, 'Sugerencia para la app móvil', 'Sería útil poder realizar seguimiento de los pedidos.', '2025-09-14 21:00:11', 4, '2025-09-14 21:00:11', 'Gracias por la sugerencia, lo tomaremos en cuenta.', 31),
+(51, 56, 1, 'mal estado', 'tomates', '2026-02-18 23:33:03', 1, '2026-02-18 23:33:03', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `producto`
+-- Table structure for table `producto`
 --
 
 CREATE TABLE `producto` (
@@ -634,7 +649,7 @@ CREATE TABLE `producto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `producto`
+-- Dumping data for table `producto`
 --
 
 INSERT INTO `producto` (`id_producto`, `nombre_producto`, `descripcion_producto`, `precio_unitario`, `unidad_medida`, `url_imagen`, `id_SubCategoria`, `id_usuario`, `estado_producto`, `fecha_creacion`, `fecha_ultima_modificacion`, `cantidad`) VALUES
@@ -657,12 +672,13 @@ INSERT INTO `producto` (`id_producto`, `nombre_producto`, `descripcion_producto`
 (43, 'tomate', 'rico', 1200.000, '100', 'https://i0.wp.com/placeres.pe/wp-content/uploads/2023/08/tomate.jpg?fit=1200%2C797&ssl=1', 16, 55, 'Inactivo', '2025-10-24 21:50:30', '2025-10-28 22:04:04', NULL),
 (44, 'tomate', 'rico', 20000.000, '100', 'https://definicion.de/wp-content/uploads/2015/01/tomate-1.jpg', 16, NULL, 'Inactivo', '2025-10-28 22:04:33', '2025-11-04 20:43:26', NULL),
 (45, 'tomate', 'rico', 10.000, '122', 'https://i0.wp.com/placeres.pe/wp-content/uploads/2023/08/tomate.jpg?fit=1200%2C797&ssl=1', 16, NULL, 'Activo', '2025-11-04 20:44:03', '2025-11-04 15:52:06', NULL),
-(46, 'Carne', 'Carne de res', 15.000, '1kg', 'https://thefoodtech.com/wp-content/uploads/2020/05/carne-de-res.jpg', 3, NULL, 'Activo', '2025-12-10 22:47:16', '2025-12-10 22:47:43', NULL);
+(46, 'Carne', 'Carne de res', 15.000, '1kg', 'https://thefoodtech.com/wp-content/uploads/2020/05/carne-de-res.jpg', 3, NULL, 'Activo', '2025-12-10 22:47:16', '2025-12-10 22:47:43', NULL),
+(47, 'Carne', 'Rica de cerdos de la granja', 500.000, 'LB', 'https://tse2.mm.bing.net/th/id/OIP.yBmqUu9BWKGv4jnHZg4wFgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3', 1, 55, 'Activo', '2026-02-19 01:03:09', '2026-02-19 01:03:09', 20);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `producto_descuento`
+-- Table structure for table `producto_descuento`
 --
 
 CREATE TABLE `producto_descuento` (
@@ -671,7 +687,7 @@ CREATE TABLE `producto_descuento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `producto_descuento`
+-- Dumping data for table `producto_descuento`
 --
 
 INSERT INTO `producto_descuento` (`id_producto`, `id_descuento`) VALUES
@@ -689,7 +705,7 @@ INSERT INTO `producto_descuento` (`id_producto`, `id_descuento`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `producto_imagenes`
+-- Table structure for table `producto_imagenes`
 --
 
 CREATE TABLE `producto_imagenes` (
@@ -699,7 +715,7 @@ CREATE TABLE `producto_imagenes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `producto_imagenes`
+-- Dumping data for table `producto_imagenes`
 --
 
 INSERT INTO `producto_imagenes` (`id_imagen`, `id_producto`, `url_imagen`) VALUES
@@ -743,7 +759,7 @@ INSERT INTO `producto_imagenes` (`id_imagen`, `id_producto`, `url_imagen`) VALUE
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `producto_oferta`
+-- Table structure for table `producto_oferta`
 --
 
 CREATE TABLE `producto_oferta` (
@@ -752,7 +768,7 @@ CREATE TABLE `producto_oferta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `producto_oferta`
+-- Dumping data for table `producto_oferta`
 --
 
 INSERT INTO `producto_oferta` (`id_producto`, `id_oferta`) VALUES
@@ -772,7 +788,7 @@ INSERT INTO `producto_oferta` (`id_producto`, `id_oferta`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -782,7 +798,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id_rol`, `nombre_rol`, `descripcion_rol`) VALUES
@@ -793,7 +809,7 @@ INSERT INTO `roles` (`id_rol`, `nombre_rol`, `descripcion_rol`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `subcategoria`
+-- Table structure for table `subcategoria`
 --
 
 CREATE TABLE `subcategoria` (
@@ -803,7 +819,7 @@ CREATE TABLE `subcategoria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `subcategoria`
+-- Dumping data for table `subcategoria`
 --
 
 INSERT INTO `subcategoria` (`id_SubCategoria`, `nombre`, `id_categoria`) VALUES
@@ -830,7 +846,7 @@ INSERT INTO `subcategoria` (`id_SubCategoria`, `nombre`, `id_categoria`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipo_pqrs`
+-- Table structure for table `tipo_pqrs`
 --
 
 CREATE TABLE `tipo_pqrs` (
@@ -839,7 +855,7 @@ CREATE TABLE `tipo_pqrs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `tipo_pqrs`
+-- Dumping data for table `tipo_pqrs`
 --
 
 INSERT INTO `tipo_pqrs` (`id_tipo_pqrs`, `nombre_tipo`) VALUES
@@ -851,7 +867,7 @@ INSERT INTO `tipo_pqrs` (`id_tipo_pqrs`, `nombre_tipo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -861,108 +877,113 @@ CREATE TABLE `usuarios` (
   `correo_electronico` varchar(150) NOT NULL,
   `id_rol` int(11) NOT NULL,
   `documento_identidad` varchar(50) DEFAULT NULL,
-  `estado` varchar(20) DEFAULT 'Activo'
+  `estado` varchar(20) DEFAULT 'Activo',
+  `reset_code` varchar(10) DEFAULT NULL,
+  `reset_expires` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `password_hash`, `correo_electronico`, `id_rol`, `documento_identidad`, `estado`) VALUES
-(1, 'juan.ramirez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juan.ramirez@example.com', 1, '100000021', 'Activo'),
-(2, 'sofia.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.gomez@example.com', 1, '100000022', 'Activo'),
-(3, 'andres.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.morales@example.com', 1, '100000023', 'Activo'),
-(4, 'paola.salazar', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'paola.salazar@example.com', 1, '100000024', 'Activo'),
-(5, 'jose.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jose.figueroa@example.com', 1, '100000025', 'Activo'),
-(6, 'marta.palomino', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marta.palomino@example.com', 1, '100000026', 'Activo'),
-(7, 'luis.mendoza', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.mendoza@example.com', 1, '100000027', 'Activo'),
-(8, 'marcela.romero', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marcela.romero@example.com', 1, '100000028', 'Activo'),
-(9, 'laura.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'laura.gomez@example.com', 1, '100000001', 'Activo'),
-(10, 'carlos.perez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carlos.perez@example.com', 1, '100000002', 'Activo'),
-(11, 'maria.rojas', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'maria.rojas@example.com', 1, '100000003', 'Activo'),
-(12, 'julian.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'julian.martinez@example.com', 1, '100000004', 'Activo'),
-(13, 'sandra.nieves', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sandra.nieves@example.com', 1, '100000005', 'Activo'),
-(14, 'fernando.soto', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'fernando.soto@example.com', 1, '100000006', 'Activo'),
-(15, 'luisa.moreno', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luisa.moreno@example.com', 1, '100000007', 'Activo'),
-(16, 'ricardo.diaz', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.diaz@example.com', 1, '100000008', 'Activo'),
-(17, 'natalia.ospina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'natalia.ospina@example.com', 1, '100000009', 'Activo'),
-(18, 'diego.castillo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'diego.castillo@example.com', 1, '100000010', 'Activo'),
-(19, 'admin.juana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juana.admin@example.com', 2, '200000001', 'Activo'),
-(20, 'admin.luis', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.admin@example.com', 2, '200000002', 'Activo'),
-(21, 'admin.monica', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'monica.admin@example.com', 2, '200000003', 'Activo'),
-(22, 'admin.esteban', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'esteban.admin@example.com', 2, '200000004', 'Activo'),
-(23, 'admin.camila', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camila.admin@example.com', 2, '200000005', 'Activo'),
-(24, 'admin.david', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'david.admin@example.com', 2, '200000006', 'Activo'),
-(25, 'admin.andrea', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andrea.admin@example.com', 2, '200000007', 'Activo'),
-(26, 'admin.sebastian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sebastian.admin@example.com', 2, '200000008', 'Activo'),
-(27, 'admin.ana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.admin@example.com', 2, '200000009', 'Activo'),
-(28, 'admin.jorge', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.admin@example.com', 2, '200000010', 'Activo'),
-(29, 'admin.mario', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mario.admin@example.com', 2, '200000021', 'Activo'),
-(30, 'admin.tamara', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'tamara.admin@example.com', 2, '200000022', 'Activo'),
-(31, 'admin.ricardo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.admin@example.com', 2, '200000023', 'Activo'),
-(32, 'admin.carmen', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carmen.admin@example.com', 2, '200000024', 'Activo'),
-(33, 'javier', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'javier.agro@example.com', 3, '300000001', 'Activo'),
-(34, 'elena', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'elena.agro@example.com', 3, '300000002', 'Activo'),
-(35, 'andres', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.agro@example.com', 3, '300000003', 'Activo'),
-(36, 'sofia', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.agro@example.com', 3, '300000004', 'Activo'),
-(37, 'mateo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mateo.agro@example.com', 3, '300000005', 'Activo'),
-(38, 'valentina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'valentina.agro@example.com', 3, '300000006', 'Activo'),
-(39, 'cristian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'cristian.agro@example.com', 3, '300000007', 'Activo'),
-(40, 'isabela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'isabela.agro@example.com', 3, '300000008', 'Activo'),
-(41, 'felipe', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'felipe.agro@example.com', 3, '300000009', 'Activo'),
-(42, 'daniela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'daniela.agro@example.com', 3, '300000010', 'Activo'),
-(43, 'ana.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.martinez@example.com', 3, '300000021', 'Activo'),
-(44, 'lucas.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'lucas.gomez@example.com', 3, '300000022', 'Activo'),
-(45, 'jorge.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.figueroa@example.com', 3, '300000023', 'Activo'),
-(46, 'carolina.sanchez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carolina.sanchez@example.com', 3, '300000024', 'Activo'),
-(47, 'camilo.rodriguez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camilo.rodriguez@example.com', 3, '300000025', 'Activo'),
-(48, 'veronica.paredes', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'veronica.paredes@example.com', 3, '300000026', 'Activo'),
-(49, 'pedro.gonzalez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'pedro.gonzalez@example.com', 3, '300000027', 'Activo'),
-(50, 'mariana.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mariana.morales@example.com', 3, '300000028', 'Activo'),
-(51, 'Juan Suarez', 'bd4b67accb1f47a860c9d70b5684752722edb435', 'jZuares@example.com', 1, '12005678', 'Activo'),
-(52, '1234', '', 'juliana@gmail.com', 3, '1024482979', 'activo'),
-(54, 'julia', '$2b$10$cN5hBcsvzvC/L3TWun8A4OcihoG6rSByADKkLngDBFS5NTRXmZNBq', 'julia@gmail.com', 2, '1021203101', 'Activo'),
-(55, 'juliana', '$2b$10$wKFyjI8orX7MDN/EdBJbAeLWvQFnPxWMWzraDujETa.66gHdF.RZG', 'julianaaa@gmail.com', 3, '1024512302', 'Activo'),
-(56, 'Albeiro Ramos', '$2b$10$d/p9slCQeYdIOs45EPxvA.YsInEdvrbteMYCx7PqfyPMpJ52uP2y6', 'Profealbeiro2020@gmail.com', 1, '1234567', 'Activo'),
-(57, 'julio', '$2b$10$LAT06vMkful3OGdFQXxdiOgmOyjeyqFarUcNarhAz868Y6JWL5VN2', 'julio@gmail.com', 3, '2036521236', 'Activo'),
-(58, 'johanL2', '$2b$10$xkc56RPHKIH.NeEbE8gEZeGNL5lPsArQbZR3kd9/elSIOCR2Bn.zy', 'Jh@gmail.com', 2, '11022334455', 'Activo'),
-(59, 'johanL4', '$2b$10$juVmu68QgpzsKCmfiDI1Yug6Ov2xJVySI1nIQuTAUsF8oU3S2PjZK', 'johan@gmail.com', 3, '1234567891', 'Activo'),
-(66, 'Juan', '$2b$10$eJQ1Qtq2DmBVvbzEjhUje.soc7rWzUZrZS.VVsyh/cX3UFDPBdkle', 'juan@gmail.com', 1, '123456789', 'Activo');
+INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `password_hash`, `correo_electronico`, `id_rol`, `documento_identidad`, `estado`, `reset_code`, `reset_expires`) VALUES
+(1, 'juan.ramirez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juan.ramirez@example.com', 1, '100000021', 'Activo', NULL, NULL),
+(2, 'sofia.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.gomez@example.com', 1, '100000022', 'Activo', NULL, NULL),
+(3, 'andres.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.morales@example.com', 1, '100000023', 'Activo', NULL, NULL),
+(4, 'paola.salazar', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'paola.salazar@example.com', 1, '100000024', 'Activo', NULL, NULL),
+(5, 'jose.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jose.figueroa@example.com', 1, '100000025', 'Activo', NULL, NULL),
+(6, 'marta.palomino', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marta.palomino@example.com', 1, '100000026', 'Activo', NULL, NULL),
+(7, 'luis.mendoza', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.mendoza@example.com', 1, '100000027', 'Activo', NULL, NULL),
+(8, 'marcela.romero', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marcela.romero@example.com', 1, '100000028', 'Activo', NULL, NULL),
+(9, 'laura.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'laura.gomez@example.com', 1, '100000001', 'Activo', NULL, NULL),
+(10, 'carlos.perez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carlos.perez@example.com', 1, '100000002', 'Activo', NULL, NULL),
+(11, 'maria.rojas', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'maria.rojas@example.com', 1, '100000003', 'Activo', NULL, NULL),
+(12, 'julian.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'julian.martinez@example.com', 1, '100000004', 'Activo', NULL, NULL),
+(13, 'sandra.nieves', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sandra.nieves@example.com', 1, '100000005', 'Activo', NULL, NULL),
+(14, 'fernando.soto', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'fernando.soto@example.com', 1, '100000006', 'Activo', NULL, NULL),
+(15, 'luisa.moreno', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luisa.moreno@example.com', 1, '100000007', 'Activo', NULL, NULL),
+(16, 'ricardo.diaz', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.diaz@example.com', 1, '100000008', 'Activo', NULL, NULL),
+(17, 'natalia.ospina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'natalia.ospina@example.com', 1, '100000009', 'Activo', NULL, NULL),
+(18, 'diego.castillo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'diego.castillo@example.com', 1, '100000010', 'Activo', NULL, NULL),
+(19, 'admin.juana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juana.admin@example.com', 2, '200000001', 'Activo', NULL, NULL),
+(20, 'admin.luis', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.admin@example.com', 2, '200000002', 'Activo', NULL, NULL),
+(21, 'admin.monica', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'monica.admin@example.com', 2, '200000003', 'Activo', NULL, NULL),
+(22, 'admin.esteban', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'esteban.admin@example.com', 2, '200000004', 'Activo', NULL, NULL),
+(23, 'admin.camila', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camila.admin@example.com', 2, '200000005', 'Activo', NULL, NULL),
+(24, 'admin.david', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'david.admin@example.com', 2, '200000006', 'Activo', NULL, NULL),
+(25, 'admin.andrea', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andrea.admin@example.com', 2, '200000007', 'Activo', NULL, NULL),
+(26, 'admin.sebastian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sebastian.admin@example.com', 2, '200000008', 'Activo', NULL, NULL),
+(27, 'admin.ana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.admin@example.com', 2, '200000009', 'Activo', NULL, NULL),
+(28, 'admin.jorge', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.admin@example.com', 2, '200000010', 'Activo', NULL, NULL),
+(29, 'admin.mario', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mario.admin@example.com', 2, '200000021', 'Activo', NULL, NULL),
+(30, 'admin.tamara', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'tamara.admin@example.com', 2, '200000022', 'Activo', NULL, NULL),
+(31, 'admin.ricardo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.admin@example.com', 2, '200000023', 'Activo', NULL, NULL),
+(32, 'admin.carmen', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carmen.admin@example.com', 2, '200000024', 'Activo', NULL, NULL),
+(33, 'javier', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'javier.agro@example.com', 3, '300000001', 'Activo', NULL, NULL),
+(34, 'elena', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'elena.agro@example.com', 3, '300000002', 'Activo', NULL, NULL),
+(35, 'andres', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.agro@example.com', 3, '300000003', 'Activo', NULL, NULL),
+(36, 'sofia', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.agro@example.com', 3, '300000004', 'Activo', NULL, NULL),
+(37, 'mateo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mateo.agro@example.com', 3, '300000005', 'Activo', NULL, NULL),
+(38, 'valentina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'valentina.agro@example.com', 3, '300000006', 'Activo', NULL, NULL),
+(39, 'cristian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'cristian.agro@example.com', 3, '300000007', 'Activo', NULL, NULL),
+(40, 'isabela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'isabela.agro@example.com', 3, '300000008', 'Activo', NULL, NULL),
+(41, 'felipe', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'felipe.agro@example.com', 3, '300000009', 'Activo', NULL, NULL),
+(42, 'daniela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'daniela.agro@example.com', 3, '300000010', 'Activo', NULL, NULL),
+(43, 'ana.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.martinez@example.com', 3, '300000021', 'Activo', NULL, NULL),
+(44, 'lucas.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'lucas.gomez@example.com', 3, '300000022', 'Activo', NULL, NULL),
+(45, 'jorge.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.figueroa@example.com', 3, '300000023', 'Activo', NULL, NULL),
+(46, 'carolina.sanchez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carolina.sanchez@example.com', 3, '300000024', 'Activo', NULL, NULL),
+(47, 'camilo.rodriguez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camilo.rodriguez@example.com', 3, '300000025', 'Activo', NULL, NULL),
+(48, 'veronica.paredes', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'veronica.paredes@example.com', 3, '300000026', 'Activo', NULL, NULL),
+(49, 'pedro.gonzalez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'pedro.gonzalez@example.com', 3, '300000027', 'Activo', NULL, NULL),
+(50, 'mariana.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mariana.morales@example.com', 3, '300000028', 'Activo', NULL, NULL),
+(51, 'Juan Suarez', 'bd4b67accb1f47a860c9d70b5684752722edb435', 'jZuares@example.com', 1, '12005678', 'Activo', NULL, NULL),
+(52, '1234', '', 'juliana@gmail.com', 3, '1024482979', 'activo', NULL, NULL),
+(54, 'julia', '$2b$10$cN5hBcsvzvC/L3TWun8A4OcihoG6rSByADKkLngDBFS5NTRXmZNBq', 'julia@gmail.com', 2, '1021203101', 'Activo', NULL, NULL),
+(55, 'juliana', '$2b$10$wKFyjI8orX7MDN/EdBJbAeLWvQFnPxWMWzraDujETa.66gHdF.RZG', 'julianaaa@gmail.com', 3, '1024512302', 'Activo', NULL, NULL),
+(56, 'Albeiro Ramoz', '123456', 'Profealbeiro200@gmail.com', 1, '1204528856', 'Activo', NULL, NULL),
+(57, 'julio', '$2b$10$LAT06vMkful3OGdFQXxdiOgmOyjeyqFarUcNarhAz868Y6JWL5VN2', 'julio@gmail.com', 3, '2036521236', 'Activo', NULL, NULL),
+(58, 'johanL2', '$2b$10$xkc56RPHKIH.NeEbE8gEZeGNL5lPsArQbZR3kd9/elSIOCR2Bn.zy', 'Jh@gmail.com', 2, '11022334455', 'Activo', NULL, NULL),
+(59, 'johanL4', '$2b$10$juVmu68QgpzsKCmfiDI1Yug6Ov2xJVySI1nIQuTAUsF8oU3S2PjZK', 'johan@gmail.com', 3, '1234567891', 'Activo', NULL, NULL),
+(66, 'Juan', '$2b$10$eJQ1Qtq2DmBVvbzEjhUje.soc7rWzUZrZS.VVsyh/cX3UFDPBdkle', 'juan@gmail.com', 1, '123456789', 'Activo', NULL, NULL),
+(76, 'tiqueortiz', '$2b$10$kdinDBOcYQtYtqTAlNA/k.sC3YMocRwKDV05PgLG.hBr6/6QJr3Ia', 'tiqueo17@gmail.com', 1, '1023204521', 'Activo', NULL, NULL),
+(77, 'javier@gmail.com', '$2b$10$VtZCcC8/cuUpPaI.lMwBH.iSZngKD9OZpJHZvLHThd0fRTz2.mK4e', 'javiere@gmail.com', 1, '1203524658', 'Activo', NULL, NULL),
+(78, 'juliana tique ortiz', '$2b$10$olOyHThSgKX/3Gzq7hnjIOTfbcWX9AuiIamJhzyRA/MTmj2c..Mou', 'julitiquea17@gmail.com', 1, '1024485670', 'Activo', NULL, NULL);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `carrito`
+-- Indexes for table `carrito`
 --
 ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id_carrito`),
   ADD UNIQUE KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `categorias`
+-- Indexes for table `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id_categoria`),
   ADD UNIQUE KEY `nombre_categoria` (`nombre_categoria`);
 
 --
--- Indices de la tabla `categoria_descuento`
+-- Indexes for table `categoria_descuento`
 --
 ALTER TABLE `categoria_descuento`
   ADD PRIMARY KEY (`id_categoria`,`id_descuento`),
   ADD KEY `id_descuento` (`id_descuento`);
 
 --
--- Indices de la tabla `categoria_oferta`
+-- Indexes for table `categoria_oferta`
 --
 ALTER TABLE `categoria_oferta`
   ADD PRIMARY KEY (`id_categoria`,`id_oferta`),
   ADD KEY `id_oferta` (`id_oferta`);
 
 --
--- Indices de la tabla `comentario_resena`
+-- Indexes for table `comentario_resena`
 --
 ALTER TABLE `comentario_resena`
   ADD PRIMARY KEY (`id_comentario_resena`),
@@ -971,14 +992,14 @@ ALTER TABLE `comentario_resena`
   ADD KEY `id_administrador_moderador` (`id_administrador_moderador`);
 
 --
--- Indices de la tabla `descuentos`
+-- Indexes for table `descuentos`
 --
 ALTER TABLE `descuentos`
   ADD PRIMARY KEY (`id_descuento`),
   ADD UNIQUE KEY `codigo_descuento` (`codigo_descuento`);
 
 --
--- Indices de la tabla `detalle_carrito`
+-- Indexes for table `detalle_carrito`
 --
 ALTER TABLE `detalle_carrito`
   ADD PRIMARY KEY (`id_detalle_carrito`),
@@ -986,7 +1007,7 @@ ALTER TABLE `detalle_carrito`
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indices de la tabla `detalle_pedido`
+-- Indexes for table `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
   ADD PRIMARY KEY (`id_detalle_pedido`),
@@ -994,21 +1015,21 @@ ALTER TABLE `detalle_pedido`
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indices de la tabla `estado_pedido`
+-- Indexes for table `estado_pedido`
 --
 ALTER TABLE `estado_pedido`
   ADD PRIMARY KEY (`id_estado_pedido`),
   ADD UNIQUE KEY `nombre_estado` (`nombre_estado`);
 
 --
--- Indices de la tabla `estado_pqrs`
+-- Indexes for table `estado_pqrs`
 --
 ALTER TABLE `estado_pqrs`
   ADD PRIMARY KEY (`id_estado_pqrs`),
   ADD UNIQUE KEY `nombre_estado` (`nombre_estado`);
 
 --
--- Indices de la tabla `inventario`
+-- Indexes for table `inventario`
 --
 ALTER TABLE `inventario`
   ADD PRIMARY KEY (`id_inventario`),
@@ -1016,20 +1037,27 @@ ALTER TABLE `inventario`
   ADD KEY `id_agricultor` (`id_agricultor`);
 
 --
--- Indices de la tabla `metodo_pago`
+-- Indexes for table `metodo_pago`
 --
 ALTER TABLE `metodo_pago`
   ADD PRIMARY KEY (`id_metodo_pago`),
   ADD UNIQUE KEY `nombre_metodo` (`nombre_metodo`);
 
 --
--- Indices de la tabla `ofertas`
+-- Indexes for table `ofertas`
 --
 ALTER TABLE `ofertas`
   ADD PRIMARY KEY (`id_oferta`);
 
 --
--- Indices de la tabla `pedidos`
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_password_resets_email` (`email`);
+
+--
+-- Indexes for table `pedidos`
 --
 ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`id_pedido`),
@@ -1039,14 +1067,14 @@ ALTER TABLE `pedidos`
   ADD KEY `id_estado_pedido` (`id_estado_pedido`);
 
 --
--- Indices de la tabla `perfiles`
+-- Indexes for table `perfiles`
 --
 ALTER TABLE `perfiles`
   ADD PRIMARY KEY (`id_perfil`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `pqrs`
+-- Indexes for table `pqrs`
 --
 ALTER TABLE `pqrs`
   ADD PRIMARY KEY (`id_pqrs`),
@@ -1056,7 +1084,7 @@ ALTER TABLE `pqrs`
   ADD KEY `id_administrador_respuesta` (`id_administrador_respuesta`);
 
 --
--- Indices de la tabla `producto`
+-- Indexes for table `producto`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`),
@@ -1064,207 +1092,216 @@ ALTER TABLE `producto`
   ADD KEY `idx_producto_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `producto_descuento`
+-- Indexes for table `producto_descuento`
 --
 ALTER TABLE `producto_descuento`
   ADD PRIMARY KEY (`id_producto`,`id_descuento`),
   ADD KEY `id_descuento` (`id_descuento`);
 
 --
--- Indices de la tabla `producto_imagenes`
+-- Indexes for table `producto_imagenes`
 --
 ALTER TABLE `producto_imagenes`
   ADD PRIMARY KEY (`id_imagen`),
   ADD KEY `id_producto` (`id_producto`);
 
 --
--- Indices de la tabla `producto_oferta`
+-- Indexes for table `producto_oferta`
 --
 ALTER TABLE `producto_oferta`
   ADD PRIMARY KEY (`id_producto`,`id_oferta`),
   ADD KEY `id_oferta` (`id_oferta`);
 
 --
--- Indices de la tabla `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id_rol`),
   ADD UNIQUE KEY `nombre_rol` (`nombre_rol`);
 
 --
--- Indices de la tabla `subcategoria`
+-- Indexes for table `subcategoria`
 --
 ALTER TABLE `subcategoria`
   ADD PRIMARY KEY (`id_SubCategoria`),
   ADD KEY `id_categoria` (`id_categoria`);
 
 --
--- Indices de la tabla `tipo_pqrs`
+-- Indexes for table `tipo_pqrs`
 --
 ALTER TABLE `tipo_pqrs`
   ADD PRIMARY KEY (`id_tipo_pqrs`),
   ADD UNIQUE KEY `nombre_tipo` (`nombre_tipo`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
   ADD UNIQUE KEY `correo_electronico` (`correo_electronico`),
+  ADD UNIQUE KEY `nombre_usuario_2` (`nombre_usuario`),
+  ADD UNIQUE KEY `correo_electronico_2` (`correo_electronico`),
   ADD UNIQUE KEY `documento_identidad` (`documento_identidad`),
+  ADD UNIQUE KEY `documento_identidad_2` (`documento_identidad`),
   ADD KEY `id_rol` (`id_rol`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `carrito`
+-- AUTO_INCREMENT for table `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT de la tabla `categorias`
+-- AUTO_INCREMENT for table `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `comentario_resena`
+-- AUTO_INCREMENT for table `comentario_resena`
 --
 ALTER TABLE `comentario_resena`
   MODIFY `id_comentario_resena` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT de la tabla `descuentos`
+-- AUTO_INCREMENT for table `descuentos`
 --
 ALTER TABLE `descuentos`
   MODIFY `id_descuento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT de la tabla `detalle_carrito`
+-- AUTO_INCREMENT for table `detalle_carrito`
 --
 ALTER TABLE `detalle_carrito`
-  MODIFY `id_detalle_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_detalle_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT de la tabla `detalle_pedido`
+-- AUTO_INCREMENT for table `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
   MODIFY `id_detalle_pedido` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT de la tabla `estado_pedido`
+-- AUTO_INCREMENT for table `estado_pedido`
 --
 ALTER TABLE `estado_pedido`
   MODIFY `id_estado_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `estado_pqrs`
+-- AUTO_INCREMENT for table `estado_pqrs`
 --
 ALTER TABLE `estado_pqrs`
   MODIFY `id_estado_pqrs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `inventario`
+-- AUTO_INCREMENT for table `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id_inventario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_inventario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT de la tabla `metodo_pago`
+-- AUTO_INCREMENT for table `metodo_pago`
 --
 ALTER TABLE `metodo_pago`
   MODIFY `id_metodo_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `ofertas`
+-- AUTO_INCREMENT for table `ofertas`
 --
 ALTER TABLE `ofertas`
   MODIFY `id_oferta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT de la tabla `pedidos`
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pedidos`
 --
 ALTER TABLE `pedidos`
   MODIFY `id_pedido` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1010;
 
 --
--- AUTO_INCREMENT de la tabla `perfiles`
+-- AUTO_INCREMENT for table `perfiles`
 --
 ALTER TABLE `perfiles`
   MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `pqrs`
+-- AUTO_INCREMENT for table `pqrs`
 --
 ALTER TABLE `pqrs`
-  MODIFY `id_pqrs` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_pqrs` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT de la tabla `producto`
+-- AUTO_INCREMENT for table `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_producto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
--- AUTO_INCREMENT de la tabla `producto_imagenes`
+-- AUTO_INCREMENT for table `producto_imagenes`
 --
 ALTER TABLE `producto_imagenes`
   MODIFY `id_imagen` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT de la tabla `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `subcategoria`
+-- AUTO_INCREMENT for table `subcategoria`
 --
 ALTER TABLE `subcategoria`
   MODIFY `id_SubCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT de la tabla `tipo_pqrs`
+-- AUTO_INCREMENT for table `tipo_pqrs`
 --
 ALTER TABLE `tipo_pqrs`
   MODIFY `id_tipo_pqrs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `carrito`
+-- Constraints for table `carrito`
 --
 ALTER TABLE `carrito`
   ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 
 --
--- Filtros para la tabla `categoria_descuento`
+-- Constraints for table `categoria_descuento`
 --
 ALTER TABLE `categoria_descuento`
   ADD CONSTRAINT `categoria_descuento_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`),
   ADD CONSTRAINT `categoria_descuento_ibfk_2` FOREIGN KEY (`id_descuento`) REFERENCES `descuentos` (`id_descuento`);
 
 --
--- Filtros para la tabla `categoria_oferta`
+-- Constraints for table `categoria_oferta`
 --
 ALTER TABLE `categoria_oferta`
   ADD CONSTRAINT `categoria_oferta_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`),
   ADD CONSTRAINT `categoria_oferta_ibfk_2` FOREIGN KEY (`id_oferta`) REFERENCES `ofertas` (`id_oferta`);
 
 --
--- Filtros para la tabla `comentario_resena`
+-- Constraints for table `comentario_resena`
 --
 ALTER TABLE `comentario_resena`
   ADD CONSTRAINT `comentario_resena_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
@@ -1272,28 +1309,28 @@ ALTER TABLE `comentario_resena`
   ADD CONSTRAINT `comentario_resena_ibfk_3` FOREIGN KEY (`id_administrador_moderador`) REFERENCES `usuarios` (`id_usuario`);
 
 --
--- Filtros para la tabla `detalle_carrito`
+-- Constraints for table `detalle_carrito`
 --
 ALTER TABLE `detalle_carrito`
   ADD CONSTRAINT `detalle_carrito_ibfk_1` FOREIGN KEY (`id_carrito`) REFERENCES `carrito` (`id_carrito`),
   ADD CONSTRAINT `detalle_carrito_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
 --
--- Filtros para la tabla `detalle_pedido`
+-- Constraints for table `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
   ADD CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id_pedido`),
   ADD CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
 --
--- Filtros para la tabla `inventario`
+-- Constraints for table `inventario`
 --
 ALTER TABLE `inventario`
   ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
   ADD CONSTRAINT `inventario_ibfk_2` FOREIGN KEY (`id_agricultor`) REFERENCES `usuarios` (`id_usuario`);
 
 --
--- Filtros para la tabla `pedidos`
+-- Constraints for table `pedidos`
 --
 ALTER TABLE `pedidos`
   ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
@@ -1301,13 +1338,13 @@ ALTER TABLE `pedidos`
   ADD CONSTRAINT `pedidos_ibfk_3` FOREIGN KEY (`id_estado_pedido`) REFERENCES `estado_pedido` (`id_estado_pedido`);
 
 --
--- Filtros para la tabla `perfiles`
+-- Constraints for table `perfiles`
 --
 ALTER TABLE `perfiles`
   ADD CONSTRAINT `perfiles_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `pqrs`
+-- Constraints for table `pqrs`
 --
 ALTER TABLE `pqrs`
   ADD CONSTRAINT `pqrs_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
@@ -1316,40 +1353,40 @@ ALTER TABLE `pqrs`
   ADD CONSTRAINT `pqrs_ibfk_4` FOREIGN KEY (`id_administrador_respuesta`) REFERENCES `usuarios` (`id_usuario`);
 
 --
--- Filtros para la tabla `producto`
+-- Constraints for table `producto`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `fk_producto_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
   ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_SubCategoria`) REFERENCES `subcategoria` (`id_SubCategoria`);
 
 --
--- Filtros para la tabla `producto_descuento`
+-- Constraints for table `producto_descuento`
 --
 ALTER TABLE `producto_descuento`
   ADD CONSTRAINT `producto_descuento_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
   ADD CONSTRAINT `producto_descuento_ibfk_2` FOREIGN KEY (`id_descuento`) REFERENCES `descuentos` (`id_descuento`);
 
 --
--- Filtros para la tabla `producto_imagenes`
+-- Constraints for table `producto_imagenes`
 --
 ALTER TABLE `producto_imagenes`
   ADD CONSTRAINT `producto_imagenes_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 
 --
--- Filtros para la tabla `producto_oferta`
+-- Constraints for table `producto_oferta`
 --
 ALTER TABLE `producto_oferta`
   ADD CONSTRAINT `producto_oferta_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
   ADD CONSTRAINT `producto_oferta_ibfk_2` FOREIGN KEY (`id_oferta`) REFERENCES `ofertas` (`id_oferta`);
 
 --
--- Filtros para la tabla `subcategoria`
+-- Constraints for table `subcategoria`
 --
 ALTER TABLE `subcategoria`
   ADD CONSTRAINT `subcategoria_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `usuarios`
+-- Constraints for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`);
