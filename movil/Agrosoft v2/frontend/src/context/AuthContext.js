@@ -1,11 +1,10 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect, useContext } from "react";
-import {jwtDecode} from 'jwt-decode';
-import { api } from "../config/api"; // <-- Importamos API dinámica
+import { jwtDecode } from 'jwt-decode';
+import { api } from "../config/api";
 
 export const AuthContext = createContext();
 
-// Hook para usar el contexto de autenticación
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -14,15 +13,12 @@ export const useAuth = () => {
   return context;
 };
 
-// Mapeo de roles
 const ROLE_MAP = {
   1: "cliente",
   2: "administrador",
   3: "productor"
 };
 
-// DEBUG_MODE se ubica fuera del componente para estabilidad y evitar advertencias de dependencias
-// Poner false para que el frontend consuma la API real y muestre datos desde la base de datos
 const DEBUG_MODE = false;
 
 export const AuthProvider = ({ children }) => {
@@ -56,7 +52,6 @@ export const AuthProvider = ({ children }) => {
               setUser({ ...data.user, role: ROLE_MAP[data.user.id_rol] || "cliente" });
               setIsAuthenticated(true);
             } else {
-              // Fallback: decodificar token si la ruta falla
               try {
                 const decoded = jwtDecode(token);
                 setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
@@ -97,25 +92,15 @@ export const AuthProvider = ({ children }) => {
         setUser({ ...data.user, role: ROLE_MAP[data.user.id_rol] || "cliente" });
         setIsAuthenticated(true);
       } else {
-        try {
-          const decoded = jwtDecode(token);
-          setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
-          setIsAuthenticated(true);
-        } catch {
-          setUser(null);
-          setIsAuthenticated(false);
-        }
-      }
-    } catch (err) {
-      console.error("Error al obtener perfil tras login:", err);
-      try {
         const decoded = jwtDecode(token);
         setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
         setIsAuthenticated(true);
-      } catch {
-        setUser(null);
-        setIsAuthenticated(false);
       }
+    } catch (err) {
+      console.error("Error al obtener perfil tras login:", err);
+      const decoded = jwtDecode(token);
+      setUser({ ...decoded, role: ROLE_MAP[decoded.id_rol] || "cliente" });
+      setIsAuthenticated(true);
     }
   };
 
@@ -134,6 +119,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        setUser, // ✅ Exportado para que Perfil.jsx lo encuentre
         isAuthenticated,
         isLoading,
         login,

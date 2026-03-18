@@ -1,12 +1,11 @@
-// src/pages/Perfil.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { api } from '../config/api'; // ✅ Usar API centralizada
-import { useNotification } from '../context/NotificationContext'; // ✅ Para notificaciones
+import { api } from '../config/api';
+import { useNotification } from '../context/NotificationContext';
 
 const Perfil = () => {
-  const { user, isAuthenticated, login } = useAuth();
-  const { addNotification } = useNotification(); // ✅ Notificaciones
+  const { user, isAuthenticated, setUser } = useAuth();
+  const { addNotification } = useNotification();
   const [form, setForm] = useState({ 
     nombre_usuario: '', 
     correo_electronico: '', 
@@ -15,7 +14,6 @@ const Perfil = () => {
   });
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,7 +24,8 @@ const Perfil = () => {
         telefono: user.telefono || '',
         ubicacion: user.ubicacion || '',
       });
-      setPreview(user.foto_perfil || user.foto || null);
+      // Si la foto viene del backend, asegúrate de que la URL sea completa si es necesario
+      setPreview(user.foto_perfil ? `http://localhost:4000${user.foto_perfil}` : null);
     }
   }, [user]);
 
@@ -40,19 +39,11 @@ const Perfil = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!user) {
-      addNotification('Usuario no autenticado', 'error');
-      return;
-    }
+    if (!user) return;
 
     setLoading(true);
-    setMessage(null);
-
     try {
       const token = localStorage.getItem('token');
-      
-      // Crear FormData para enviar archivo
       const fd = new FormData();
       fd.append('nombre_usuario', form.nombre_usuario);
       fd.append('correo_electronico', form.correo_electronico);
@@ -60,177 +51,79 @@ const Perfil = () => {
       fd.append('ubicacion', form.ubicacion || '');
       if (file) fd.append('foto_perfil', file);
 
-      // ✅ Usar api en lugar de fetch
-      const response = await api.put(`/api/perfil/${user.id_usuario}`, fd, {
+      // ✅ URL CORREGIDA: Apuntando a /api/users/perfil/
+      const response = await api.put(`/api/users/perfil/${user.id_usuario}`, fd, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: token ? `Bearer ${token}` : undefined,
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      const data = response.data;
-      
-      if (!response.status === 200) {
-        throw new Error(data.message || 'Error al actualizar perfil');
+      if (response.status === 200) {
+        const updatedUser = response.data;
+        addNotification('¡Perfil actualizado con éxito!', 'success');
+        
+        setUser({
+          ...user,
+          nombre: updatedUser.nombre_usuario,
+          email: updatedUser.correo_electronico,
+          telefono: updatedUser.telefono,
+          ubicacion: updatedUser.ubicacion,
+          foto_perfil: updatedUser.foto_perfil 
+        });
       }
-
-      setMessage('Perfil actualizado correctamente');
-      addNotification('¡Perfil actualizado con éxito!', 'success');
-      
-      // ✅ Refrescar perfil en contexto
-      if (token && typeof login === 'function') {
-        await login(token); // Esto debería actualizar el user en el contexto
-      }
-
     } catch (err) {
       console.error('❌ Error:', err);
-      const errorMsg = err.response?.data?.message || err.message || 'Error al actualizar';
-      setMessage(errorMsg);
-      addNotification(errorMsg, 'error');
+      addNotification('Error al actualizar perfil', 'error');
     } finally {
       setLoading(false);
     }
   };
 
-  // Si no está autenticado, mostrar mensaje
-  if (!isAuthenticated) {
-    return (
-      <div className="container mt-4">
-        <div className="alert alert-warning">
-          Debes iniciar sesión para ver tu perfil
-        </div>
-      </div>
-    );
-  }
+  if (!isAuthenticated) return <div className="container mt-4 alert alert-warning">Debes iniciar sesión</div>;
 
   return (
     <div className="container mt-4">
       <h1>Mi Perfil</h1>
-      <div className="card p-3">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          {/* Foto de perfil */}
-          <div className="mb-3">
-            <label className="form-label">Foto de perfil</label>
-            <div className="d-flex align-items-center gap-3">
+      <div className="card p-4 shadow-sm">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4 text-center">
+            <div className="position-relative d-inline-block">
               {preview ? (
-                <img 
-                  src={preview} 
-                  alt="preview" 
-                  style={{ 
-                    width: 96, 
-                    height: 96, 
-                    objectFit: 'cover', 
-                    borderRadius: '50%',
-                    border: '2px solid #ddd'
-                  }} 
-                />
+                <img src={preview} alt="perfil" className="rounded-circle border" style={{ width: 150, height: 150, objectFit: 'cover' }} />
               ) : (
-                <div 
-                  style={{ 
-                    width: 96, 
-                    height: 96, 
-                    background: '#eee', 
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#999',
-                    border: '2px solid #ddd'
-                  }}
-                >
-                  Sin foto
-                </div>
+                <div className="rounded-circle bg-light border d-flex align-items-center justify-content-center text-muted" style={{ width: 150, height: 150 }}>Sin foto</div>
               )}
             </div>
-            <input 
-              type="file" 
-              name="foto_perfil" 
-              accept="image/*" 
-              onChange={handleFile} 
-              className="form-control mt-2" 
-              disabled={loading}
-            />
-            <small className="text-muted">
-              Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 5MB
-            </small>
+            <input type="file" accept="image/*" onChange={handleFile} className="form-control mt-3" disabled={loading} />
           </div>
 
-          {/* Nombre */}
-          <div className="mb-3">
-            <label className="form-label">Nombre de usuario</label>
-            <input 
-              name="nombre_usuario" 
-              className="form-control" 
-              value={form.nombre_usuario} 
-              onChange={handleChange} 
-              required
-              disabled={loading}
-            />
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Nombre de usuario</label>
+              <input name="nombre_usuario" className="form-control" value={form.nombre_usuario} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Correo electrónico</label>
+              <input name="correo_electronico" className="form-control" value={form.correo_electronico} onChange={handleChange} required />
+            </div>
           </div>
 
-          {/* Email */}
-          <div className="mb-3">
-            <label className="form-label">Correo electrónico</label>
-            <input 
-              name="correo_electronico" 
-              type="email"
-              className="form-control" 
-              value={form.correo_electronico} 
-              onChange={handleChange} 
-              required
-              disabled={loading}
-            />
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Teléfono</label>
+              <input name="telefono" className="form-control" value={form.telefono} onChange={handleChange} placeholder="Tu número" />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Ubicación</label>
+              <input name="ubicacion" className="form-control" value={form.ubicacion} onChange={handleChange} placeholder="Ciudad, País" />
+            </div>
           </div>
 
-          {/* Teléfono */}
-          <div className="mb-3">
-            <label className="form-label">Teléfono</label>
-            <input 
-              name="telefono" 
-              className="form-control" 
-              value={form.telefono} 
-              onChange={handleChange} 
-              disabled={loading}
-              placeholder="Opcional"
-            />
-          </div>
-
-          {/* Ubicación */}
-          <div className="mb-3">
-            <label className="form-label">Ubicación</label>
-            <input 
-              name="ubicacion" 
-              className="form-control" 
-              value={form.ubicacion} 
-              onChange={handleChange} 
-              disabled={loading}
-              placeholder="Ej: Bogotá, Colombia"
-            />
-          </div>
-
-          {/* Botón de guardar */}
-          <button 
-            className="btn btn-primary" 
-            type="submit" 
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Guardando...
-              </>
-            ) : (
-              'Guardar cambios'
-            )}
+          <button className="btn btn-success w-100 mt-3" type="submit" disabled={loading}>
+            {loading ? 'Guardando...' : 'GUARDAR CAMBIOS'}
           </button>
         </form>
-
-        {/* Mensajes */}
-        {message && (
-          <div className={`mt-3 alert ${message.includes('éxito') ? 'alert-success' : 'alert-info'}`}>
-            {message}
-          </div>
-        )}
       </div>
     </div>
   );

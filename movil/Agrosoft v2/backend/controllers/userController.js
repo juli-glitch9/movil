@@ -8,7 +8,6 @@ async function listUsers(req, res) {
   try {
     const { search } = req.query;
     let whereClause = {};
-
     if (search) {
       if (!isNaN(search) && search.trim() !== '') {
         whereClause = {
@@ -28,10 +27,7 @@ async function listUsers(req, res) {
         };
       }
     }
-
-    const users = await User.findAll({
-      where: whereClause
-    });
+    const users = await User.findAll({ where: whereClause });
     return res.json(users);
   } catch (err) {
     console.error("Error al listar usuarios:", err);
@@ -42,13 +38,10 @@ async function listUsers(req, res) {
 async function createUser(req, res) {
   try {
     const { nombre_usuario, correo_electronico, password_hash, id_rol, documento_identidad, estado } = req.body;
-
     if (!nombre_usuario || !correo_electronico || !password_hash || !id_rol) {
       return res.status(400).json({ message: "Faltan campos requeridos" });
     }
-
     const hashed = await bcrypt.hash(password_hash, 10);
-
     const newUser = await User.create({
       nombre_usuario,
       correo_electronico,
@@ -57,7 +50,6 @@ async function createUser(req, res) {
       documento_identidad,
       estado: estado || "Activo",
     });
-
     return res.status(201).json(newUser);
   } catch (err) {
     console.error("Error al crear usuario:", err);
@@ -69,24 +61,13 @@ async function updateUser(req, res) {
   try {
     const { id } = req.params;
     const { nombre_usuario, correo_electronico, password_hash, id_rol, documento_identidad, estado } = req.body;
-
     const user = await User.findByPk(id);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
-
-    const updateData = {
-      nombre_usuario,
-      correo_electronico,
-      id_rol,
-      documento_identidad,
-      estado,
-    };
-
+    const updateData = { nombre_usuario, correo_electronico, id_rol, documento_identidad, estado };
     if (password_hash) {
       updateData.password_hash = await bcrypt.hash(password_hash, 10);
     }
-
     await user.update(updateData);
-
     return res.json(user);
   } catch (err) {
     console.error("Error al actualizar usuario:", err);
@@ -99,12 +80,40 @@ async function deleteUser(req, res) {
     const { id } = req.params;
     const user = await User.findByPk(id);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
-
     await user.destroy();
     return res.status(204).send();
   } catch (err) {
     console.error("Error al eliminar usuario:", err);
     return res.status(500).json({ message: "Error al eliminar usuario" });
+  }
+}
+
+// ✅ NUEVA FUNCIÓN PARA EL PERFIL DEL USUARIO
+async function updateUserProfile(req, res) {
+  try {
+    const { id } = req.params;
+    const { nombre_usuario, correo_electronico, telefono, ubicacion } = req.body;
+
+    const user = await User.findByPk(id);
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+    const updateData = {
+      nombre_usuario,
+      correo_electronico,
+      telefono,
+      ubicacion,
+    };
+
+    if (req.file) {
+      // Guardamos el nombre del archivo o la ruta
+      updateData.foto_perfil = `/uploads/${req.file.filename}`;
+    }
+
+    await user.update(updateData);
+    return res.json(user);
+  } catch (err) {
+    console.error("Error al actualizar perfil:", err);
+    return res.status(500).json({ message: "Error al actualizar perfil" });
   }
 }
 
@@ -115,4 +124,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  updateUserProfile, // <--- Exportado correctamente
 };
