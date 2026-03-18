@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2026 at 07:21 PM
+-- Generation Time: Mar 18, 2026 at 06:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -50,7 +50,7 @@ INSERT INTO `carrito` (`id_carrito`, `id_usuario`, `fecha_creacion`, `fecha_ulti
 (8, 66, '2025-11-25 20:14:19', '2025-11-27 20:43:58', 'Activo'),
 (9, 76, '2026-03-05 20:27:06', '2026-03-05 23:16:11', 'Activo'),
 (10, 77, '2026-03-06 00:48:55', '2026-03-06 00:48:55', 'Activo'),
-(11, 78, '2026-03-13 18:02:20', '2026-03-13 18:02:20', 'Activo');
+(11, 78, '2026-03-13 18:02:20', '2026-03-16 21:57:48', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -233,7 +233,9 @@ INSERT INTO `detalle_carrito` (`id_detalle_carrito`, `id_carrito`, `id_producto`
 (6, 6, 6, 4, 25.000, 100.000),
 (33, 7, 6, 1, 2.100, 2.100),
 (34, 9, 47, 1, 500.000, 500.000),
-(35, 9, 7, 1, 4.100, 4.100);
+(35, 9, 7, 1, 4.100, 4.100),
+(36, 11, 4, 1, 9.800, 9.800),
+(37, 11, 12, 1, 1.500, 1.500);
 
 -- --------------------------------------------------------
 
@@ -446,6 +448,13 @@ CREATE TABLE `password_resets` (
   `used` tinyint(1) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`id`, `email`, `code`, `expires_at`, `used`, `created_at`) VALUES
+(1, 'julitiquea17@gmail.com', '283413', '2026-03-16 22:16:41', 1, '2026-03-16 22:06:41');
 
 -- --------------------------------------------------------
 
@@ -879,76 +888,79 @@ CREATE TABLE `usuarios` (
   `documento_identidad` varchar(50) DEFAULT NULL,
   `estado` varchar(20) DEFAULT 'Activo',
   `reset_code` varchar(10) DEFAULT NULL,
-  `reset_expires` datetime DEFAULT NULL
+  `reset_expires` datetime DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `ubicacion` varchar(255) DEFAULT NULL,
+  `foto_perfil` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `password_hash`, `correo_electronico`, `id_rol`, `documento_identidad`, `estado`, `reset_code`, `reset_expires`) VALUES
-(1, 'juan.ramirez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juan.ramirez@example.com', 1, '100000021', 'Activo', NULL, NULL),
-(2, 'sofia.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.gomez@example.com', 1, '100000022', 'Activo', NULL, NULL),
-(3, 'andres.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.morales@example.com', 1, '100000023', 'Activo', NULL, NULL),
-(4, 'paola.salazar', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'paola.salazar@example.com', 1, '100000024', 'Activo', NULL, NULL),
-(5, 'jose.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jose.figueroa@example.com', 1, '100000025', 'Activo', NULL, NULL),
-(6, 'marta.palomino', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marta.palomino@example.com', 1, '100000026', 'Activo', NULL, NULL),
-(7, 'luis.mendoza', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.mendoza@example.com', 1, '100000027', 'Activo', NULL, NULL),
-(8, 'marcela.romero', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marcela.romero@example.com', 1, '100000028', 'Activo', NULL, NULL),
-(9, 'laura.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'laura.gomez@example.com', 1, '100000001', 'Activo', NULL, NULL),
-(10, 'carlos.perez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carlos.perez@example.com', 1, '100000002', 'Activo', NULL, NULL),
-(11, 'maria.rojas', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'maria.rojas@example.com', 1, '100000003', 'Activo', NULL, NULL),
-(12, 'julian.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'julian.martinez@example.com', 1, '100000004', 'Activo', NULL, NULL),
-(13, 'sandra.nieves', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sandra.nieves@example.com', 1, '100000005', 'Activo', NULL, NULL),
-(14, 'fernando.soto', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'fernando.soto@example.com', 1, '100000006', 'Activo', NULL, NULL),
-(15, 'luisa.moreno', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luisa.moreno@example.com', 1, '100000007', 'Activo', NULL, NULL),
-(16, 'ricardo.diaz', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.diaz@example.com', 1, '100000008', 'Activo', NULL, NULL),
-(17, 'natalia.ospina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'natalia.ospina@example.com', 1, '100000009', 'Activo', NULL, NULL),
-(18, 'diego.castillo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'diego.castillo@example.com', 1, '100000010', 'Activo', NULL, NULL),
-(19, 'admin.juana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juana.admin@example.com', 2, '200000001', 'Activo', NULL, NULL),
-(20, 'admin.luis', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.admin@example.com', 2, '200000002', 'Activo', NULL, NULL),
-(21, 'admin.monica', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'monica.admin@example.com', 2, '200000003', 'Activo', NULL, NULL),
-(22, 'admin.esteban', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'esteban.admin@example.com', 2, '200000004', 'Activo', NULL, NULL),
-(23, 'admin.camila', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camila.admin@example.com', 2, '200000005', 'Activo', NULL, NULL),
-(24, 'admin.david', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'david.admin@example.com', 2, '200000006', 'Activo', NULL, NULL),
-(25, 'admin.andrea', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andrea.admin@example.com', 2, '200000007', 'Activo', NULL, NULL),
-(26, 'admin.sebastian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sebastian.admin@example.com', 2, '200000008', 'Activo', NULL, NULL),
-(27, 'admin.ana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.admin@example.com', 2, '200000009', 'Activo', NULL, NULL),
-(28, 'admin.jorge', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.admin@example.com', 2, '200000010', 'Activo', NULL, NULL),
-(29, 'admin.mario', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mario.admin@example.com', 2, '200000021', 'Activo', NULL, NULL),
-(30, 'admin.tamara', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'tamara.admin@example.com', 2, '200000022', 'Activo', NULL, NULL),
-(31, 'admin.ricardo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.admin@example.com', 2, '200000023', 'Activo', NULL, NULL),
-(32, 'admin.carmen', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carmen.admin@example.com', 2, '200000024', 'Activo', NULL, NULL),
-(33, 'javier', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'javier.agro@example.com', 3, '300000001', 'Activo', NULL, NULL),
-(34, 'elena', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'elena.agro@example.com', 3, '300000002', 'Activo', NULL, NULL),
-(35, 'andres', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.agro@example.com', 3, '300000003', 'Activo', NULL, NULL),
-(36, 'sofia', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.agro@example.com', 3, '300000004', 'Activo', NULL, NULL),
-(37, 'mateo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mateo.agro@example.com', 3, '300000005', 'Activo', NULL, NULL),
-(38, 'valentina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'valentina.agro@example.com', 3, '300000006', 'Activo', NULL, NULL),
-(39, 'cristian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'cristian.agro@example.com', 3, '300000007', 'Activo', NULL, NULL),
-(40, 'isabela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'isabela.agro@example.com', 3, '300000008', 'Activo', NULL, NULL),
-(41, 'felipe', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'felipe.agro@example.com', 3, '300000009', 'Activo', NULL, NULL),
-(42, 'daniela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'daniela.agro@example.com', 3, '300000010', 'Activo', NULL, NULL),
-(43, 'ana.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.martinez@example.com', 3, '300000021', 'Activo', NULL, NULL),
-(44, 'lucas.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'lucas.gomez@example.com', 3, '300000022', 'Activo', NULL, NULL),
-(45, 'jorge.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.figueroa@example.com', 3, '300000023', 'Activo', NULL, NULL),
-(46, 'carolina.sanchez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carolina.sanchez@example.com', 3, '300000024', 'Activo', NULL, NULL),
-(47, 'camilo.rodriguez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camilo.rodriguez@example.com', 3, '300000025', 'Activo', NULL, NULL),
-(48, 'veronica.paredes', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'veronica.paredes@example.com', 3, '300000026', 'Activo', NULL, NULL),
-(49, 'pedro.gonzalez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'pedro.gonzalez@example.com', 3, '300000027', 'Activo', NULL, NULL),
-(50, 'mariana.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mariana.morales@example.com', 3, '300000028', 'Activo', NULL, NULL),
-(51, 'Juan Suarez', 'bd4b67accb1f47a860c9d70b5684752722edb435', 'jZuares@example.com', 1, '12005678', 'Activo', NULL, NULL),
-(52, '1234', '', 'juliana@gmail.com', 3, '1024482979', 'activo', NULL, NULL),
-(54, 'julia', '$2b$10$cN5hBcsvzvC/L3TWun8A4OcihoG6rSByADKkLngDBFS5NTRXmZNBq', 'julia@gmail.com', 2, '1021203101', 'Activo', NULL, NULL),
-(55, 'juliana', '$2b$10$wKFyjI8orX7MDN/EdBJbAeLWvQFnPxWMWzraDujETa.66gHdF.RZG', 'julianaaa@gmail.com', 3, '1024512302', 'Activo', NULL, NULL),
-(56, 'Albeiro Ramoz', '123456', 'Profealbeiro200@gmail.com', 1, '1204528856', 'Activo', NULL, NULL),
-(57, 'julio', '$2b$10$LAT06vMkful3OGdFQXxdiOgmOyjeyqFarUcNarhAz868Y6JWL5VN2', 'julio@gmail.com', 3, '2036521236', 'Activo', NULL, NULL),
-(58, 'johanL2', '$2b$10$xkc56RPHKIH.NeEbE8gEZeGNL5lPsArQbZR3kd9/elSIOCR2Bn.zy', 'Jh@gmail.com', 2, '11022334455', 'Activo', NULL, NULL),
-(59, 'johanL4', '$2b$10$juVmu68QgpzsKCmfiDI1Yug6Ov2xJVySI1nIQuTAUsF8oU3S2PjZK', 'johan@gmail.com', 3, '1234567891', 'Activo', NULL, NULL),
-(66, 'Juan', '$2b$10$eJQ1Qtq2DmBVvbzEjhUje.soc7rWzUZrZS.VVsyh/cX3UFDPBdkle', 'juan@gmail.com', 1, '123456789', 'Activo', NULL, NULL),
-(76, 'tiqueortiz', '$2b$10$kdinDBOcYQtYtqTAlNA/k.sC3YMocRwKDV05PgLG.hBr6/6QJr3Ia', 'tiqueo17@gmail.com', 1, '1023204521', 'Activo', NULL, NULL),
-(77, 'javier@gmail.com', '$2b$10$VtZCcC8/cuUpPaI.lMwBH.iSZngKD9OZpJHZvLHThd0fRTz2.mK4e', 'javiere@gmail.com', 1, '1203524658', 'Activo', NULL, NULL),
-(78, 'juliana tique ortiz', '$2b$10$olOyHThSgKX/3Gzq7hnjIOTfbcWX9AuiIamJhzyRA/MTmj2c..Mou', 'julitiquea17@gmail.com', 1, '1024485670', 'Activo', NULL, NULL);
+INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `password_hash`, `correo_electronico`, `id_rol`, `documento_identidad`, `estado`, `reset_code`, `reset_expires`, `telefono`, `ubicacion`, `foto_perfil`) VALUES
+(1, 'juan.ramirez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juan.ramirez@example.com', 1, '100000021', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(2, 'sofia.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.gomez@example.com', 1, '100000022', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(3, 'andres.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.morales@example.com', 1, '100000023', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(4, 'paola.salazar', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'paola.salazar@example.com', 1, '100000024', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(5, 'jose.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jose.figueroa@example.com', 1, '100000025', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(6, 'marta.palomino', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marta.palomino@example.com', 1, '100000026', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(7, 'luis.mendoza', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.mendoza@example.com', 1, '100000027', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(8, 'marcela.romero', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'marcela.romero@example.com', 1, '100000028', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(9, 'laura.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'laura.gomez@example.com', 1, '100000001', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(10, 'carlos.perez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carlos.perez@example.com', 1, '100000002', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(11, 'maria.rojas', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'maria.rojas@example.com', 1, '100000003', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(12, 'julian.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'julian.martinez@example.com', 1, '100000004', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(13, 'sandra.nieves', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sandra.nieves@example.com', 1, '100000005', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(14, 'fernando.soto', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'fernando.soto@example.com', 1, '100000006', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(15, 'luisa.moreno', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luisa.moreno@example.com', 1, '100000007', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(16, 'ricardo.diaz', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.diaz@example.com', 1, '100000008', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(17, 'natalia.ospina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'natalia.ospina@example.com', 1, '100000009', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(18, 'diego.castillo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'diego.castillo@example.com', 1, '100000010', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(19, 'admin.juana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'juana.admin@example.com', 2, '200000001', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(20, 'admin.luis', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'luis.admin@example.com', 2, '200000002', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(21, 'admin.monica', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'monica.admin@example.com', 2, '200000003', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(22, 'admin.esteban', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'esteban.admin@example.com', 2, '200000004', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(23, 'admin.camila', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camila.admin@example.com', 2, '200000005', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(24, 'admin.david', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'david.admin@example.com', 2, '200000006', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(25, 'admin.andrea', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andrea.admin@example.com', 2, '200000007', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(26, 'admin.sebastian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sebastian.admin@example.com', 2, '200000008', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(27, 'admin.ana', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.admin@example.com', 2, '200000009', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(28, 'admin.jorge', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.admin@example.com', 2, '200000010', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(29, 'admin.mario', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mario.admin@example.com', 2, '200000021', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(30, 'admin.tamara', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'tamara.admin@example.com', 2, '200000022', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(31, 'admin.ricardo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ricardo.admin@example.com', 2, '200000023', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(32, 'admin.carmen', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carmen.admin@example.com', 2, '200000024', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(33, 'javier', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'javier.agro@example.com', 3, '300000001', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(34, 'elena', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'elena.agro@example.com', 3, '300000002', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(35, 'andres', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'andres.agro@example.com', 3, '300000003', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(36, 'sofia', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'sofia.agro@example.com', 3, '300000004', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(37, 'mateo', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mateo.agro@example.com', 3, '300000005', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(38, 'valentina', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'valentina.agro@example.com', 3, '300000006', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(39, 'cristian', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'cristian.agro@example.com', 3, '300000007', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(40, 'isabela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'isabela.agro@example.com', 3, '300000008', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(41, 'felipe', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'felipe.agro@example.com', 3, '300000009', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(42, 'daniela', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'daniela.agro@example.com', 3, '300000010', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(43, 'ana.martinez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'ana.martinez@example.com', 3, '300000021', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(44, 'lucas.gomez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'lucas.gomez@example.com', 3, '300000022', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(45, 'jorge.figueroa', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'jorge.figueroa@example.com', 3, '300000023', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(46, 'carolina.sanchez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'carolina.sanchez@example.com', 3, '300000024', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(47, 'camilo.rodriguez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'camilo.rodriguez@example.com', 3, '300000025', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(48, 'veronica.paredes', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'veronica.paredes@example.com', 3, '300000026', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(49, 'pedro.gonzalez', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'pedro.gonzalez@example.com', 3, '300000027', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(50, 'mariana.morales', '0530e0d1838430054034151bbc8a67fa1d5db9c9', 'mariana.morales@example.com', 3, '300000028', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(51, 'Juan Suarez', 'bd4b67accb1f47a860c9d70b5684752722edb435', 'jZuares@example.com', 1, '12005678', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(52, '1234', '', 'juliana@gmail.com', 3, '1024482979', 'activo', NULL, NULL, NULL, NULL, NULL),
+(54, 'julia', '$2b$10$cN5hBcsvzvC/L3TWun8A4OcihoG6rSByADKkLngDBFS5NTRXmZNBq', 'julia@gmail.com', 2, '1021203101', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(55, 'juliana', '$2b$10$wKFyjI8orX7MDN/EdBJbAeLWvQFnPxWMWzraDujETa.66gHdF.RZG', 'julianaaa@gmail.com', 3, '1024512302', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(56, 'Albeiro Ramoz', '123456', 'Profealbeiro200@gmail.com', 1, '1204528856', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(57, 'julio', '$2b$10$LAT06vMkful3OGdFQXxdiOgmOyjeyqFarUcNarhAz868Y6JWL5VN2', 'julio@gmail.com', 3, '2036521236', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(58, 'johanL2', '$2b$10$xkc56RPHKIH.NeEbE8gEZeGNL5lPsArQbZR3kd9/elSIOCR2Bn.zy', 'Jh@gmail.com', 2, '11022334455', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(59, 'johanL4', '$2b$10$juVmu68QgpzsKCmfiDI1Yug6Ov2xJVySI1nIQuTAUsF8oU3S2PjZK', 'johan@gmail.com', 3, '1234567891', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(66, 'Juan', '$2b$10$eJQ1Qtq2DmBVvbzEjhUje.soc7rWzUZrZS.VVsyh/cX3UFDPBdkle', 'juan@gmail.com', 1, '123456789', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(76, 'tiqueortiz', '$2b$10$kdinDBOcYQtYtqTAlNA/k.sC3YMocRwKDV05PgLG.hBr6/6QJr3Ia', 'tiqueo17@gmail.com', 1, '1023204521', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(77, 'javier@gmail.com', '$2b$10$VtZCcC8/cuUpPaI.lMwBH.iSZngKD9OZpJHZvLHThd0fRTz2.mK4e', 'javiere@gmail.com', 1, '1203524658', 'Activo', NULL, NULL, NULL, NULL, NULL),
+(78, 'juliana tique ortiz', '$2b$10$.8ac6U7QApLWldM9ltzNC.Q3q2.z6BKT7qwO2SPMxjOhiy.AciUc6', 'julitiquea17@gmail.com', 1, '1024485670', 'Activo', NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1178,7 +1190,7 @@ ALTER TABLE `descuentos`
 -- AUTO_INCREMENT for table `detalle_carrito`
 --
 ALTER TABLE `detalle_carrito`
-  MODIFY `id_detalle_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_detalle_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `detalle_pedido`
@@ -1220,7 +1232,7 @@ ALTER TABLE `ofertas`
 -- AUTO_INCREMENT for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pedidos`
